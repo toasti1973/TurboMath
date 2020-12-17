@@ -1,9 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Headerdateien">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
+    <ClInclude Include="AABB.h" />
+    <ClInclude Include="AAllocator.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="Frustum.h" />
+    <ClInclude Include="Line.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MoveController.h" />
+    <ClInclude Include="OBB.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Point2.h" />
+    <ClInclude Include="Point3.h" />
+    <ClInclude Include="Point4.h" />
+    <ClInclude Include="Quat.h" />
+    <ClInclude Include="Ray.h" />
+    <ClInclude Include="Scalar.h" />
+    <ClInclude Include="Sphere.h" />
+    <ClInclude Include="Triangle.h" />
+    <ClInclude Include="TurboMath.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Vector4.h" />
+    <ClInclude Include="WayPoints.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AABB.inl" />
+    <None Include="camera.inl" />
+    <None Include="color.inl" />
+    <None Include="Frustum.inl" />
+    <None Include="Helper.inl" />
+    <None Include="Line.inl" />
+    <None Include="Matrix.inl" />
+    <None Include="MoveController.inl" />
+    <None Include="OBB.inl" />
+    <None Include="Plane.inl" />
+    <None Include="Point2.inl" />
+    <None Include="Point3.inl" />
+    <None Include="Point4.inl" />
+    <None Include="Quat.inl" />
+    <None Include="Ray.inl" />
+    <None Include="Scalar.inl" />
+    <None Include="Sphere.inl" />
+    <None Include="Triangle.inl" />
+    <None Include="Vector2.inl" />
+    <None Include="Vector3.inl" />
+    <None Include="Vector4.inl" />
+    <None Include="WayPoints.inl" />
   </ItemGroup>
 </Project>

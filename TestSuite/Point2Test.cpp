@@ -1,12 +1,12 @@
 
 // -------------------------------------------------------------------
-// File			:	TestSuite
+// File			:	Point2Test - TestSuite
 //
-// Description	:	Test for TurboMath in Cpp
+// Description	:	Test for Point2 from TurboMath
 //
 // Author		:	Thorsten Polte
 // -------------------------------------------------------------------
-// (c) 2011 by Innovation3D-StudioÂ´s
+// (c) 2012 by Innovation3D-Studio´s
 // --------------------------------------------------------------------
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
 // ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
@@ -20,32 +20,42 @@
 
 using namespace TurboMath;
 
-bool Point2Test();
-bool Point3Test();
-bool Point4Test();
-
-
-bool Vector2Test();
-bool Vector3Test();
-bool Vector4Test();
-
-int main()
+bool Point2Test()
 {
-	// First Test - Point2
-	Point2Test();
+	Point2 p1,p2,p3,p4,p5;
+//	XMFLOAT2 r1,r2;
 
-	// Next Test - Point3
-	Point3Test();
+	p1.SetZero();
+	p2.SetZero();
+	p3.SetZero();
+	p4.SetZero();
+	p5.SetZero();
 
-	// Next Test - Point4
-	Point4Test();
+	// Test add
+	p5 = Point2(1.0f,1.0f);
 
-	const Matrix mat1 = mat1.Identity();
+	p1 = p5;
 
-	Matrix mat2 = mat1;
-	const Matrix mat3(mat1);
+	assert(p1 == p5);
+	assert(! (p1 != p5) );
 
-	// Ready
-	return 0;
+	p1 += p5;
+	assert(p1 == Point2(2.0f,2.0f));
+
+	p1 *= p1;
+	assert(p1 == Point2(4.0f,4.0f));
+
+	p1 -= p5;
+	assert(p1 == Point2(3.0f,3.0f));
+
+	p1 *= 3.0f;
+	assert(p1 == Point2(9.0f,9.0f));
+
+	p1.Set(5.0f,10.0f);
+
+	p1 /= 2.0f;
+
+	// Ready and return
+	return true;
+
 }
-
