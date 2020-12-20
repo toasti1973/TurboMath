@@ -14,6 +14,7 @@
 // PARTICULAR PURPOSE.
 //---------------------------------------------------------------------
 
+#include "stdafx.h"
 #include "..\TurboMath\TurboMath.h"
 #include <assert.h>
 #include <windows.h>

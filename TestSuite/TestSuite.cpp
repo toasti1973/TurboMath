@@ -1,3 +1,6 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
 
 // -------------------------------------------------------------------
 // File			:	TestSuite
@@ -6,7 +9,7 @@
 //
 // Author		:	Thorsten Polte
 // -------------------------------------------------------------------
-// (c) 2011 by Innovation3D-StudioÂ´s
+// (c) 2011 by Innovation3D-Studio´s
 // --------------------------------------------------------------------
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
 // ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
@@ -14,6 +17,7 @@
 // PARTICULAR PURPOSE.
 //---------------------------------------------------------------------
 
+#include "stdafx.h"
 #include "..\TurboMath\TurboMath.h"
 #include <assert.h>
 #include <windows.h>
@@ -29,7 +33,9 @@ bool Vector2Test();
 bool Vector3Test();
 bool Vector4Test();
 
-int main()
+bool MatrixTest();
+
+int _tmain(int argc, _TCHAR* argv[])
 {
 	// First Test - Point2
 	Point2Test();
@@ -40,10 +46,17 @@ int main()
 	// Next Test - Point4
 	Point4Test();
 
-	const Matrix mat1 = mat1.Identity();
+	// First Test - Vector2
+	Vector2Test();
 
-	Matrix mat2 = mat1;
-	const Matrix mat3(mat1);
+	// Next Test - Vector3
+	Vector3Test();
+
+	// Next Test - Vector4
+	Vector4Test();
+
+	// Next Test - Matrix
+	MatrixTest();
 
 	// Ready
 	return 0;
