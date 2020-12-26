@@ -32,7 +32,7 @@
 namespace TurboMath
 {
 
-	class Point4
+	CACHE_ALIGN(16) class Point4
 	{
 	public:
 		//------------------------------------------------------------

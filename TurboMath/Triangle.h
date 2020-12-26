@@ -28,7 +28,7 @@
 namespace TurboMath
 {
 
-	class Triangle
+	CACHE_ALIGN(16) class Triangle
 	{
 	public:
 		//-----------------------------------------------------------------------------

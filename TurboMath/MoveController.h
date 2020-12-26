@@ -31,7 +31,7 @@
 namespace TurboMath
 {
 
-	class MovementController
+	CACHE_ALIGN(16) class MovementController
 	{
 	public:
 

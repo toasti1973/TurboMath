@@ -29,7 +29,7 @@
 
 namespace TurboMath
 {
-	CACHE_ALIGN(4) class Vector2
+	CACHE_ALIGN(16) class Vector2
 	{
 	public:
 		//------------------------------------------------------
