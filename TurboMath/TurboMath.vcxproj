@@ -164,6 +164,7 @@
     <ClInclude Include="WayPoints.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\README.md" />
     <None Include="AABB.inl" />
     <None Include="camera.inl" />
     <None Include="color.inl" />

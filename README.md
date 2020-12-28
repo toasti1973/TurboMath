@@ -27,30 +27,33 @@ vec2 = vec1 * mat1;
 
 ## Requirements
 
-The only required features are a C++ compiler with SSE-support on your target platform. As a curiosity it also includes an Xbox 360 implementation.
+The only required features are a C++ compiler with SSE-support on your target platform. 
 
 ## How to use
 
 ```cpp
 #include "TurboMath.h"
+using namespace TurboMath
 ```
 
 ## Features
 
 * fast inline SSE2-Code with VectorCall (Calling-Convention)
-* Vector2, Vector3, Vector4, Point2, Point3, Point4
-* Color-Class with Color define
-* Matrix
+* Vector2, Vector3, Vector4, Point2, Point3, Point4, AAB, OBB, Ray, Line, Plane, Camera, MoveController
+* Color-Class with much predefined Color´s
+* Matrix (4x4)
 * Quaternion
 * Conversion construction and assignment
 * Basic operators +, *, -, / for all Types
 * Per-component comparison operators ==, !=, >, <, >=, <=
-* Collision-Tests for Ray, ABB, OBB, Sphere, Triangle etc
-* many Additional matrix functions: determinant, transpose, inverse etc
+* Collision-Tests for Ray, ABB, OBB, Sphere, Triangle, Plane, Frustum etc
+* many Additional Matrix Functions: Determinant, Transpose, Inverse, LockAt etc
 * WayPoints with Interpolation
 
 Missing/planned:
 
 * swizzling 
 * boolN types
-* more Inline and VectorCall
+* more Inline and VectorCall optimazion
+* SSE3 / SSE4.x / AVX support
+* Octree / BSP / BVH - classes

@@ -48,5 +48,13 @@
     <None Include="Vector3.inl" />
     <None Include="Vector4.inl" />
     <None Include="WayPoints.inl" />
+    <None Include="..\README.md">
+      <Filter>Readme</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Readme">
+      <UniqueIdentifier>{6f26225f-8658-4d17-99e4-265bd0484d35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
