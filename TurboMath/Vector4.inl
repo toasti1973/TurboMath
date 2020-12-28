@@ -398,12 +398,24 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	XM_INLINE const float	XM_CALLCONV Vector4::Length() const noexcept
 	{
+#if XM_SSE4_INTRINSICS
+		XMVECTOR vTemp = _mm_dp_ps( V, V, 0xff );
+   		return _mm_sqrt_ps( vTemp );
+#endif
 		return Vector4::Unpack_X(XMVector4Length(this->vec));
+
 	}
 
 	//------------------------------------------------------------------------------
 	XM_INLINE const float XM_CALLCONV Vector4::Lengthsq() const noexcept
 	{
+#if XM_SSE4_INTRINSICS
+		return Vector4::Unpack_X( _mm_dp_ps( this->vec, this->vec, 0xff ));
+#elseif XM_SSE3_INTRINSICS
+		XMVECTOR vTemp = _mm_mul_ps(this->vec,this->vec);
+   		vTemp = _mm_hadd_ps( vTemp, vTemp );
+    		return Vector4::Unpack_X(_mm_hadd_ps( vTemp, vTemp ));
+#endif
 		return Vector4::Unpack_X(XMVector4LengthSq(this->vec));
 	}
 
@@ -434,6 +446,13 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	XM_INLINE float	XM_CALLCONV Vector4::Dot( const Vector4 &v0,  const Vector4 &v1) noexcept
 	{
+#if XM_SSE4_INTRINSICS
+		return Vector4::Unpack_X(_mm_dp_ps( v0.vec, v1.vec, 0xff ));
+#elseif XM_SSE3_INTRINSICS
+		XMVECTOR vTemp = _mm_mul_ps(V0,V1);
+   		vTemp = _mm_hadd_ps( vTemp, vTemp );
+    		return Vector4::Unpack_X(_mm_hadd_ps( vTemp, vTemp ));
+#endif
 		return Vector4::Unpack_X(XMVector3Dot(v0.vec, v1.vec));
 	}
 
@@ -476,6 +495,36 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	XM_INLINE Vector4	XM_CALLCONV Vector4::Normalize(const Vector4 &v) noexcept
 	{
+#if XM_SSE4_INTRINSICS
+		XMVECTOR vLengthSq = _mm_dp_ps( V, V, 0xff );
+   		
+		// Prepare for the division
+  		XMVECTOR vResult = _mm_sqrt_ps(vLengthSq);
+   		
+		// Create zero with a single instruction
+   		XMVECTOR vZeroMask = _mm_setzero_ps();
+   		
+		// Test for a divide by zero (Must be FP to detect -0.0)
+   		vZeroMask = _mm_cmpneq_ps(vZeroMask,vResult);
+   		
+		// Failsafe on zero (Or epsilon) length planes
+   		// If the length is infinity, set the elements to zero
+    		vLengthSq = _mm_cmpneq_ps(vLengthSq,g_XMInfinity);
+   		
+		// Divide to perform the normalization
+   		vResult = _mm_div_ps(V,vResult);
+   		
+		// Any that are infinity, set to zero
+   		vResult = _mm_and_ps(vResult,vZeroMask);
+  		
+		// Select qnan or result based on infinite length
+  		XMVECTOR vTemp1 = _mm_andnot_ps(vLengthSq,g_XMQNaN);
+   		XMVECTOR vTemp2 = _mm_and_ps(vResult,vLengthSq);
+  		
+		vResult = _mm_or_ps(vTemp1,vTemp2);
+  		
+		return Vector4(vResult);
+#endif
 		if (Vector4::Equal3_All(v, Vector4(0,0,0,0))) return v;
 		return XMVector4Normalize(v.vec);
 	}
@@ -848,6 +897,17 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	XM_INLINE const Vector4	XM_CALLCONV Vector4::Transform( const Vector4 & v, const Matrix &m) noexcept
 	{
+#if XM_AVX2_INTRINSICS
+		XMVECTOR vResult = _mm_permute_ps(v.vec,_MM_SHUFFLE(3,3,3,3)); // W
+    		vResult = _mm_mul_ps( vResult, m.GetRow3() );
+    		XMVECTOR vTemp = _mm_permute_ps(v.vec,_MM_SHUFFLE(2,2,2,2)); // Z
+    		vResult = _mm_fmadd_ps( vTemp, M.GetRow2(), vResult );
+    		vTemp = _mm_permute_ps(v.vec,_MM_SHUFFLE(1,1,1,1)); // Y
+    		vResult = _mm_fmadd_ps( vTemp, M.GetRow1(), vResult );
+    		vTemp = _mm_broadcastss_ps(v.vec); // X
+    		vResult = _mm_fmadd_ps( vTemp, M.GetRow0(), vResult );
+    		return Vector4(vResult);
+#endif
 		return XMVector4Transform(v.vec, m.mx);
 	}
 

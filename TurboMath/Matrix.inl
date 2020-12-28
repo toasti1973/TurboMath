@@ -892,6 +892,59 @@ namespace TurboMath
 
 	__forceinline	Matrix Matrix::operator* ( const Matrix& Mat ) const
 	{
+#if XM_AVX2_INTRINSICS
+	 	XMMATRIX mResult;
+
+    		// Use vW to hold the original row
+    		XMVECTOR vW = M1.this->GetRow0();
+    		// Splat the component X,Y,Z then W
+    		XMVECTOR vX = _mm_broadcastss_ps(vW);
+    		XMVECTOR vY = _mm_permute_ps(vW,_MM_SHUFFLE(1,1,1,1));
+    		XMVECTOR vZ = _mm_permute_ps(vW,_MM_SHUFFLE(2,2,2,2));
+    		vW = _mm_permute_ps(vW,_MM_SHUFFLE(3,3,3,3));
+    		// Perform the operation on the first row
+    		vX = _mm_mul_ps(vX,Mat.GetRow0());
+    		vX = _mm_fmadd_ps(vY,Mat.GetRow1(),vX);
+    		vX = _mm_fmadd_ps(vZ,Mat.GetRow2(),vX);
+    		vX = _mm_fmadd_ps(vW,Mat.GetRow3(),vX);
+    		mResult.r[0] = vX;
+
+    		// Repeat for the other 3 rows
+    		vW = this->GetRow1();
+    		vX = _mm_broadcastss_ps(vW);
+    		vY = _mm_permute_ps(vW,_MM_SHUFFLE(1,1,1,1));
+    		vZ = _mm_permute_ps(vW,_MM_SHUFFLE(2,2,2,2));
+    		vW = _mm_permute_ps(vW,_MM_SHUFFLE(3,3,3,3));
+    		vX = _mm_mul_ps(vX,Mat.GetRow0());
+    		vX = _mm_fmadd_ps(vY,Mat.GetRow1(),vX);
+    		vX = _mm_fmadd_ps(vZ,Mat.GetRow2(),vX);
+    		vX = _mm_fmadd_ps(vW,Mat.GetRow3(),vX);
+    		mResult.r[1] = vX;
+
+    		vW = this->GetRow2();
+    		vX = _mm_broadcastss_ps(vW);
+    		vY = _mm_permute_ps(vW,_MM_SHUFFLE(1,1,1,1));
+    		vZ = _mm_permute_ps(vW,_MM_SHUFFLE(2,2,2,2));
+    		vW = _mm_permute_ps(vW,_MM_SHUFFLE(3,3,3,3));
+    		vX = _mm_mul_ps(vX,Mat.GetRow0());
+    		vX = _mm_fmadd_ps(vY,Mat.GetRow1(),vX);
+    		vX = _mm_fmadd_ps(vZ,Mat.GetRow2(),vX);
+    		vX = _mm_fmadd_ps(vW,Mat.GetRow3(),vX);
+    		mResult.r[2] = vX;
+
+    		vW = this->GetRow3();
+    		vX = _mm_broadcastss_ps(vW);
+    		vY = _mm_permute_ps(vW,_MM_SHUFFLE(1,1,1,1));
+    		vZ = _mm_permute_ps(vW,_MM_SHUFFLE(2,2,2,2));
+    		vW = _mm_permute_ps(vW,_MM_SHUFFLE(3,3,3,3));
+    		vX = _mm_mul_ps(vX,Mat.GetRow0());
+    		vX = _mm_fmadd_ps(vY,Mat.GetRow1(),vX);
+    		vX = _mm_fmadd_ps(vZ,Mat.GetRow2(),vX);
+    		vX = _mm_fmadd_ps(vW,Mat.GetRow3(),vX);
+    		mResult.r[3] = vX;
+
+   		return Matrix(mResult);
+#endif
 		return XMMatrixMultiply(this->mx, Mat.mx);
 	}
 

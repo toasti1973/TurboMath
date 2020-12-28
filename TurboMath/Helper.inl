@@ -35,32 +35,32 @@ namespace TurboMath
 	// Check for Memory Align 
 	//----------------------------------------------------------------------------------------
 
-	template <typename T> __forceinline T AlignUpWithMask(T value, size_t mask)
+	template <typename T> XM_INLINE T AlignUpWithMask(T value, size_t mask)
 	{
 		return (T)(((size_t)value + mask) & ~mask);
 	}
 
-	template <typename T> __forceinline T AlignDownWithMask(T value, size_t mask)
+	template <typename T> XM_INLINE T AlignDownWithMask(T value, size_t mask)
 	{
 		return (T)((size_t)value & ~mask);
 	}
 
-	template <typename T> __forceinline T AlignUp(T value, size_t alignment)
+	template <typename T> XM_INLINE T AlignUp(T value, size_t alignment)
 	{
 		return AlignUpWithMask(value, alignment - 1);
 	}
 
-	template <typename T> __forceinline T AlignDown(T value, size_t alignment)
+	template <typename T> XM_INLINE T AlignDown(T value, size_t alignment)
 	{
 		return AlignDownWithMask(value, alignment - 1);
 	}
 
-	template <typename T> __forceinline bool IsAligned(T value, size_t alignment)
+	template <typename T> XM_INLINE bool IsAligned(T value, size_t alignment)
 	{
 		return 0 == ((size_t)value & (alignment - 1));
 	}
 
-	template <typename T> __forceinline T DivideByMultiple(T value, size_t alignment)
+	template <typename T> XM_INLINE T DivideByMultiple(T value, size_t alignment)
 	{
 		return (T)((value + alignment - 1) / alignment);
 	}
@@ -78,7 +78,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Get Max from two floats
 	//-----------------------------------------------------------------------------
-	__forceinline float TB_max(const float a,const float b)
+	XM_INLINE float TB_max(const float a,const float b)
 	{
 		return (a > b) ? a : b;
 	}
@@ -86,7 +86,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Get Min from two floats
 	//-----------------------------------------------------------------------------
-	__forceinline float TB_min(const float a,const float b)
+	XM_INLINE float TB_min(const float a,const float b)
 	{
 		return (a < b) ? a : b;
 	}
@@ -96,10 +96,10 @@ namespace TurboMath
 	// Return true if any of the elements of a 3 vector are equal to 0xffffffff.
 	// Slightly more efficient than using XMVector3EqualInt.
 	//-----------------------------------------------------------------------------
-	__forceinline bool XMVector3AnyTrue( const FXMVECTOR V )
+	XM_INLINE bool XMVector3AnyTrue( const FXMVECTOR V )
 	{
 		// Duplicate the fourth element from the first element.
-		XMVECTOR C = XMVectorSwizzle<XM_SWIZZLE_X, XM_SWIZZLE_Y, XM_SWIZZLE_Z, XM_SWIZZLE_X>(V);
+		const XMVECTOR C = XMVectorSwizzle<XM_SWIZZLE_X, XM_SWIZZLE_Y, XM_SWIZZLE_Z, XM_SWIZZLE_X>(V);
 
 		return XMComparisonAnyTrue( XMVector4EqualIntR( C, XMVectorTrueInt() ) );
 	}
@@ -109,10 +109,10 @@ namespace TurboMath
 	// Return true if all of the elements of a 3 vector are equal to 0xffffffff.
 	// Slightly more efficient than using XMVector3EqualInt.
 	//-----------------------------------------------------------------------------
-	__forceinline bool XMVector3AllTrue( const FXMVECTOR V )
+	XM_INLINE bool XMVector3AllTrue( const FXMVECTOR V )
 	{
 		// Duplicate the fourth element from the first element.
-		XMVECTOR C = XMVectorSwizzle<XM_SWIZZLE_X, XM_SWIZZLE_Y, XM_SWIZZLE_Z, XM_SWIZZLE_X>( V );
+		const XMVECTOR C = XMVectorSwizzle<XM_SWIZZLE_X, XM_SWIZZLE_Y, XM_SWIZZLE_Z, XM_SWIZZLE_X>( V );
 
 		return XMComparisonAllTrue( XMVector4EqualIntR( C, XMVectorTrueInt() ) );
 	}
@@ -121,7 +121,7 @@ namespace TurboMath
 	// Test if the point (P) on the plane of the triangle is inside the triangle
 	// (V0, V1, V2).
 	//-----------------------------------------------------------------------------
-	__forceinline Vector4 PointOnPlaneInsideTriangle( const Vector4& P, const Vector4& V0, const Vector4& V1, const Vector4& V2 )
+	XM_INLINE Vector4 PointOnPlaneInsideTriangle( const Vector4& P, const Vector4& V0, const Vector4& V1, const Vector4& V2 )
 	{
 		// Compute the triangle normal.
 		const XMVECTOR N = XMVector3Cross(  (V2 - V0) , (V1 - V0) );
@@ -144,12 +144,11 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	static __forceinline void FastIntersectSpherePlane( const Vector4& Center, const Vector4& Radius,  const Plane& Plane, XMVECTOR& Outside,  XMVECTOR& Inside )
+	static XM_INLINE void FastIntersectSpherePlane( const Vector4& Center, const Vector4& Radius,  const Plane& Plane, XMVECTOR& Outside,  XMVECTOR& Inside )
 	{
 		const XMVECTOR Dist = XMVector4Dot( Center, Plane.Get() );
 
 		// Outside the plane?
-
 		Outside = XMVectorGreater( Dist, Radius);
 
 		// Fully inside the plane?
@@ -158,7 +157,7 @@ namespace TurboMath
 
 	//-----------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------
-	static __forceinline void FastIntersectFrustumPlane(  Vector4& Point0,  Vector4& Point1,  Vector4& Point2,  const Vector4& Point3,	 const Vector4& Point4,
+	static XM_INLINE void FastIntersectFrustumPlane(  Vector4& Point0,  Vector4& Point1,  Vector4& Point2,  const Vector4& Point3,	 const Vector4& Point4,
 												 const Vector4& Point5,  const Vector4& Point6,  const Vector4& Point7,  const Plane& Plane,  XMVECTOR& Outside,  XMVECTOR& Inside )
 	{
 		// Find the min/max projection of the frustum onto the plane normal.
@@ -206,38 +205,38 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	A fuzzy floating point equality check
 	//------------------------------------------------------------------------------
-	__forceinline bool TestFloatEqual(const float f0,const float f1,const float tolerance)
+	XM_INLINE bool TestFloatEqual(const float f0,const float f1,const float tolerance)
 	{
 		const float f = f0 - f1;
 		return ((f > (-tolerance)) && (f < tolerance));
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Abs(const float a)
+	XM_INLINE float Abs(const float a)
 	{
 		return (a < 0.0f) ? -a : a;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Sgn(const float a)
+	XM_INLINE float Sgn(const float a)
 	{
 		return (a < 0.0f) ? -1.0f : 1.0f;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Deg2Rad(float d)
+	XM_INLINE float Deg2Rad(float d)
 	{
 		return (float)((d * TURBOMATH_PI) / 180.0f);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Rad2Deg(float r)
+	XM_INLINE float Rad2Deg(float r)
 	{
 		return (float)((r * 180.0f) / TURBOMATH_PI);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline int Clamp(int val, int minVal, int maxVal)
+	XM_INLINE int Clamp(int val, int minVal, int maxVal)
 	{
 		if (val < minVal)      return minVal;
 		else if (val > maxVal) return maxVal;
@@ -247,7 +246,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	A fuzzy floating point less-then check.
 	//------------------------------------------------------------------------------
-	__forceinline bool TestFloatLess(float f0, float f1, float tol)
+	XM_INLINE bool TestFloatLess(float f0, float f1, float tol)
 	{
 		return ((f0 - f1) < tol);
 	}
@@ -255,14 +254,14 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	A fuzzy floating point greater-then check.
 	//------------------------------------------------------------------------------
-	__forceinline bool TestFloatGreater(float f0, float f1, float tol)
+	XM_INLINE bool TestFloatGreater(float f0, float f1, float tol)
 	{
 		return ((f0 - f1) > tol);
 	}
 	//------------------------------------------------------------------------------
 	//	Clamp a value against lower und upper boundary.
 	//------------------------------------------------------------------------------
-	__forceinline float Clamp(float val, float lower, float upper)
+	XM_INLINE float Clamp(float val, float lower, float upper)
 	{
 		if (val < lower)      return lower;
 		else if (val > upper) return upper;
@@ -272,7 +271,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Saturate a value (clamps between 0.0f and 1.0f)
 	//------------------------------------------------------------------------------
-	__forceinline float Saturate(float val)
+	XM_INLINE float Saturate(float val)
 	{
 		if (val < 0.0f)      return 0.0f;
 		else if (val > 1.0f) return 1.0f;
@@ -282,7 +281,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Linearly interpolate between 2 values: ret = x + l * (y - x)
 	//------------------------------------------------------------------------------
-	__forceinline float Lerp(float x, float y, float l)
+	XM_INLINE float Lerp(float x, float y, float l)
 	{
 		return x + l * (y - x);
 	}
@@ -290,7 +289,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Linearly interpolate between 2 values: ret = x + l * (y - x)
 	//------------------------------------------------------------------------------
-	__forceinline double n_lerp(double x, double y, double l)
+	XM_INLINE double n_lerp(double x, double y, double l)
 	{
 		return x + l * (y - x);
 	}
@@ -298,7 +297,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Returns true if the input float is denormalized (#DEN)
 	//------------------------------------------------------------------------------
-	__forceinline bool IsDenormal(float s)
+	XM_INLINE bool IsDenormal(float s)
 	{
 		return (((*(UINT*)&s)&0x7f800000)==0);
 	}
@@ -306,7 +305,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Returns 0 if float is denormal.
 	//------------------------------------------------------------------------------
-	__forceinline float Undenormalize(float s)
+	XM_INLINE float Undenormalize(float s)
 	{
 		if (IsDenormal(s))
 		{
@@ -321,7 +320,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	test of nearly equal given a tolerance (epsilon)
 	//------------------------------------------------------------------------------
-	__forceinline bool NearEqual(float a, float b, float epsilon)
+	XM_INLINE bool NearEqual(float a, float b, float epsilon)
 	{
 		return Abs(a - b) <= epsilon;
 	}
@@ -329,7 +328,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Return a pseudo random number between 0 and 1.
 	//------------------------------------------------------------------------------
-	__forceinline float n_rand()
+	XM_INLINE float n_rand()
 	{
 		return float(rand()) / float(RAND_MAX);
 	}
@@ -337,7 +336,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Return a pseudo random number between min and max.
 	//------------------------------------------------------------------------------
-	__forceinline float Rand(float min, float max)
+	XM_INLINE float Rand(float min, float max)
 	{
 		const float unit = (float)rand() / RAND_MAX;
 		const float diff = max - min;
@@ -345,7 +344,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Sqrt(float x)
+	XM_INLINE float Sqrt(float x)
 	{
 	#if __XBOX360__
 		return __fsqrts(x);
@@ -355,13 +354,13 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Cot(float x)
+	XM_INLINE float Cot(float x)
 	{
 		return float(1.0) / Tan(x);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline int  FloatToInt( float f)
+	XM_INLINE int  FloatToInt( float f)
 	{
 		/// @todo type cast to int is slow!
 		return int(f);
@@ -370,7 +369,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Normalize an angular value into the range rad(0) to rad(360).
 	//------------------------------------------------------------------------------
-	__forceinline float ModAngle( float a)
+	XM_INLINE float ModAngle( float a)
 	{
 		// we had different results for
 		//   win32 release:  3.141593 == XMScalarModAngle(N_PI)
@@ -389,7 +388,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Get angular distance.
 	//------------------------------------------------------------------------------
-	__forceinline float AngularDistance( float from, float to)
+	XM_INLINE float AngularDistance( float from, float to)
 	{
 		float normFrom = ModAngle(from);
 		float normTo   = ModAngle(to);
@@ -408,7 +407,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	log2() function.
 	//------------------------------------------------------------------------------
-	__forceinline float Log2( float f)
+	XM_INLINE float Log2( float f)
 	{
 		const static float LN_2 = 0.693147180559945f;
 
@@ -416,7 +415,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Exp( float x)
+	XM_INLINE float Exp( float x)
 	{
 		return expf(x);
 	}
@@ -424,19 +423,19 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Round float to integer.
 	//------------------------------------------------------------------------------
-	__forceinline int RoundFloatToInt( float f)
+	XM_INLINE int RoundFloatToInt( float f)
 	{
 		return FloatToInt(floorf(f + 0.5f));
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Fmod( float x,  float y)
+	XM_INLINE float Fmod( float x,  float y)
 	{
 		return fmodf(x, y);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float Pow( float x,  float y)
+	XM_INLINE float Pow( float x,  float y)
 	{
 		return powf(x, y);
 	}
@@ -444,13 +443,13 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	get logarithm of x
 	//------------------------------------------------------------------------------
-	__forceinline float Log(float x)
+	XM_INLINE float Log(float x)
 	{
 		return logf(x);
 	}
 
 	//-----------------------------------------------------------------------------
-	static __forceinline void FastIntersectOrientedBoxPlane( FXMVECTOR Center, FXMVECTOR Extents, FXMVECTOR Axis0, CXMVECTOR Axis1,
+	static XM_INLINE void FastIntersectOrientedBoxPlane( FXMVECTOR Center, FXMVECTOR Extents, FXMVECTOR Axis0, CXMVECTOR Axis1,
 		CXMVECTOR Axis2, CXMVECTOR Plane, XMVECTOR& Outside, XMVECTOR& Inside )
 	{
 		// Compute the distance to the center of the box.
@@ -474,7 +473,7 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	static __forceinline bool SolveCubic( const float e, const float f, const float g, float* t, float* u, float* v )
+	static XM_INLINE bool SolveCubic( const float e, const float f, const float g, float* t, float* u, float* v )
 	{
 		float p, q, h, rc, d, theta, costh3, sinth3;
 
@@ -513,7 +512,7 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	static __forceinline XMVECTOR CalculateEigenVector(const float m11, const float m12, const float m13,
+	static XM_INLINE XMVECTOR CalculateEigenVector(const float m11, const float m12, const float m13,
 		const float m22, const float m23, const float m33, float e )
 	{
 		float f1, f2, f3;
@@ -582,7 +581,7 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	static __forceinline bool CalculateEigenVectors( const float m11, const float m12, const float m13,
+	static XM_INLINE bool CalculateEigenVectors( const float m11, const float m12, const float m13,
 		const float m22, const float m23, const float m33,
 		const float e1,  const float e2,  const float e3,
 		XMVECTOR* pV1, XMVECTOR* pV2, XMVECTOR* pV3 )
@@ -682,7 +681,7 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	static __forceinline bool CalculateEigenVectorsFromCovarianceMatrix( const float Cxx, const float Cyy, const float Czz,
+	static XM_INLINE bool CalculateEigenVectorsFromCovarianceMatrix( const float Cxx, const float Cyy, const float Czz,
 		const float Cxy, const float Cxz, const float Cyz,
 		XMVECTOR* pV1, XMVECTOR* pV2, XMVECTOR* pV3 )
 	{
@@ -706,7 +705,7 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	static __forceinline void FastIntersectAxisAlignedBoxPlane( const AABB& Box, const Plane& Plane0,	XMVECTOR& Outside, XMVECTOR& Inside )
+	static XM_INLINE void FastIntersectAxisAlignedBoxPlane( const AABB& Box, const Plane& Plane0,	XMVECTOR& Outside, XMVECTOR& Inside )
 	{
 		// Compute the distance to the center of the box.
 		const XMVECTOR Dist = XMVector4Dot( Box.GetCenter(), Plane0.Get() );

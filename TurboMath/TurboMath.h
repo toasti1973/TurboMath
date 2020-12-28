@@ -1,10 +1,10 @@
-//	 #######                             #     #                     
-//		#    #    # #####  #####   ####  ##   ##   ##   ##### #    # 
-//		#    #    # #    # #    # #    # # # # #  #  #    #   #    # 
-//		#    #    # #    # #####  #    # #  #  # #    #   #   ###### 
-//		#    #    # #####  #    # #    # #     # ######   #   #    # 
-//		#    #    # #   #  #    # #    # #     # #    #   #   #    # 
-//		#     ####  #    # #####   ####  #     # #    #   #   #    # 
+//   #######                             #     #                     
+//	#    #    # #####  #####   ####  ##   ##   ##   ##### #    # 
+//	#    #    # #    # #    # #    # # # # #  #  #    #   #    # 
+//	#    #    # #    # #####  #    # #  #  # #    #   #   ###### 
+//	#    #    # #####  #    # #    # #     # ######   #   #    # 
+//	#    #    # #   #  #    # #    # #     # #    #   #   #    # 
+//	#     ####  #    # #####   ####  #     # #    #   #   #    # 
 // -------------------------------------------------------------------
 // File			:	TurboMath.h
 //
@@ -32,6 +32,25 @@
 #ifndef _TURBOMATH_H_
 #define _TURBOMATH_H_
 
+
+#ifndef __cplusplus
+#error TurboMath requires C++
+#endif
+
+#define TURBOMATH_VERSION 089b
+
+
+//-------------------------------------------------------
+// Config for TurboMath
+// enable optional SIMD-Support
+//-------------------------------------------------------
+
+//#define XM_AVX2_INTRINSICS
+//#define XM_AVX_INTRINSICS
+//#define XM_SSE4_INTRINSICS
+//#define XM_SSE3_INTRINSICS
+
+
 // ************************************************************
 // Disable Warnings
 // ************************************************************
@@ -46,7 +65,7 @@
 #pragma warning (disable : 4244)
 
 //-------------------------------------------------------
-// Math for TurboMath
+// inlcudes for TurboMath
 //-------------------------------------------------------
 
 
@@ -56,6 +75,16 @@
 #include <DirectXCollision.h>
 #include <DirectXColors.h>
 #include <limits>
+
+
+#if XM_SSE4_INTRINSICS
+#include <smmintrin.h>
+#endif
+
+#if XM_SSE3_INTRINSICS
+#include <pmmintrin.h>
+#endif
+
 
 using namespace DirectX;
 
@@ -74,10 +103,32 @@ typedef unsigned int        UINT;
 // We want the fastest Calling-Convention
 // for all Functions ...	: __vectorcall
 //------------------------------------------------------
+//#define XM_CALLCONV __vectorcall
+
+// VectorCall on Mircosoft-Compiler´s
+#if defined(_MSC_VER)
 #define XM_CALLCONV __vectorcall
+#elif defined(__GNUC__)
+#define XM_CALLCONV
+#else
+#define XM_CALLCONV __fastcall
+#endif
 
-
+//------------------------------------------------------
+// We want inline for all Functions ...	
+//------------------------------------------------------
 #define XM_INLINE   __forceinline
+
+//------------------------------------------------------
+// We want Prefetch
+//------------------------------------------------------
+#if defined(__clang__) || defined(__GNUC__)
+#define XM_PREFETCH( a ) __builtin_prefetch(a)
+#elif defined(_MSC_VER)
+#define XM_PREFETCH( a ) __prefetch(a)
+#else
+#define XM_PREFETCH( a )
+#endif
 
 
 //------------------------------------------------------
@@ -103,8 +154,8 @@ namespace TurboMath
 	enum ePlane
 	{
 		LEFT_PLANE,				/**< Left plane.*/
-		RIGHT_PLANE,			/**< Right plane.*/
-		BOTTOM_PLANE,			/**< Bottom plane.*/
+		RIGHT_PLANE,				/**< Right plane.*/
+		BOTTOM_PLANE,				/**< Bottom plane.*/
 		TOP_PLANE,				/**< Top plane.*/
 		NEAR_PLANE,				/**< Near plane.*/
 		FAR_PLANE				/**< Far plane.*/
@@ -114,12 +165,13 @@ namespace TurboMath
 	constexpr  float	TURBOMATH_PI				= 3.14159265358979323846f;				// pi
 	constexpr  float	TURBOMATH_TWO_PI			= 2.0f * TURBOMATH_PI;					// pi * 2
 	constexpr  float	TURBOMATH_HALF_PI			= 0.5f * TURBOMATH_PI;					// pi * 0.5
-	constexpr  float	TURBOMATH_ONEFOURTH_PI		= 0.25f * TURBOMATH_PI;					// pi * 0.25
+	constexpr  float	TURBOMATH_ONEFOURTH_PI			= 0.25f * TURBOMATH_PI;					// pi * 0.25
 	constexpr  float	TURBOMATH_SQRT_TWO			= 1.41421356237309504880f;				// sqrt( 2 )
-	constexpr  float	TURBOMATH_SQRT_THREE		= 1.73205080756887729352f;				// sqrt( 3 )
-	constexpr  float	TURBOMATH_SQRT_1OVER2		= 0.70710678118654752440f;				// sqrt( 1 / 2 )
-	constexpr  float	TURBOMATH_SQRT_1OVER3		= 0.57735026918962576450f;				// sqrt( 1 / 3 )
+	constexpr  float	TURBOMATH_SQRT_THREE			= 1.73205080756887729352f;				// sqrt( 3 )
+	constexpr  float	TURBOMATH_SQRT_1OVER2			= 0.70710678118654752440f;				// sqrt( 1 / 2 )
+	constexpr  float	TURBOMATH_SQRT_1OVER3			= 0.57735026918962576450f;				// sqrt( 1 / 3 )
 	constexpr  float	TURBOMATH_EPSILON			= std::numeric_limits<float>::epsilon() ;// Used to compensate for floating point inaccuracy.
+	constexpr  size_t 	XM_CACHE_LINE_SIZE 			= 64;
 
 
 	// Foreward declaration
@@ -136,7 +188,7 @@ namespace TurboMath
 
 	
 	//----------------------------------------------------------------------------------------
-	// Check for SSE/SSE2 CPU-Support for XNA-Math
+	// Check for SSE/SSE2/SSE3/SSE4.x/AVX/AVX2 CPU-Support for TurboMath
 	//----------------------------------------------------------------------------------------
 extern "C"
 {

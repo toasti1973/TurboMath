@@ -56,7 +56,7 @@ namespace TurboMath
 		explicit Vector3( const Vector4& rhs);
 		
 		/// C++11 Move Constructor
-		Vector3( Vector3&& other) noexcept;
+		Vector3( Vector3&& other);
 
 		//------------------------------------------------------
 		// operator
@@ -302,10 +302,10 @@ namespace TurboMath
 		static const bool  XM_CALLCONV IsUnit(const XMVECTOR v) noexcept;
 
 
-		static Vector3 XM_CALLCONV ZERO() noexcept;
-		static Vector3 XM_CALLCONV UNIT_X() noexcept;
-		static Vector3 XM_CALLCONV UNIT_Y() noexcept;
-		static Vector3 XM_CALLCONV UNIT_Z() noexcept;
+		static Vector3  XM_CALLCONV ZERO() noexcept;
+		static Vector3  XM_CALLCONV UNIT_X() noexcept;
+		static Vector3  XM_CALLCONV UNIT_Y() noexcept;
+		static Vector3  XM_CALLCONV UNIT_Z() noexcept;
 
 
 		protected:
