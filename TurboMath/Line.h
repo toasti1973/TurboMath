@@ -37,53 +37,53 @@ namespace TurboMath
 	public:
 		
 		/// default constructor
-					Line();
+				Line() noexcept;
 		
 					/// component constructor
-		explicit	Line(const Vector4& startPoint, const Vector4& endPoint);
+		explicit	Line(const Vector4& startPoint, const Vector4& endPoint) noexcept;
 		
 		/// component constructor
-		explicit	Line(const Vector4& startPoint, const Vector4& dir, const float lenght);
+		explicit	Line(const Vector4& startPoint, const Vector4& dir, const float lenght) noexcept;
 		
 		/// copy constructor
-					Line(const Line& rhs);
+				Line(const Line& rhs) noexcept;
 		
 					
 		/// set start and end point
-		void Set(const Vector4& startPoint, const Vector4& endPoint);
+		void  XM_CALLCONV Set(const Vector4& startPoint, const Vector4& endPoint) noexcept;
 		
 		/// get start point
-		const Vector4& GetStartPoint() const;
+		const Vector4&  XM_CALLCONV GetStartPoint() const noexcept;
 		
 		/// get end point
-		Vector4 GetEndPoint() const;
+		const Vector4  XM_CALLCONV GetEndPoint() const noexcept;
 		
 		/// get vector
-		const Vector4& DirectionVector() const;
+		const Vector4&  XM_CALLCONV DirectionVector() const noexcept;
 		
 		/// get length
-		const float Length() const;
+		const float  XM_CALLCONV Length() const noexcept;
 		
 		/// get squared length
-		const float Lengthsq() const;
+		const float  XM_CALLCONV Lengthsq() const noexcept;
 		
 		/// minimal distance of point to Line
-		const float Distance(const Vector4& p) const;
+		const float  XM_CALLCONV Distance(const Vector4& p) const noexcept;
 		
 		/// intersect with Line
-		const bool Intersect(const Line& l, Vector4& pa, Vector4& pb) const;
+		const bool  XM_CALLCONV Intersect(const Line& l, Vector4& pa, Vector4& pb) const noexcept;
 		
 		/// return t of the closest point on the Line
-		const float ClosestPoint(const Vector4& p) const;
+		const float  XM_CALLCONV ClosestPoint(const Vector4& p) const noexcept;
 		
 		/// return p = b + m*t
-		Vector4 PointAt(float t) const;
+		const Vector4  XM_CALLCONV PointAt(const float t) const noexcept;
 		
 		/// Return the point on the line segement  nearest the point P.
-		Vector4 PointOnLineSegmentNearestPoint(const Vector4& P );
+		const Vector4  XM_CALLCONV PointOnLineSegmentNearestPoint(const Vector4& P ) noexcept;
 		
 		/// Intersect Plane / Line
-		const bool IntersectPlane( const Plane& plane) const;
+		const bool  XM_CALLCONV IntersectPlane( const Plane& plane) const noexcept;
 
 
 	protected:

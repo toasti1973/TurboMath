@@ -37,7 +37,7 @@
 #error TurboMath requires C++
 #endif
 
-#define TURBOMATH_VERSION 089b
+#define TURBOMATH_VERSION 089c
 
 
 //-------------------------------------------------------

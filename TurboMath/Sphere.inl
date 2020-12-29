@@ -25,7 +25,7 @@ namespace TurboMath
 {
 	
 	
-	__forceinline void Sphere::SetCenter(const Vector4& center)
+	XM_INLINE void  XM_CALLCONV Sphere::SetCenter(const Vector4& center) noexcept
 	{
 		const float radius = this->Center.GetW();
 
@@ -35,44 +35,44 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const Vector4 Sphere::GetCenter() const
+	XM_INLINE const Vector4  XM_CALLCONV Sphere::GetCenter() const noexcept
 	{
 		return this->Center;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Sphere::SetRadius(const float radius)
+	XM_INLINE void  XM_CALLCONV Sphere::SetRadius(const float radius) noexcept
 	{
 		this->Center.SetW(radius);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const float Sphere::GetRadius() const
+	XM_INLINE const float  XM_CALLCONV Sphere::GetRadius() const noexcept
 	{
 		return this->Center.GetW();
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Sphere::Set(const Vector4& center, const float radius)
+	XM_INLINE void  XM_CALLCONV Sphere::Set(const Vector4& center, const float radius) noexcept
 	{
 		this->Center = center;
 		this->Center.SetW(radius);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline  const bool Sphere::operator == (const Sphere& s) const
+	XM_INLINE const bool  XM_CALLCONV Sphere::operator == (const Sphere& s) const noexcept
 	{
 		return this->GetCenter() == s.GetCenter() || this->GetRadius() == s.GetRadius();
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline  const bool Sphere::operator != (const Sphere& s) const
+	XM_INLINE const bool  XM_CALLCONV Sphere::operator != (const Sphere& s) const noexcept
 	{
 		return this->GetCenter() != s.GetCenter() || this->GetRadius() != s.GetRadius();
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline  const bool Sphere::IsEmpty()
+	XM_INLINE const bool  XM_CALLCONV Sphere::IsEmpty() noexcept
 	{ 
 		return this->GetRadius() <= TURBOMATH_EPSILON;
 	}
@@ -84,7 +84,7 @@ namespace TurboMath
 	// The algorithm is based on  Jack Ritter, "An Efficient Bounding Sphere",
 	// Graphics Gems.
 	//-----------------------------------------------------------------------------
-	_inline void	Sphere::ComputeBoundingSphereFromPoints(const UINT Count, Vector4* pPoints, const UINT Stride )
+	XM_INLINE void	 XM_CALLCONV Sphere::ComputeBoundingSphereFromPoints(const UINT Count, Vector4* pPoints, const UINT Stride )
 	{
 		assert( Count > 0 );
 		assert( pPoints );
@@ -192,7 +192,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Transform a sphere by an angle preserving transform.
 	//-----------------------------------------------------------------------------
-	__forceinline void	Sphere::Transform( const Sphere* pIn, const float Scale,const Quat& Rotation, const Vector4& Translation )
+	XM_INLINE void	 XM_CALLCONV Sphere::Transform( const Sphere* pIn, const float Scale,const Quat& Rotation, const Vector4& Translation )
 	{
 		assert( pIn );
 		assert( Rotation.IsUnit() );
@@ -215,7 +215,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Intersection testing routines.
 	//-----------------------------------------------------------------------------
-	__forceinline const bool	Sphere::IntersectPoint( const Vector4& Point)
+	XM_INLINE const bool	 XM_CALLCONV Sphere::IntersectPoint( const Vector4& Point) noexcept
 	{
 		const XMVECTOR Center = XMLoadFloat3( (XMFLOAT3*)&this->Center );
 		const float rad = this->GetRadius();
@@ -228,7 +228,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const bool	Sphere::IntersectRay(  const Ray& theRay, float* pDist  )
+	XM_INLINE const bool	 XM_CALLCONV Sphere::IntersectRay(  const Ray& theRay, float* pDist  )
 	{
 		assert( pDist );
 		assert( theRay.GetDirection().IsUnit() );
@@ -279,7 +279,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const bool	Sphere::IntersectTriangle( const Vector4& V0, const Vector4& V1, const Vector4& V2)
+	XM_INLINE const bool	 XM_CALLCONV Sphere::IntersectTriangle( const Vector4& V0, const Vector4& V1, const Vector4& V2) noexcept
 	{
 		// Load the sphere.
 		const XMVECTOR Center = XMLoadFloat3( (XMFLOAT3*)&this->Center.GetRaw() );
@@ -341,7 +341,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const bool	Sphere::IntersectSphere( const Sphere* pVolumeA)
+	XM_INLINE const bool	 XM_CALLCONV Sphere::IntersectSphere( const Sphere* pVolumeA)
 	{
 		assert( pVolumeA );
 
@@ -367,7 +367,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const bool	Sphere::IntersectAABB( const AABB* pVolumeB )
+	XM_INLINE const bool	 XM_CALLCONV Sphere::IntersectAABB( const AABB* pVolumeB )
 	{
 		assert( pVolumeB );
 
@@ -406,7 +406,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const bool	Sphere::IntersectOBB(const OBB* pVolumeB )
+	XM_INLINE const bool	 XM_CALLCONV Sphere::IntersectOBB(const OBB* pVolumeB )
 	{
 		assert( pVolumeB );
 
@@ -455,7 +455,7 @@ namespace TurboMath
 	//                1 = volume intersects the plane,
 	//                2 = volume is inside the plane (on the negative side of the plane)
 	//-----------------------------------------------------------------------------
-	__forceinline const eCullClassify	Sphere::IntersectFrustum( Frustum* pVolumeB )
+	XM_INLINE const eCullClassify	 XM_CALLCONV Sphere::IntersectFrustum( Frustum* pVolumeB )
 	{
 		assert(pVolumeB);
 
@@ -463,7 +463,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const eCullClassify	Sphere::Intersect6Planes( const Plane& Plane0, const Plane& Plane1, const Plane& Plane2,const Plane& Plane3, const Plane& Plane4, const Plane& Plane5 )
+	XM_INLINE const eCullClassify	 XM_CALLCONV Sphere::Intersect6Planes( const Plane& Plane0, const Plane& Plane1, const Plane& Plane2,const Plane& Plane3, const Plane& Plane4, const Plane& Plane5 ) noexcept
 	{
 		// Load the sphere.
 		XMVECTOR Center = XMLoadFloat3( (XMFLOAT3*)&this->Center );
@@ -514,7 +514,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const eCullClassify	Sphere::IntersectPlane( const Plane& Plane )
+	XM_INLINE const eCullClassify	 XM_CALLCONV Sphere::IntersectPlane( const Plane& Plane )
 	{
 		assert(  Plane.IsUnit()  );
 

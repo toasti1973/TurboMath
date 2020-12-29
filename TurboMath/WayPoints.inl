@@ -25,7 +25,7 @@
 namespace TurboMath
 {
 	/// Add Point to List
-	__forceinline void WayPoints::AddPathPoint(PathPoint& newPoint)
+	XM_INLINE   void  XM_CALLCONV WayPoints::AddPathPoint(PathPoint& newPoint) noexcept
 	{
 		m_PathTypePosition = PATH_STRAIGHT;
 		m_PathTypeLockAt = PATH_STRAIGHT;
@@ -34,7 +34,7 @@ namespace TurboMath
 	}
 
 	/// Delete Path
-	__forceinline void WayPoints::DeletePath()
+	XM_INLINE   void  XM_CALLCONV WayPoints::DeletePath() noexcept
 	{
 		m_PathPointList.clear();
 
@@ -43,7 +43,7 @@ namespace TurboMath
 	}
 
 	/// Linerare Interpolation
-	__forceinline const bool WayPoints::ExecuteLinearInterpolation( const float fTime,Vector4* pResult)
+	XM_INLINE   const bool  XM_CALLCONV WayPoints::ExecuteLinearInterpolation( const float fTime,Vector4* pResult) noexcept
 	{
 		assert(pResult);
 		if (!pResult) return false;
@@ -75,7 +75,7 @@ namespace TurboMath
 	}
 
 	/// Catmull-Rom Interpolation
-	__forceinline const bool WayPoints::ExecuteCatmullRomInterpolation(const float fTime,Vector4* pResult)
+	XM_INLINE   const bool  XM_CALLCONV WayPoints::ExecuteCatmullRomInterpolation(const float fTime,Vector4* pResult) noexcept
 	{
 		assert(pResult);
 		if (!pResult) return false;

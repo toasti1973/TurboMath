@@ -39,19 +39,19 @@ namespace TurboMath
 	// -----------------------------------------------------------
 
 	/// default constructor, NOTE: setup components to ZERO!
-	__forceinline Point4::Point4()
+	 XM_INLINE Point4::Point4() noexcept
 	{
 		vec.x = vec.y = vec.z = vec.w = 0.0f;
 	}
 
 	/// construct from values, set x and y to v1
-	__forceinline Point4::Point4( const float v1)
+	 XM_INLINE Point4::Point4( const float v1) noexcept
 	{
 		vec.x = vec.y = vec.z = vec.w = v1;
 	}
 
 	/// construct from values set x to v1 and y to v2 and z to v3
-	__forceinline Point4::Point4( const float v1, const float v2, const float v3, const float v4)
+	 XM_INLINE Point4::Point4( const float v1, const float v2, const float v3, const float v4) noexcept
 	{
 		vec.x = v1;
 		vec.y = v2;
@@ -60,13 +60,13 @@ namespace TurboMath
 	}
 
 	/// construct from other Point4
-	__forceinline Point4::Point4( const Point4& p1)
+	 XM_INLINE Point4::Point4( const Point4& p1) noexcept
 	{
 		vec = p1.vec;
 	}
 
 	/// C++11 Move Constructor
-	__forceinline Point4::Point4( Point4&& other)
+	 XM_INLINE Point4::Point4( Point4&& other) noexcept
 	{
 		vec = other.vec;		
 	}
@@ -76,7 +76,7 @@ namespace TurboMath
 	// -----------------------------------------------------------
 
 	/// assignment operator
-	__forceinline void Point4::operator=( const Point4& rhs)
+	 XM_INLINE void  XM_CALLCONV Point4::operator=( const Point4& rhs) noexcept
 	{
 		vec.x = rhs.vec.x;
 		vec.y = rhs.vec.y;
@@ -85,7 +85,7 @@ namespace TurboMath
 	}
 
 	/// assign an XMFLOAT4
-	__forceinline void Point4::operator=( XMFLOAT4 rhs)
+	 XM_INLINE void  XM_CALLCONV Point4::operator=( XMFLOAT4 rhs) noexcept
 	{
 		vec.x = rhs.x;
 		vec.y = rhs.y;
@@ -94,14 +94,14 @@ namespace TurboMath
 	}
 
 	/// assign a float
-	__forceinline Point4 Point4::operator=( const float rhs)
+	 XM_INLINE Point4  XM_CALLCONV Point4::operator=( const float rhs) noexcept
 	{
 		vec.x = vec.y = vec.z = vec.w = rhs;
 		return *this;
 	}
 
 	/// assign a Vector4
-	__forceinline Point4 Point4::operator=( const Vector4& rhs)
+	 XM_INLINE Point4  XM_CALLCONV Point4::operator=( const Vector4& rhs) noexcept
 	{
 		vec.x = rhs.GetX();
 		vec.y = rhs.GetY();
@@ -116,13 +116,13 @@ namespace TurboMath
 
 
 	/// cast to Vector4
-	__forceinline Point4::operator Vector4 ()
+	 XM_INLINE Point4::operator Vector4 () noexcept
 	{
 		return Vector4(*this);
 	}
 
 	/// cast to const Vector4
-	__forceinline Point4::operator const Vector4 () const
+	 XM_INLINE Point4::operator const Vector4 () const noexcept
 	{
 		return Vector4(*this);
 	}
@@ -134,7 +134,7 @@ namespace TurboMath
 	//------------------------------------------------------------
 
 	/// C++11 Move
-	__forceinline Point4& Point4::operator=( Point4&& other)
+	 XM_INLINE Point4&  XM_CALLCONV Point4::operator=( Point4&& other) noexcept
 	{
 		vec = other.vec;
 		return *this;
@@ -145,7 +145,7 @@ namespace TurboMath
 	//------------------------------------------------------------
 
 	/// inplace add
-	__forceinline Point4& Point4::operator+=( const Point4 &rhs)
+	 XM_INLINE Point4&  XM_CALLCONV Point4::operator+=( const Point4 &rhs) noexcept
 	{
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -155,7 +155,7 @@ namespace TurboMath
 	}
 
 	/// inplace sub
-	__forceinline Point4& Point4::operator-=( const Point4 &rhs)
+	 XM_INLINE Point4& XM_CALLCONV  Point4::operator-=( const Point4 &rhs) noexcept
 	{
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -165,7 +165,7 @@ namespace TurboMath
 	}
 
 	/// inplace float multiply
-	__forceinline Point4& Point4::operator*=( float s)
+	 XM_INLINE Point4&  XM_CALLCONV Point4::operator*=( float s) noexcept
 	{	
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR X = XMVectorScale(v1,s);
@@ -175,7 +175,7 @@ namespace TurboMath
 
 
 	/// muliply by a Point component-wise
-	__forceinline Point4& Point4::operator*=( const Point4& rhs)
+	 XM_INLINE Point4&  XM_CALLCONV Point4::operator*=( const Point4& rhs) noexcept
 	{
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -185,7 +185,7 @@ namespace TurboMath
 	}
 
 	/// inplace float division
-	__forceinline Point4& Point4::operator/=( float s)
+	 XM_INLINE Point4&  XM_CALLCONV Point4::operator/=( float s) noexcept
 	{	
 		const float tmp = 1.0f / s + TURBOMATH_EPSILON;
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
@@ -195,7 +195,7 @@ namespace TurboMath
 	}
 
 	/// muliply by a Point component-wise
-	__forceinline Point4 Point4::operator*( const Point4& rhs)
+	 XM_INLINE Point4  XM_CALLCONV Point4::operator*( const Point4& rhs) noexcept
 	{
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -209,7 +209,7 @@ namespace TurboMath
 
 
 	/// add 2 Points
-	__forceinline Point4 Point4::operator+( const Point4 &rhs) const
+	 XM_INLINE Point4  XM_CALLCONV Point4::operator+( const Point4 &rhs) const noexcept
 	{
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -222,7 +222,7 @@ namespace TurboMath
 	}
 
 	/// subtract 2 Points
-	__forceinline Point4 Point4::operator-( const Point4 &rhs) const
+	 XM_INLINE Point4 XM_CALLCONV  Point4::operator-( const Point4 &rhs) const noexcept
 	{
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -235,7 +235,7 @@ namespace TurboMath
 	}
 
 	/// multiply with float
-	__forceinline Point4 Point4::operator*( float s) const
+	 XM_INLINE Point4 XM_CALLCONV  Point4::operator*( float s) const noexcept
 	{
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR X = XMVectorScale(v1,s);
@@ -247,7 +247,7 @@ namespace TurboMath
 	}
 
 	/// equality operator
-	__forceinline bool Point4::operator==( const Point4 &rhs) const
+	 XM_INLINE bool  XM_CALLCONV Point4::operator==( const Point4 &rhs) const noexcept
 	{
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -255,7 +255,7 @@ namespace TurboMath
 	}
 
 	/// inequality operator
-	__forceinline bool Point4::operator!=( const Point4 &rhs) const
+	 XM_INLINE bool  XM_CALLCONV Point4::operator!=( const Point4 &rhs) const noexcept
 	{	
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -264,7 +264,7 @@ namespace TurboMath
 
 		
 	/// Point-float division
-	__forceinline Point4 Point4::operator / ( const float f) const
+	 XM_INLINE Point4 XM_CALLCONV  Point4::operator / ( const float f) const noexcept
 	{	
 		const float tmp = 1.0f / f + TURBOMATH_EPSILON;
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
@@ -277,7 +277,7 @@ namespace TurboMath
 	}
 
 	/// inplace division by Point
-	__forceinline Point4 Point4::operator/= (  const Point4& rhs )
+	 XM_INLINE Point4 XM_CALLCONV  Point4::operator/= (  const Point4& rhs ) noexcept
 	{	
 		const XMVECTOR v1 = XMLoadFloat4( &vec );
 		const XMVECTOR v2 = XMLoadFloat4( &rhs.vec );
@@ -294,13 +294,13 @@ namespace TurboMath
 	//------------------------------------------------------------
 
 	/// set with Point4
-	__forceinline void Point4::Set(const Point4& rhs)
+	 XM_INLINE void XM_CALLCONV  Point4::Set(const Point4& rhs) noexcept
 	{
 		vec = rhs.vec;
 	}
 
 	/// set content
-	__forceinline void Point4::Set( float x, float y, float z, float w)
+	 XM_INLINE void XM_CALLCONV  Point4::Set( const float x, const float y, const float z, const float w) noexcept
 	{
 		vec.x = x;
 		vec.y = y;
@@ -309,37 +309,37 @@ namespace TurboMath
 	}
 
 	/// Set Content
-	__forceinline void Point4::Set( XMFLOAT4 rhs)
+	 XM_INLINE void XM_CALLCONV  Point4::Set( const XMFLOAT4 rhs) noexcept
 	{
 		vec = rhs;
 	}
 
 	/// set the x component
-	__forceinline void Point4::SetX( float x)
+	 XM_INLINE void XM_CALLCONV  Point4::SetX( const float x) noexcept
 	{
 		vec.x = x;
 	}
 		
 	/// set the y component
-	__forceinline void Point4::SetY( float y)
+	 XM_INLINE void  XM_CALLCONV Point4::SetY( const float y) noexcept
 	{
 		vec.y = y;
 	}
 
 	/// set the z component
-	__forceinline void Point4::SetZ( float z)
+	 XM_INLINE void  XM_CALLCONV Point4::SetZ( const float z) noexcept
 	{
 		vec.z = z;
 	}
 
 	/// set the w component
-	__forceinline void Point4::SetW( float w)
+	 XM_INLINE void XM_CALLCONV  Point4::SetW( const float w) noexcept
 	{
 		vec.w = w;
 	}
 
 	/// set to Zero
-	__forceinline void Point4::SetZero()
+	 XM_INLINE  void XM_CALLCONV  Point4::SetZero() noexcept
 	{
 		vec.x = vec.y = vec.z = vec.w = 0.0f;
 	}
@@ -349,49 +349,49 @@ namespace TurboMath
 	//------------------------------------------------------------
 
 	/// read/write access to x component
-	__forceinline float& Point4::X()
+	 XM_INLINE float&  XM_CALLCONV Point4::X() noexcept
 	{
 		return vec.x;
 	}
 
 	/// read/write access to y component
-	__forceinline float& Point4::Y()
+	 XM_INLINE float& XM_CALLCONV  Point4::Y() noexcept
 	{
 		return vec.y;
 	}
 
 	/// read/write access to z component
-	__forceinline float& Point4::Z()
+	 XM_INLINE float& XM_CALLCONV  Point4::Z() noexcept
 	{
 		return vec.z;
 	}
 	
 	/// read/write access to w component
-	__forceinline float& Point4::W()
+	 XM_INLINE float&  XM_CALLCONV Point4::W() noexcept
 	{
 		return vec.w;
 	}
 
 	/// read-only access to x component
-	__forceinline float Point4::GetX() const
+	 XM_INLINE const float XM_CALLCONV  Point4::GetX() const noexcept
 	{
 		return vec.x;
 	}
 		
 	/// read-only access to y component
-	__forceinline float Point4::GetY() const
+	 XM_INLINE const float XM_CALLCONV  Point4::GetY() const noexcept
 	{
 		return vec.y;
 	}
 
 	/// read-only access to z component
-	__forceinline float Point4::GetZ() const
+	 XM_INLINE const float XM_CALLCONV  Point4::GetZ() const noexcept
 	{
 		return vec.z;
 	}
 
 	/// read-only access to w component
-	__forceinline float Point4::GetW() const
+	 XM_INLINE const float XM_CALLCONV  Point4::GetW() const noexcept
 	{
 		return vec.w;
 	}
@@ -401,13 +401,13 @@ namespace TurboMath
 	//------------------------------------------------------------
 
 	/// Get RawData
-	__forceinline XMFLOAT4	Point4::GetRaw() const
+	 XM_INLINE XMFLOAT4 XM_CALLCONV 	Point4::GetRaw() const noexcept
 	{
 		return vec;
 	}
 	
 	/// Get RawDataPtr
-	__forceinline XMFLOAT4*	Point4::GetRawPtr()
+	 XM_INLINE XMFLOAT4* XM_CALLCONV 	Point4::GetRawPtr() noexcept
 	{
 		return &vec;
 	}

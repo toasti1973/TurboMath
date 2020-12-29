@@ -30,53 +30,53 @@
 
 namespace TurboMath
 {
-	__forceinline const Vector4	MovementController::GetPos() const
+	XM_INLINE const Vector4	XM_CALLCONV MovementController::GetPos() const noexcept
 	{
 		return m_vcPos;
 	}
 
-	__forceinline const Vector4	MovementController::GetRight() const	
+	XM_INLINE const Vector4 XM_CALLCONV MovementController::GetRight() const noexcept	
 	{
 		return m_vcRight;
 	}
 
-	__forceinline const Vector4	MovementController::GetUp() const	
+	XM_INLINE const Vector4	XM_CALLCONV MovementController::GetUp() const noexcept	
 	{
 		return m_vcUp;
 	}
 
-	__forceinline const Vector4	MovementController::GetDir() const
+	XM_INLINE const Vector4	XM_CALLCONV MovementController::GetDir() const noexcept
 	{
 		return m_vcDir;
 	}
 
-	__forceinline const Vector4	MovementController::GetVelocity() const
+	XM_INLINE const Vector4	XM_CALLCONV MovementController::GetVelocity() const noexcept
 	{
 		return m_vcV;
 	}
 
-	__forceinline const Vector4	MovementController::GetMoveVector() const		
+	XM_INLINE const Vector4	XM_CALLCONV MovementController::GetMoveVector() const noexcept		
 	{
 		return m_MoveVector;
 	}
 	
-	__forceinline const Quat	MovementController::GetRotation() const
+	XM_INLINE const Quat	XM_CALLCONV MovementController::GetRotation() const noexcept
 	{
 		return m_Quat;
 	}
 
 	
-	__forceinline MovementController::MovementController()				// Konstruktor
+	XM_INLINE MovementController::MovementController()	 noexcept			// Konstruktor
 	{
 		Init();
 	}
 
-	__forceinline MovementController::~MovementController()	
+	XM_INLINE MovementController::~MovementController()	
 	{
 	};		
 
 
-	__forceinline void MovementController::Init()
+	XM_INLINE void XM_CALLCONV MovementController::Init() noexcept
 	{
 		m_vcPos.Set(0.0f,0.0f,0.0f);
 		m_vcRight.Set(1.0f,0.0f,0.0f);
@@ -91,7 +91,7 @@ namespace TurboMath
 		m_fRollSpdMax = m_fPitchSpdMax = m_fYawSpdMax = 10.0f;
 	}
 
-	__forceinline void MovementController::RecalcAxes(void)
+	XM_INLINE void XM_CALLCONV MovementController::RecalcAxes(void) noexcept
 	{
 		Quat	qFrame;
 		Matrix	mat;
@@ -133,61 +133,61 @@ namespace TurboMath
 
 	// -------------------------------------------------------------------------------------
 
-	__forceinline MovementControllerFree::MovementControllerFree()
+	XM_INLINE MovementControllerFree::MovementControllerFree() noexcept
 	{
 		MovementController::Init();
 	}
 
-	__forceinline MovementControllerFree::~MovementControllerFree()			
+	XM_INLINE MovementControllerFree::~MovementControllerFree()	 noexcept		
 	{
 	}
 
-	__forceinline void MovementControllerFree::SetRotationSpeedX(const float f)
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetRotationSpeedX(const float f) noexcept
 	{
 		m_fPitchSpd = f;
 	}
 
-	__forceinline void MovementControllerFree::SetRotationSpeedY(const float f)		
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetRotationSpeedY(const float f) noexcept		
 	{
 		m_fYawSpd = f;
 	}
 
-	__forceinline void MovementControllerFree::SetRotationSpeedZ(const float f)			
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetRotationSpeedZ(const float f) noexcept			
 	{
 		m_fRollSpd = f;
 	}
 
-	__forceinline void MovementControllerFree::AddThrust(const float f)	
+	XM_INLINE void XM_CALLCONV MovementControllerFree::AddThrust(const float f)	 noexcept
 	{
 		m_fThrust += f;
 	}
 
-	__forceinline void MovementControllerFree::SetThrust(const float f)		
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetThrust(const float f)	 noexcept	
 	{
 		m_fThrust  = f;
 	}
 
-	__forceinline void MovementControllerFree::SetPos(const Vector4& vc)	
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetPos(const Vector4& vc) noexcept	
 	{
 		m_vcPos = vc;
 	}
 
-	__forceinline void MovementControllerFree::SetRight(const Vector4& vc)
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetRight(const Vector4& vc) noexcept
 	{
 		m_vcRight = vc;
 	}
 
-	__forceinline void MovementControllerFree::SetUp(const Vector4& vc)		
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetUp(const Vector4& vc) noexcept		
 	{
 		m_vcUp = vc;
 	}
 
-	__forceinline void MovementControllerFree::SetDir(const Vector4& vc)		
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetDir(const Vector4& vc) noexcept		
 	{
 		m_vcDir = vc;
 	}
 
-	__forceinline void MovementControllerFree::SetRotation(const float x, const float y, const float z)
+	XM_INLINE void XM_CALLCONV MovementControllerFree::SetRotation(const float x, const float y, const float z) noexcept
 	{
 		m_fRotX = x;
 		m_fRotY = y;
@@ -196,21 +196,21 @@ namespace TurboMath
 		RecalcAxes();
 	}
 
-	__forceinline void MovementControllerFree::AddRotationSpeed(const float sx, const float sy, const float sz)
+	XM_INLINE void XM_CALLCONV MovementControllerFree::AddRotationSpeed(const float sx, const float sy, const float sz) noexcept
 	{
 		m_fPitchSpd += sx;
 		m_fYawSpd   += sy;
 		m_fRollSpd  *= sz;
 	}
 
-	__forceinline void MovementControllerFree::SetRotationSpeed(const float sx, const float sy, const float sz)
+	XM_INLINE void XM_CALLCONV  MovementControllerFree::SetRotationSpeed(const float sx, const float sy, const float sz) noexcept
 	{
 		m_fPitchSpd = sx;
 		m_fYawSpd   = sy;
 		m_fRollSpd  = sz;
 	}
 
-	__forceinline void MovementControllerFree::Update(const float fET)
+	XM_INLINE void XM_CALLCONV MovementControllerFree::Update(const float fET) noexcept
 	{
 		// Rotationsgeschwindigkeit addieren
 
@@ -234,7 +234,7 @@ namespace TurboMath
 
 	// -------------------------------------------------------------------------------------
 
-	__forceinline MovementControllerEgo::MovementControllerEgo()		
+	XM_INLINE MovementControllerEgo::MovementControllerEgo()	 noexcept	
 	: MovementController()
 	{
 		MovementController::Init();
@@ -242,51 +242,51 @@ namespace TurboMath
 		m_fSlide = 0;
 	}
 
-	__forceinline MovementControllerEgo::~MovementControllerEgo()
+	XM_INLINE MovementControllerEgo::~MovementControllerEgo() noexcept
 	{
 	}
 
-	__forceinline void MovementControllerEgo::SetRotationSpeedX(const float f)
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetRotationSpeedX(const float f) noexcept
 	{
 		m_fPitchSpd = f;
 	}
 
-	__forceinline void MovementControllerEgo::SetRotationSpeedY(const float f)	
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetRotationSpeedY(const float f) noexcept	
 	{
 		m_fYawSpd = f;
 	}
 
-	__forceinline void MovementControllerEgo::SetSpeed(const float f)		
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetSpeed(const float f) noexcept		
 	{
 		m_fSpeed = f;
 	}
 
-	__forceinline void MovementControllerEgo::SetSlideSpeed(const float f)
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetSlideSpeed(const float f) noexcept
 	{
 		m_fSlide = f;
 	}
 
-	__forceinline void MovementControllerEgo::SetPos(const Vector4& vc)
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetPos(const Vector4& vc) noexcept
 	{
 		m_vcPos = vc;
 	}
 
-	__forceinline void MovementControllerEgo::SetRight(const Vector4& vc)		
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetRight(const Vector4& vc)	 noexcept	
 	{
 		m_vcRight = vc;
 	}
 
-	__forceinline void MovementControllerEgo::SetUp(const Vector4& vc)	
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetUp(const Vector4& vc) noexcept	
 	{
 		m_vcUp = vc;
 	}
 
-	__forceinline void MovementControllerEgo::SetDir(const Vector4& vc)	
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetDir(const Vector4& vc) noexcept	
 	{
 		m_vcDir = vc;
 	}
 
-	__forceinline void MovementControllerEgo::SetRotation(const float rx, const float ry, const float rz)
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::SetRotation(const float rx, const float ry, const float rz) noexcept
 	{
 		m_fRotX = rx;
 		m_fRotY = ry;
@@ -294,19 +294,19 @@ namespace TurboMath
 		RecalcAxes();
 	}
 
-	__forceinline void MovementControllerEgo::GetRotation(float* x, float* y, float* z)
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::GetRotation(float* x, float* y, float* z) noexcept
 	{
 		if(x) *x = m_fRotX;
 		if(y) *y = m_fRotY;
 		if(z) *z = m_fRotZ;
 	}
 
-	__forceinline const Vector4 MovementControllerEgo::GetRotation()
+	XM_INLINE const Vector4 XM_CALLCONV MovementControllerEgo::GetRotation() noexcept
 	{
 		return Vector4(m_fRotX,m_fRotY,m_fRotZ);
 	}
 
-	__forceinline void MovementControllerEgo::RecalcAxes()
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::RecalcAxes() noexcept
 	{
 		Matrix mat;
 
@@ -343,7 +343,7 @@ namespace TurboMath
 		m_vcUp	  = Vector4::Normalize(m_vcUp);
 	}
 
-	__forceinline void MovementControllerEgo::Update(const float fTime)
+	XM_INLINE void XM_CALLCONV MovementControllerEgo::Update(const float fTime) noexcept
 	{
 		Vector4 vcS;
 

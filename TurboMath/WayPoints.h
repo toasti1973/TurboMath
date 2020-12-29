@@ -41,17 +41,17 @@ namespace TurboMath
 	{
 	public :
 
-		void				SetPoint(Vector4& Pos)			{m_vPoint = Pos;}
-		void				SetLockAt(Vector4& Rot)			{m_vLockAt = Rot;}
-		void				SetStartTime(float Time)		{m_StartTime = Time;}
-		void				SetMoveTime(float Time)			{m_MoveTime = Time;}
+		void	XM_CALLCONV			SetPoint(Vector4& Pos)	 noexcept		{m_vPoint = Pos;}
+		void	XM_CALLCONV			SetLockAt(Vector4& Rot)	 noexcept		{m_vLockAt = Rot;}
+		void	XM_CALLCONV			SetStartTime(float Time) noexcept		{m_StartTime = Time;}
+		void	XM_CALLCONV			SetMoveTime(float Time)	 noexcept		{m_MoveTime = Time;}
 
-		Vector4				GetPoint()	const				{return m_vPoint;}
-		Vector4				GetLockAt() const				{return m_vLockAt;}
-		float				GetStartTime()	const			{return m_StartTime;}
-		float				GetMoveTime()	const			{return m_MoveTime;}
+		Vector4	XM_CALLCONV			GetPoint()	const	 noexcept		{return m_vPoint;}
+		Vector4	XM_CALLCONV			GetLockAt() 	const	 noexcept		{return m_vLockAt;}
+		float	XM_CALLCONV			GetStartTime()	const	 noexcept		{return m_StartTime;}
+		float	XM_CALLCONV			GetMoveTime()	const	 noexcept		{return m_MoveTime;}
 
-		void				Reset()
+		void	XM_CALLCONV			Reset() noexcept
 		{
 			m_vPoint = Vector4::NullVec();								// Reset
 			m_vLockAt = Vector4::ForewardVec();
@@ -61,12 +61,12 @@ namespace TurboMath
 
 		// Ctor / Dtor
 
-		PathPoint()
+		PathPoint() noexcept
 		{
 			Reset();
 		}
 
-		PathPoint(const PathPoint& cpyPoint)
+		PathPoint(const PathPoint& cpyPoint) noexcept
 		{
 			m_vPoint = cpyPoint.GetPoint();
 			m_vLockAt = cpyPoint.GetLockAt();
@@ -78,7 +78,7 @@ namespace TurboMath
 
 		Vector4				m_vPoint;						// Start Point
 		Vector4				m_vLockAt;						// Lock-At
-		float				m_StartTime;					// Start Time
+		float				m_StartTime;						// Start Time
 		float				m_MoveTime;						// MoveTime for this part
 	};
 
@@ -88,7 +88,8 @@ namespace TurboMath
 	public:
 		enum PathPointType
 		{
-			PATH_STRAIGHT = 0,
+			PATH_LOCKAT_NONE = 0,			// Only for Lock-AT
+			PATH_STRAIGHT,
 			PATH_CURVED,
 
 			PATHPOINT_FORCE_DWORD           = 0x7fffffff, /* force 32-bit size enum */
@@ -98,25 +99,25 @@ namespace TurboMath
 
 		std::vector<PathPoint, AAllocator<PathPoint> >	m_PathPointList;							// Liste der Punkte
 
-		Vector4				m_Position;																// Aktuelle Position auf dem Pfad
-		Vector4				m_LockAt;																// act. Lock-At-Vector
+		Vector4				m_Position;										// Aktuelle Position auf dem Pfad
+		Vector4				m_LockAt;										// act. Lock-At-Vector
 
-		Vector4				m_ComputePoints[4];														// Diese Punkte werden für die Interpolation benutzt
+		Vector4				m_ComputePoints[4];									// Diese Punkte werden für die Interpolation benutzt
 
-		double				m_CurrentTime;															// Aktuelle Zeit
-		float				m_Speed;																// Speed
+		double				m_CurrentTime;										// Aktuelle Zeit
+		float				m_Speed;										// Speed
 
-		PathPointType		m_PathTypePosition;														// Linie, Curve oder was ?
-		PathPointType		m_PathTypeLockAt;														// Linie, Curve oder was ?
+		PathPointType			m_PathTypePosition;									// Linie, Curve oder was ?
+		PathPointType			m_PathTypeLockAt;									// Linie, Curve oder was ?
 		
-		bool				m_ReverseAble;															// Pfad zurück gehen am Ende
+		bool				m_ReverseAble;										// Pfad zurück gehen am Ende
 
-		std::wstring		m_RouteName;															// Name der Route
+		std::wstring			m_RouteName;										// Name der Route
 
 	public:
 
 		// Ctor / Dtor
-		WayPoints()
+		WayPoints() noexcept
 		{
 			m_PathTypePosition = PATH_STRAIGHT;
 			m_PathTypeLockAt = PATH_STRAIGHT;
@@ -125,7 +126,7 @@ namespace TurboMath
 			m_CurrentTime = 0.0f;
 		}
 
-		virtual ~WayPoints()
+		virtual ~WayPoints() noexcept
 		{
 			DeletePath();
 		}
@@ -133,27 +134,28 @@ namespace TurboMath
 		// Functions
 
 		/// Get num Points in List
-		const size_t	GetNumPathPoints()						{return m_PathPointList.size();}
+		const size_t XM_CALLCONV	GetNumPathPoints()	 noexcept			{return m_PathPointList.size();}
 
 		/// Add Point to List
-		void			AddPathPoint(PathPoint& newPoint);
+		void	XM_CALLCONV		AddPathPoint(PathPoint& newPoint) noexcept;
 
 		/// Set the Path-Type for Position
-		void			SetPathTypePosition(const PathPointType& type)
+		void	XM_CALLCONV		SetPathTypePosition(const PathPointType& type) noexcept
 		{
 			m_PathTypePosition = type;
 		}
+
 		/// Set the Path-Type for Lock-At
-		void			SetPathTypeLockAt(const PathPointType& type)
+		void	XM_CALLCONV		SetPathTypeLockAt(const PathPointType& type) noexcept
 		{
 			m_PathTypeLockAt = type;
 		}
 
 		/// Delete Path
-		void			DeletePath();
+		void	XM_CALLCONV		DeletePath() noexcept;
 
 		/// Update the Actual position on WList
-		const bool		Update(const float fTime)
+		const bool	XM_CALLCONV	Update(const float fTime) noexcept
 		{
 			if (m_PathPointList.size() == 0)  return false;							// No Path
 
@@ -180,7 +182,7 @@ namespace TurboMath
 				ExecuteLinearInterpolation(fTime,&m_LockAt);	
 
 			}
-			else 
+			else if (m_PathTypeLockAt == PATH_CURVED)
 			{
 				// Curve Interpolation
 				ExecuteCatmullRomInterpolation(fTime,&m_LockAt);	 
@@ -189,31 +191,31 @@ namespace TurboMath
 			return true;
 		}
 
-		Vector4&		GetPosition()							{return m_Position;}				// Position auf dem Pfad
-		Vector4&		GetLockAt()								{return m_LockAt;}					// Get Lock-At-Vector
+		Vector4& XM_CALLCONV		GetPosition()	 noexcept			{return m_Position;}				// Position auf dem Pfad
+		Vector4& XM_CALLCONV		GetLockAt()	 noexcept			{return m_LockAt;}				// Get Lock-At-Vector
 
-		const std::wstring&	GetRouteName()						{return m_RouteName;}				// Name der Route zurück
-		void			SetRouteName(const std::wstring& Name)	{m_RouteName = Name;}				// Namen zuweisen
+		const std::wstring& XM_CALLCONV	GetRouteName()	 noexcept			{return m_RouteName;}				// Name der Route zurück
+		void	XM_CALLCONV		SetRouteName(const std::wstring& Name) noexcept	{m_RouteName = Name;}				// Namen zuweisen
 
 		/// Restart Path
-		void			Restart()
+		void	XM_CALLCONV		Restart() noexcept
 		{
 			m_CurrentTime = 0.0f;
 		}
 
-		void			SetReverseAble(const bool Status)		{m_ReverseAble = Status;}			// ReverseAble setzen
-		const bool		GetReverseAble()						{return m_ReverseAble;}				// ReverseAble abfragen
+		void	XM_CALLCONV		SetReverseAble(const bool Status) noexcept		{m_ReverseAble = Status;}			// ReverseAble setzen
+		const bool XM_CALLCONV		GetReverseAble() noexcept				{return m_ReverseAble;}				// ReverseAble abfragen
 
-		void			SetSpeed(const float fSpeed)			{m_Speed = 1.0f / fSpeed;}			// Set Speed
-		const float		GetSpeed()								{return m_Speed;}					// Get Speed
+		void	XM_CALLCONV		SetSpeed(const float fSpeed)	 noexcept		{m_Speed = 1.0f / fSpeed;}			// Set Speed
+		const float XM_CALLCONV		GetSpeed()	 noexcept				{return m_Speed;}					// Get Speed
 
 	private:
 
 		/// Linerare Interpolation
-		const bool		ExecuteLinearInterpolation( const float fTime,Vector4* pResult = NULL);
+		const bool XM_CALLCONV		ExecuteLinearInterpolation( const float fTime,Vector4* pResult = NULL) noexcept;
 
 		/// Catmull-Rom Interpolation
-		const bool		ExecuteCatmullRomInterpolation(const float fTime,Vector4* pResult = NULL);
+		const bool XM_CALLCONV		ExecuteCatmullRomInterpolation(const float fTime,Vector4* pResult = NULL) noexcept;
 	};
 
 }; // end of namespace 

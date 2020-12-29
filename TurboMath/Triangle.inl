@@ -30,7 +30,7 @@ namespace TurboMath
 {
 	
 	// Functions
-	void __forceinline Triangle::Set(const Vector4& vec1, const Vector4& vec2, const Vector4& vec3)
+	XM_INLINE void  XM_CALLCONV Triangle::Set(const Vector4& vec1, const Vector4& vec2, const Vector4& vec3) noexcept
 	{
 		static_assert(sizeof(Triangle) == 48, "Class TurboMath::Triangle wrong size");
 
@@ -39,44 +39,44 @@ namespace TurboMath
 		v[2] = vec3;
 	}
 
-	void __forceinline Triangle::SetVector1(const Vector4& vec)
+	XM_INLINE void  XM_CALLCONV Triangle::SetVector1(const Vector4& vec) noexcept
 	{
 		v[0] = vec;
 	}
 
-	void __forceinline Triangle::SetVector2(const Vector4& vec)
+	XM_INLINE void  XM_CALLCONV Triangle::SetVector2(const Vector4& vec) noexcept
 	{
 		v[1] = vec;
 	}
 
-	void  __forceinline Triangle::SetVector3(const Vector4& vec)
+	XM_INLINE void   XM_CALLCONV Triangle::SetVector3(const Vector4& vec) noexcept
 	{
 		v[2] = vec;
 	}
 
-	const Vector4 __forceinline Triangle::GetVector1() const
+	XM_INLINE const Vector4  XM_CALLCONV Triangle::GetVector1() const noexcept
 	{
 		return v[0];
 	}
 
-	const Vector4 __forceinline Triangle::GetVector2() const
+	XM_INLINE const Vector4  XM_CALLCONV Triangle::GetVector2() const noexcept
 	{
 		return v[1];
 	}
 
-	const Vector4 __forceinline Triangle::GetVector3() const
+	XM_INLINE const Vector4  XM_CALLCONV Triangle::GetVector3() const noexcept
 	{
 		return v[2];
 	}
 
-	const Vector4 __forceinline Triangle::GetNormalVector() const
+	XM_INLINE const Vector4  XM_CALLCONV Triangle::GetNormalVector() const noexcept
 	{
 		Plane p(v[0],v[1],v[2]);
 
 		return p.GetNormal();
 	}
 
-	const AABB __forceinline Triangle::GetAABB() const
+	XM_INLINE const AABB  XM_CALLCONV Triangle::GetAABB() const noexcept
 	{
 		Vector4 vcMin;
 		Vector4 vcMax;
@@ -100,7 +100,7 @@ namespace TurboMath
 		return box;
 	}
 
-	void __forceinline Triangle::GetAABB(AABB& box) const
+	XM_INLINE void  XM_CALLCONV Triangle::GetAABB(AABB& box) const noexcept
 	{
 		Vector4 vcMin;
 		Vector4 vcMax;
@@ -121,26 +121,26 @@ namespace TurboMath
 		box.Set(vcMin,vcMax);
 	}
 
-	const Plane __forceinline Triangle::GetPlane() const
+	XM_INLINE  const Plane  XM_CALLCONV Triangle::GetPlane() const noexcept
 	{
 		Plane p(v[0],v[1],v[2]);
 
 		return p;
 	}
 
-	void __forceinline Triangle::GetPlane(Plane& p) const
+	XM_INLINE void  XM_CALLCONV Triangle::GetPlane(Plane& p) const noexcept
 	{
 		p.Set(v[0],v[1],v[2]);
 	}
 
-	void __forceinline Triangle::operator*=(const Matrix& m)
+	XM_INLINE void  XM_CALLCONV Triangle::operator*=(const Matrix& m) noexcept
 	{
 		this->v[0] *= this->v[0] * m;
 		this->v[1] *= this->v[1] * m;
 		this->v[2] *= this->v[2] * m;
 	}
 
-	const Triangle __forceinline Triangle::operator * (const Matrix& m) const
+	XM_INLINE const Triangle  XM_CALLCONV Triangle::operator * (const Matrix& m) const noexcept
 	{
 		Triangle tri;
 
@@ -151,14 +151,14 @@ namespace TurboMath
 		return tri;
 	}
 
-	void __forceinline Triangle::SetUserData(const UINT& UData)
+	XM_INLINE void  XM_CALLCONV Triangle::SetUserData(const UINT& UData) noexcept
 	{
 		const float tmp = (float) UData;
 
 		v[0].SetZ(tmp);
 	}
 
-	const UINT __forceinline Triangle::GetUserData() const
+	XM_INLINE const UINT  XM_CALLCONV Triangle::GetUserData() const noexcept
 	{
 		const float tmp = v[0].GetZ();
 

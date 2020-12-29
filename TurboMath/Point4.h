@@ -32,7 +32,7 @@
 namespace TurboMath
 {
 
-	CACHE_ALIGN(16) class Point4
+	class Point4
 	{
 	public:
 		//------------------------------------------------------------
@@ -40,179 +40,179 @@ namespace TurboMath
 		// -----------------------------------------------------------
 
 		/// default constructor, NOTE: setup components to ZERO!
-					Point4();
+					Point4() noexcept;
 
 		/// construct from values, set x and y and z to v1
-		explicit	Point4( const float v1);
+		explicit	Point4( const float v1) noexcept;
 
 		/// construct from values set x to v1 and y to v2 and z to v3 and w to v4
-		explicit	Point4( const float v1, const float v2, const float v3, const float v4);
+		explicit	Point4( const float v1, const float v2, const float v3, const float v4) noexcept;
 
 		/// construct from other Point4
-					Point4( const Point4& p1);
+				Point4( const Point4& p1) noexcept;
 
 		/// C++11 Move Constructor
-					Point4( Point4&& other);
+				Point4( Point4&& other) noexcept;
 
 		//------------------------------------------------------------
 		// assignment
 		// -----------------------------------------------------------
 
 		/// assignment operator
-		void operator=( const Point4& rhs);
+		void XM_CALLCONV operator=( const Point4& rhs) noexcept;
 
 		/// assign an XMFLOAT4
-		void operator=( XMFLOAT4 rhs);
+		void XM_CALLCONV operator=( XMFLOAT4 rhs) noexcept;
 
 		/// assign a float
-		Point4 operator=( const float rhs);
+		Point4 XM_CALLCONV  operator=( const float rhs) noexcept; 
 
 		/// assign a Vector4
-		Point4 operator=( const Vector4& rhs);
+		Point4 XM_CALLCONV  operator=( const Vector4& rhs) noexcept;
 
 		//------------------------------------------------------------
 		// Casting-Operatoren
 		//------------------------------------------------------------
 
 		/// cast to XMFLOAT4&
-		operator XMFLOAT4& ();	
+		 XM_CALLCONV operator XMFLOAT4& () noexcept;	
 
 		/// cast to const XMFLOAT4&
-		operator const XMFLOAT4& () const;
+		 XM_CALLCONV operator const XMFLOAT4& () const noexcept;
 
 		/// cast to XMFLOAT4*
-		operator XMFLOAT4* ();
+		 XM_CALLCONV operator XMFLOAT4* () noexcept;
 
 		/// cast to const XMFLOAT4*
-		operator const XMFLOAT4* () const;
+		 XM_CALLCONV operator const XMFLOAT4* () const noexcept;
 
 		/// cast to Vector4
-		operator Vector4 ();
+		 XM_CALLCONV operator Vector4 () noexcept;
 
 		/// cast to const Vector4
-		operator const Vector4 () const;
+		 XM_CALLCONV operator const Vector4 () const noexcept;
 
 		/// cast to float*
-		operator float* ()					{return (float*)&vec;}
+		 XM_CALLCONV operator float* () noexcept			{return (float*)&vec;}
 
 		/// cast to const float*
-		operator const float* () const		{return (float*)&vec;}
+		 XM_CALLCONV operator const float* () const	 noexcept	{return (float*)&vec;}
 
 		//------------------------------------------------------------
 		// C++11 Move
 		//------------------------------------------------------------
 
 		/// C++11 Move
-		Point4& operator=( Point4&& other);
+		Point4&  XM_CALLCONV operator=( Point4&& other) noexcept;
 
 		//------------------------------------------------------------
 		// operator
 		//------------------------------------------------------------
 
 		/// inplace add
-		Point4& operator+=( const Point4 &rhs);
+		Point4&  XM_CALLCONV operator+=( const Point4 &rhs) noexcept;
 
 		/// inplace sub
-		Point4& operator-=( const Point4 &rhs);
+		Point4& XM_CALLCONV  operator-=( const Point4 &rhs) noexcept;
 
 		/// inplace float multiply
-		Point4& operator*=( float s);
+		Point4& XM_CALLCONV  operator*=( float s) noexcept;
 
 		/// muliply by a Point component-wise
-		Point4& operator*=( const Point4& rhs);
+		Point4& XM_CALLCONV  operator*=( const Point4& rhs) noexcept;
 
 		/// muliply by a Point component-wise
-		Point4 operator*( const Point4& rhs);
+		Point4 XM_CALLCONV  operator*( const Point4& rhs) noexcept;
 
 		/// add 2 Points
-		Point4 operator+( const Point4 &rhs) const;
+		Point4 XM_CALLCONV  operator+( const Point4 &rhs) const noexcept;
 
 		/// subtract 2 Points
-		Point4 operator-( const Point4 &rhs) const;
+		Point4 XM_CALLCONV  operator-( const Point4 &rhs) const noexcept;
 
 		/// multiply with float
-		Point4 operator*( float s) const;
+		Point4 XM_CALLCONV  operator*( float s) const noexcept;
 
 		/// equality operator
-		bool operator==( const Point4 &rhs) const;
+		bool XM_CALLCONV  operator==( const Point4 &rhs) const noexcept;
 
 		/// inequality operator
-		bool operator!=( const Point4 &rhs) const;
+		bool XM_CALLCONV  operator!=( const Point4 &rhs) const noexcept;
 		
 		/// Point-float division
-		Point4 operator / ( const float f) const;
+		Point4 XM_CALLCONV  operator / ( const float f) const noexcept;
 
 		/// inplace division by Scalar
-		Point4& operator/= (  const float fScalar );
+		Point4&  XM_CALLCONV operator/= (  const float fScalar ) noexcept;
 
 		/// inplace division by Point
-		Point4 operator/= (  const Point4& rhs );
+		Point4 XM_CALLCONV  operator/= (  const Point4& rhs ) noexcept;
 
 		//------------------------------------------------------------
 		// Set-Functions
 		//------------------------------------------------------------
 
 		/// set with Point4
-		void Set(const Point4& rhs);
+		void XM_CALLCONV  Set(const Point4& rhs) noexcept;
 
 		/// set content
-		void Set( float x, float y, float z, float w);
+		void  XM_CALLCONV Set( const float x, const float y, const float z, const float w = 0.0f) noexcept;
 
 		/// Set Content
-		void Set( XMFLOAT4 rhs);
+		void  XM_CALLCONV Set( const XMFLOAT4 rhs) noexcept;
 
 		/// set the x component
-		void SetX( float x);
+		void  XM_CALLCONV SetX( const float x) noexcept;
 		
 		/// set the y component
-		void SetY( float y);
+		void XM_CALLCONV  SetY( const float y) noexcept;
 
 		/// set the z component
-		void SetZ( float z);
+		void XM_CALLCONV  SetZ( const float z) noexcept;
 
 		/// set the w component
-		void SetW( float w);
+		void  XM_CALLCONV SetW( const float w) noexcept;
 
 		/// set to Zero
-		void SetZero();
+		void  XM_CALLCONV SetZero() noexcept;
 
 		//------------------------------------------------------------
 		// Read / Write Access
 		//------------------------------------------------------------
 
 		/// read/write access to x component
-		float& X();
+		float& XM_CALLCONV  X() noexcept;
 
 		/// read/write access to y component
-		float& Y();
+		float& XM_CALLCONV  Y() noexcept;
 
 		/// read/write access to z component
-		float& Z();
+		float& XM_CALLCONV  Z() noexcept;
 
 		/// read/write access to w component
-		float& W();
+		float& XM_CALLCONV  W() noexcept;
 	
 		/// read-only access to x component
-		float GetX() const;
+		const float XM_CALLCONV  GetX() const noexcept;
 		
 		/// read-only access to y component
-		float GetY() const;
+		const float XM_CALLCONV  GetY() const noexcept;
 
 		/// read-only access to z component
-		float GetZ() const;
+		const float XM_CALLCONV  GetZ() const noexcept;
 
 		/// read-only access to w component
-		float GetW() const;
+		const float XM_CALLCONV  GetW() const noexcept;
 
 		//------------------------------------------------------------
 		// Get Raw Data (XMFLOAT4)
 		//------------------------------------------------------------
 
 		/// Get RawData
-		XMFLOAT4	GetRaw() const;
+		XMFLOAT4 XM_CALLCONV 	GetRaw() const noexcept;
 	
 		/// Get RawDataPtr
-		XMFLOAT4*	GetRawPtr();
+		XMFLOAT4* XM_CALLCONV 	GetRawPtr() noexcept;
 
 
 	protected:

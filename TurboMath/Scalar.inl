@@ -34,27 +34,27 @@
 namespace TurboMath
 {
 
-	__forceinline const float ACos( float value) noexcept
+	 XM_INLINE const float ACos( const float value) noexcept
 	{
 		return XMScalarACos(value);
 	}
 
-	__forceinline const float ACosEst(const float value)
+	 XM_INLINE const float ACosEst(const float value) noexcept
 	{
 		return XMScalarACosEst(value);
 	}
 
-	__forceinline const float ASin(const float value)
+	 XM_INLINE const float ASin(const float value) noexcept
 	{
 		return XMScalarASin(value);
 	}
 
-	__forceinline const float ASinEst(const float value)
+	 XM_INLINE const float ASinEst(const float value) noexcept
 	{
 		return XMScalarASinEst(value);
 	}
 
-	__forceinline const float ATan(const float value)
+	 XM_INLINE const float ATan(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -66,7 +66,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float ATanEst(const float value)
+	 XM_INLINE const float ATanEst(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -78,7 +78,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float ATan2(const float y, const float x)
+	 XM_INLINE const float ATan2(const float y, const float x) noexcept
 	{
 		auto vector1 = XMLoadFloat(&y);
 		auto vector2 = XMLoadFloat(&x);
@@ -91,7 +91,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float ATan2Est(const float y, const float x)
+	 XM_INLINE const float ATan2Est(const float y, const float x) noexcept
 	{
 		auto vector1 = XMLoadFloat(&y);
 		auto vector2 = XMLoadFloat(&x);
@@ -104,7 +104,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float Cos(const float value)
+	 XM_INLINE const float Cos(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -116,7 +116,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float CosEst(const float value)
+	 XM_INLINE const float CosEst(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -128,7 +128,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float Sin(const float value)
+	 XM_INLINE const float Sin(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -140,7 +140,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float SinEst(const float value)
+	 XM_INLINE const float SinEst(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -152,7 +152,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float Tan(const float value)
+	 XM_INLINE const float Tan(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -164,7 +164,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float TanEst(const float value)
+	 XM_INLINE const float TanEst(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -177,7 +177,7 @@ namespace TurboMath
 
 	}
 
-	__forceinline const float CosH(const float value)
+	 XM_INLINE const float CosH(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -189,7 +189,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float SinH(const float value)
+	 XM_INLINE const float SinH(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -201,7 +201,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline const float TanH(const float value)
+	 XM_INLINE const float TanH(const float value) noexcept
 	{
 		auto vector = XMLoadFloat(&value);
 
@@ -213,7 +213,7 @@ namespace TurboMath
 		return ret;
 	}
 
-	__forceinline void SinCos(const float value, float* sin, float* cos)
+	 XM_INLINE void SinCos(const float value, float* sin, float* cos) noexcept
 	{
 		auto vector1 = XMLoadFloat(sin);
 		auto vector2 = XMLoadFloat(cos);
@@ -226,7 +226,7 @@ namespace TurboMath
 	}
 
 
-	__forceinline void SinCosEst(const float value, float* sin, float* cos)
+	 XM_INLINE void SinCosEst(const float value, float* sin, float* cos) noexcept
 	{
 		auto vector1 = XMLoadFloat(sin);
 		auto vector2 = XMLoadFloat(cos);
@@ -238,17 +238,17 @@ namespace TurboMath
 		XMStoreFloat(cos, vector2);
 	}
 
-	__forceinline const float ToDegrees(const float radians)
+	 XM_INLINE const float ToDegrees(const float radians) noexcept
 	{
 		return XMConvertToDegrees(radians);
 	}
 
-	__forceinline const float ToRadians(const float degrees)
+	 XM_INLINE const float ToRadians(const float degrees) noexcept
 	{
 		return XMConvertToRadians(degrees);
 	}
 
-	__forceinline const float WrapAngle(const float angle)
+	 XM_INLINE const float WrapAngle(const float angle) noexcept
 	{
 		return XMScalarModAngle(angle);
 	}

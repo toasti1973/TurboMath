@@ -28,7 +28,7 @@
 namespace TurboMath
 {
 
-	CACHE_ALIGN(16) class Triangle
+	class Triangle
 	{
 	public:
 		//-----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ namespace TurboMath
 		{
 		}
 
-		explicit Triangle( const Vector4& vec1, const Vector4& vec2, const Vector4& vec3)
+		explicit Triangle( const Vector4& vec1, const Vector4& vec2, const Vector4& vec3) noexcept
 		{
 			v[0] = vec1;
 			v[1] = vec2;
@@ -48,26 +48,26 @@ namespace TurboMath
 		~Triangle() {}
 
 		// Functions
-		void				Set(const Vector4& vec1, const Vector4& vec2, const Vector4& vec3);
-		void				SetVector1(const Vector4& vec);
-		void				SetVector2(const Vector4& vec);
-		void				SetVector3(const Vector4& vec);
+		void	 XM_CALLCONV 			Set(const Vector4& vec1, const Vector4& vec2, const Vector4& vec3) noexcept;
+		void	 XM_CALLCONV 			SetVector1(const Vector4& vec) noexcept;
+		void	 XM_CALLCONV 			SetVector2(const Vector4& vec) noexcept;
+		void	 XM_CALLCONV 			SetVector3(const Vector4& vec) noexcept;
 
-		const Vector4		GetVector1() const;
-		const Vector4		GetVector2() const;
-		const Vector4		GetVector3() const;
-		const Vector4		GetNormalVector() const;
-		const AABB			GetAABB() const;
-		void				GetAABB(AABB& box) const;
-		const Plane			GetPlane() const;
-		void				GetPlane(Plane& p) const;
-		void				SetUserData(const UINT& UData);
-		const UINT			GetUserData() const;
+		const Vector4	 XM_CALLCONV 		GetVector1() const noexcept;
+		const Vector4	 XM_CALLCONV 		GetVector2() const noexcept;
+		const Vector4	 XM_CALLCONV 		GetVector3() const noexcept;
+		const Vector4	 XM_CALLCONV 		GetNormalVector() const noexcept;
+		const AABB	 XM_CALLCONV 		GetAABB() const noexcept;
+		void		 XM_CALLCONV 		GetAABB(AABB& box) const noexcept;
+		const Plane	 XM_CALLCONV 		GetPlane() const noexcept;
+		void		 XM_CALLCONV 		GetPlane(Plane& p) const noexcept;
+		void		 XM_CALLCONV 		SetUserData(const UINT& UData) noexcept;
+		const UINT	 XM_CALLCONV 		GetUserData() const noexcept;
 
 		// Triangle-Matrix product
-		const Triangle operator * (const Matrix& m) const;
+		const Triangle  XM_CALLCONV operator * (const Matrix& m) const noexcept;
 		/// muliply by a Matrix component-wise
-		void operator*=(const Matrix& m);
+		void  XM_CALLCONV operator*=(const Matrix& m) noexcept;
 
 	protected:
 

@@ -31,30 +31,30 @@
 namespace TurboMath
 {
 
-	CACHE_ALIGN(16) class MovementController
+	class MovementController
 	{
 	public:
 
-		MovementController();
-		virtual ~MovementController();
+		MovementController() noexcept;
+		virtual ~MovementController() noexcept;
 
-		virtual void Update( const float fTime )=0;					// Virtual !!!!!
+		virtual void XM_CALLCONV Update( const float fTime )=0;					// Virtual !!!!!
 		
 		// Zugriffs-Methoden für die MemberVariablen
 
-		const Vector4		GetPos() const;
-		const Vector4		GetRight() const;
-		const Vector4		GetUp() const;
-		const Vector4		GetDir() const;
-		const Vector4		GetVelocity() const;
-		const Vector4		GetMoveVector() const;
-		const Quat			GetRotation() const;
+		const Vector4	XM_CALLCONV 	GetPos() const noexcept;
+		const Vector4	XM_CALLCONV 	GetRight() const noexcept;
+		const Vector4	XM_CALLCONV 	GetUp() const noexcept;
+		const Vector4	XM_CALLCONV 	GetDir() const noexcept;
+		const Vector4	XM_CALLCONV 	GetVelocity() const noexcept;
+		const Vector4	XM_CALLCONV 	GetMoveVector() const noexcept;
+		const Quat		XM_CALLCONV 	GetRotation() const noexcept;
 		
 	protected:
 
 		// Methoden
-		virtual void RecalcAxes();
-		virtual void Init();
+		virtual void XM_CALLCONV RecalcAxes() noexcept;
+		virtual void XM_CALLCONV Init() noexcept;
 
 		Vector4		m_vcPos;					// Position
 		Vector4		m_vcRight;					// RechtsVector
@@ -63,7 +63,7 @@ namespace TurboMath
 		Vector4		m_vcV;						// Geschwindigkeits-Vector
 		Quat		m_Quat;						// Quaternion für Rotation
 
-		Vector4		m_MoveVector;				// Bewegungsvector (schon mit Zeit verrechnet !)
+		Vector4		m_MoveVector;					// Bewegungsvector (schon mit Zeit verrechnet !)
 
 		// Rotation-Speed on every Axis
 		float		m_fRollSpd;
@@ -88,28 +88,28 @@ namespace TurboMath
 	{
 	public:
 
-		MovementControllerFree();
-		virtual ~MovementControllerFree();
+		MovementControllerFree() noexcept;
+		virtual ~MovementControllerFree() noexcept;
 
-		virtual void Update(const float fTime);
+		virtual void XM_CALLCONV Update(const float fTime) noexcept;
 
 		// Die Methoden für die Bewegung
 
-		void AddRotationSpeed(const float sx, const float sy, const float sz);
-		void SetRotationSpeed(const float sx, const float sy, const float sz);
-		void SetRotationSpeedX(const float f);
-		void SetRotationSpeedY(const float f);
-		void SetRotationSpeedZ(const float f);
-		void AddThrust(const float f);
-		void SetThrust(const float f);
+		void XM_CALLCONV AddRotationSpeed(const float sx, const float sy, const float sz) noexcept;
+		void XM_CALLCONV SetRotationSpeed(const float sx, const float sy, const float sz) noexcept;
+		void XM_CALLCONV SetRotationSpeedX(const float f) noexcept;
+		void XM_CALLCONV SetRotationSpeedY(const float f) noexcept;
+		void XM_CALLCONV SetRotationSpeedZ(const float f) noexcept;
+		void XM_CALLCONV AddThrust(const float f) noexcept;
+		void XM_CALLCONV SetThrust(const float f) noexcept;
 
 		// Die Attribute direkt einstellen ... nur für INIT !!!
-		void SetRotation(const float rx, const float ry, const float rz);
+		void XM_CALLCONV SetRotation(const float rx, const float ry, const float rz) noexcept;
 
-		void SetPos(const Vector4& vc)	;
-		void SetRight(const Vector4& vc);
-		void SetUp(const Vector4& vc);
-		void SetDir(const Vector4& vc)	;
+		void XM_CALLCONV SetPos(const Vector4& vc) noexcept;
+		void XM_CALLCONV SetRight(const Vector4& vc) noexcept;
+		void XM_CALLCONV SetUp(const Vector4& vc) noexcept;
+		void XM_CALLCONV SetDir(const Vector4& vc) noexcept;
 
 	};
 
@@ -120,35 +120,35 @@ namespace TurboMath
 	{
 	public:
 
-		MovementControllerEgo();					// Konstruktor
-		virtual ~MovementControllerEgo();			// Destruktor
+		MovementControllerEgo() noexcept;					// Konstruktor
+		virtual ~MovementControllerEgo() noexcept;			// Destruktor
 
-		virtual void Update(const float fTime);
+		virtual void XM_CALLCONV Update(const float fTime) noexcept;
 
 		// Die Methoden für die Bewegung
 
-		void			GetRotation(float* x, float* y, float *z);
-		const Vector4	GetRotation();
-		void			SetRotationSpeedX(const float f);
-		void			SetRotationSpeedY(const float f);
-		void			SetSpeed(const float f);
-		void			SetSlideSpeed(const float f);
+		void		XM_CALLCONV GetRotation(float* x, float* y, float *z) noexcept;
+		const Vector4 	XM_CALLCONV GetRotation() noexcept;
+		void		XM_CALLCONV SetRotationSpeedX(const float f) noexcept;
+		void		XM_CALLCONV SetRotationSpeedY(const float f) noexcept;
+		void		XM_CALLCONV SetSpeed(const float f) noexcept;
+		void		XM_CALLCONV SetSlideSpeed(const float f) noexcept;
 
 
 
 		// Die Attribute direkt einstellen ... nur für INIT !!!
 
-		void SetRotation(const float rx, const float ry, const float rz);
-		void SetPos(const Vector4& vc);
-		void SetRight(const Vector4& vc);
-		void SetUp(const Vector4& vc);
-		void SetDir(const Vector4& vc);
+		void XM_CALLCONV SetRotation(const float rx, const float ry, const float rz) noexcept;
+		void XM_CALLCONV SetPos(const Vector4& vc) noexcept;
+		void XM_CALLCONV SetRight(const Vector4& vc) noexcept;
+		void XM_CALLCONV SetUp(const Vector4& vc) noexcept;
+		void XM_CALLCONV SetDir(const Vector4& vc) noexcept;
 
 	private:
 
 		float m_fSpeed;
 		float m_fSlide;
-		void RecalcAxes(void);
+		void XM_CALLCONV RecalcAxes(void) noexcept;
 	};
 
 }; // end of namespace

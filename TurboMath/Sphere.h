@@ -37,42 +37,42 @@ namespace TurboMath
 	CACHE_ALIGN(16) class Sphere
 	{
 	protected:
-		Vector4 Center;				// X/Y/Z Center of the sphere. W -> Raduis
+		Vector4 Center;			// X/Y/Z Center of the sphere. W -> Raduis
 
 	public:
 		// Functions
 
 		/// Set Center
-		void			SetCenter( const Vector4& center);
+		void XM_CALLCONV 		SetCenter( const Vector4& center) noexcept;
 		/// Get Center
-		const Vector4	GetCenter() const;
+		const Vector4 XM_CALLCONV 	GetCenter() const noexcept;
 		/// Set Radius
-		void			SetRadius( const float radius);
+		void XM_CALLCONV 		SetRadius( const float radius) noexcept;
 		/// Get Radius
-		const float		GetRadius() const;
+		const float XM_CALLCONV 	GetRadius() const noexcept;
 		/// Set
-		void			Set(const Vector4& center, const float radius);
+		void XM_CALLCONV 		Set(const Vector4& center, const float radius) noexcept;
 
-		void	ComputeBoundingSphereFromPoints(const UINT Count, Vector4* pPoints, const UINT Stride );
+		void XM_CALLCONV 		ComputeBoundingSphereFromPoints(const UINT Count, Vector4* pPoints, const UINT Stride );
 	
-		void	Transform( const Sphere* pIn, const float Scale,const Quat& Rotation, const Vector4& Translation );
+		void XM_CALLCONV 		Transform( const Sphere* pIn, const float Scale,const Quat& Rotation, const Vector4& Translation );
 
 		//-----------------------------------------------------------------------------
 		// Comparison 
 		//-----------------------------------------------------------------------------
-		const bool		operator == (const Sphere& s) const;
-		const bool		operator != (const Sphere& s) const;
-		const bool		IsEmpty();
+		const bool XM_CALLCONV 		operator == (const Sphere& s) const noexcept;
+		const bool XM_CALLCONV 		operator != (const Sphere& s) const noexcept;
+		const bool XM_CALLCONV 		IsEmpty() noexcept;
 
 		//-----------------------------------------------------------------------------
 		// Intersection testing routines.
 		//-----------------------------------------------------------------------------
-		const bool	IntersectPoint(const Vector4& Point);
-		const bool	IntersectRay( const Ray& theRay, float* pDist );
-		const bool	IntersectTriangle( const Vector4& V0, const Vector4& V1, const Vector4& V2);
-		const bool	IntersectSphere( const Sphere* pVolumeA);
-		const bool	IntersectAABB(  const AABB* pVolumeB );
-		const bool	IntersectOBB(  const OBB* pVolumeB );
+		const bool XM_CALLCONV 	IntersectPoint(const Vector4& Point) noexcept;
+		const bool XM_CALLCONV 	IntersectRay( const Ray& theRay, float* pDist );
+		const bool XM_CALLCONV 	IntersectTriangle( const Vector4& V0, const Vector4& V1, const Vector4& V2) noexcept;
+		const bool XM_CALLCONV 	IntersectSphere( const Sphere* pVolumeA);
+		const bool XM_CALLCONV 	IntersectAABB(  const AABB* pVolumeB );
+		const bool XM_CALLCONV 	IntersectOBB(  const OBB* pVolumeB );
 
 		//-----------------------------------------------------------------------------
 		// Volume vs plane intersection testing routines.
@@ -80,9 +80,9 @@ namespace TurboMath
 		//                1 = volume intersects the plane,
 		//                2 = volume is inside the plane (on the negative side of the plane)
 		//-----------------------------------------------------------------------------
-		const eCullClassify	IntersectFrustum( Frustum* pVolumeB );
-		const eCullClassify	Intersect6Planes( const Plane& Plane0, const Plane& Plane1, const Plane& Plane2,const Plane& Plane3, const Plane& Plane4, const Plane& Plane5 );
-		const eCullClassify	IntersectPlane( const Plane& Plane );
+		const eCullClassify XM_CALLCONV 	IntersectFrustum( Frustum* pVolumeB );
+		const eCullClassify XM_CALLCONV 	Intersect6Planes( const Plane& Plane0, const Plane& Plane1, const Plane& Plane2,const Plane& Plane3, const Plane& Plane4, const Plane& Plane5 ) noexcept;
+		const eCullClassify XM_CALLCONV 	IntersectPlane( const Plane& Plane );
 	};
 
 }; // end of Namespace

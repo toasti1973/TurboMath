@@ -28,13 +28,13 @@ namespace TurboMath
 {
 
 	//------------------------------------------------------------------------------
-	__forceinline Line::Line()
+	XM_INLINE   Line::Line() noexcept
 	{
 		// empty
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Line::Line(const Vector4& startPoint, const Vector4& endPoint) :
+	XM_INLINE   Line::Line(const Vector4& startPoint, const Vector4& endPoint)  noexcept:
 	b(startPoint),
 	m(endPoint - startPoint)
 	{
@@ -42,14 +42,14 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Line::Line(const Vector4& startPoint, const Vector4& dir, const float length)
+	XM_INLINE   Line::Line(const Vector4& startPoint, const Vector4& dir, const float length) noexcept
 	{
 		b = startPoint;
 		m = dir * length;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Line::Line(const Line& rhs) :
+	XM_INLINE   Line::Line(const Line& rhs) noexcept :
 	b(rhs.b),
 	m(rhs.m)
 	{
@@ -57,38 +57,38 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Line::Set(const Vector4& startPoint, const Vector4& endPoint)
+	XM_INLINE   void  XM_CALLCONV Line::Set(const Vector4& startPoint, const Vector4& endPoint) noexcept
 	{
 		this->b = startPoint;
 		this->m = endPoint - startPoint;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const Vector4& Line::GetStartPoint() const
+	XM_INLINE   const Vector4&  XM_CALLCONV Line::GetStartPoint() const noexcept
 	{
 		return this->b;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Vector4 Line::GetEndPoint() const
+	XM_INLINE   const Vector4  XM_CALLCONV Line::GetEndPoint() const noexcept
 	{
 		return this->b + this->m;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const Vector4& Line::DirectionVector() const
+	XM_INLINE   const Vector4&  XM_CALLCONV Line::DirectionVector() const noexcept
 	{
 		return this->m;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const float Line::Length() const
+	XM_INLINE   const float  XM_CALLCONV Line::Length() const noexcept
 	{
 		return this->m.Length();
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const float Line::Lengthsq() const
+	XM_INLINE   const float  XM_CALLCONV Line::Lengthsq() const noexcept
 	{
 		return this->m.Lengthsq();
 	}
@@ -101,7 +101,7 @@ namespace TurboMath
 	//
 	//	p = m + b*t
 	//-------------------------------------------------------------------------------
-	__forceinline const float Line::ClosestPoint(const Vector4& p) const
+	XM_INLINE   const float  XM_CALLCONV Line::ClosestPoint(const Vector4& p) const noexcept
 	{
 		Vector4 diff(p - this->b);
 
@@ -118,7 +118,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const float Line::Distance(const Vector4& p) const
+	XM_INLINE   const float  XM_CALLCONV Line::Distance(const Vector4& p) const noexcept
 	{
 		Vector4 diff(p - this->b);
 
@@ -141,7 +141,7 @@ namespace TurboMath
 	//	Returns p = b + m * t, given t. Note that the point is not on the Line
 	//	if 0.0 > t > 1.0
 	//------------------------------------------------------------------------------
-	__forceinline Vector4 Line::PointAt(float t) const
+	XM_INLINE   const Vector4  XM_CALLCONV Line::PointAt(const float t) const noexcept
 	{
 		return this->b + this->m * t;
 	}
@@ -149,7 +149,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	//	Get line/line intersection. Returns the shortest line between two lines.
 	//------------------------------------------------------------------------------
-	__forceinline const bool Line::Intersect(const Line& l, Vector4& pa, Vector4& pb) const
+	XM_INLINE   const bool  XM_CALLCONV Line::Intersect(const Line& l, Vector4& pa, Vector4& pb) const noexcept
 	{
 		const float EPS = 2.22e-16f;
 		const Vector4 p1 = this->b;
@@ -185,7 +185,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Return the point on the line segement (S1, S2) nearest the point P.
 	//-----------------------------------------------------------------------------
-	__forceinline Vector4 Line::PointOnLineSegmentNearestPoint(const Vector4& P )
+	XM_INLINE   const Vector4  XM_CALLCONV Line::PointOnLineSegmentNearestPoint(const Vector4& P ) noexcept
 	{
 		const Vector4 Dir = this->b - this->m;
 		float t1 = ( Vector4::Dot( P, Dir ) - Vector4::Dot( this->b, Dir ) );
@@ -210,7 +210,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	/// Intersect Plane / Line
 	//-----------------------------------------------------------------------------
-	__forceinline const bool Line::IntersectPlane( const Plane& plane) const
+	XM_INLINE   const bool  XM_CALLCONV Line::IntersectPlane( const Plane& plane) const noexcept
 	{
 		const float d1 = plane.Dot(b);
 		const float d2 = plane.Dot(m);

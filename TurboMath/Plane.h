@@ -36,128 +36,128 @@ namespace TurboMath
 	{
 	public:
 		/// default constructor, NOTE: does NOT setup componenets!
-					Plane();
+				Plane() noexcept;
 	
 		/// construct from components
-		explicit	Plane(float a, float b, float c, float d);
+		explicit	Plane(const float a, const float b, const float c, const float d) noexcept;
 	
 		/// construct from points
-		explicit	Plane(const Vector4& p0, const Vector4& p1, const Vector4& p2);
+		explicit	Plane(const Vector4& p0, const Vector4& p1, const Vector4& p2) noexcept;
 		
 		/// construct from point and normal
 		explicit	Plane(const Vector4& p, const Vector4& n);
 		
 		/// construct from XMVECTOR
-		explicit	Plane(XMVECTOR rhs);
+		explicit	Plane(XMVECTOR rhs) noexcept;
 
-		const bool operator == (const Plane& p) const;
-		const bool operator != (const Plane& p) const;
+		const bool XM_CALLCONV operator == (const Plane& p) const noexcept;
+		const bool XM_CALLCONV operator != (const Plane& p) const noexcept;
 
 		/// Set with Point and Normal
-		void Set(const Vector4& point, const Vector4& normal);
+		void XM_CALLCONV Set(const Vector4& point, const Vector4& normal) noexcept;
 		
 		/// set componenets
-		void Set(float a, float b, float c, float d);
+		void XM_CALLCONV Set(float a, float b, float c, float d) noexcept;
 		
 		/// set by Vector4
-		void Set(const Vector4& Data);
+		void XM_CALLCONV Set(const Vector4& Data) noexcept;
 		
 		/// set by XMVECTOR
-		void Set(const XMVECTOR& Data);
+		void XM_CALLCONV Set(const XMVECTOR& Data) noexcept;
 		
 		/// set by points
-		void Set(const Vector4& p0, const Vector4& p1, const Vector4& p2);
+		void XM_CALLCONV Set(const Vector4& p0, const Vector4& p1, const Vector4& p2) noexcept;
 		
 		/// set the x component
-		void SetA(float a);
+		void XM_CALLCONV SetA(const float a) noexcept;
 		
 		/// set the y component
-		void SetB(float b);
+		void XM_CALLCONV SetB(const float b) noexcept;
 		
 		/// set the z component
-		void SetC(float c);
+		void XM_CALLCONV SetC(const float c) noexcept;
 		
 		/// set the w component
-		void SetD(float d);
+		void XM_CALLCONV SetD(const float d) noexcept;
 
-		static Plane XZ_PLANE();
-		static Plane XY_PLANE();
-		static Plane YZ_PLANE();
+		static const Plane XM_CALLCONV XZ_PLANE() noexcept;
+		static const Plane XM_CALLCONV XY_PLANE() noexcept;
+		static const Plane XM_CALLCONV YZ_PLANE() noexcept;
 
 		/// get the x component
-		const float GetA() const;
+		const float XM_CALLCONV  GetA() const noexcept;
 		
 		/// get the y component
-		const float GetB() const;
+		const float XM_CALLCONV GetB() const noexcept;
 		
 		/// get the z component
-		const float GetC() const;
+		const float XM_CALLCONV GetC() const noexcept;
 		
 		/// get the w component
-		const float GetD() const;
+		const float XM_CALLCONV GetD() const noexcept;
 	
 		/// Get
-		Vector4	Get() const;
+		const Vector4	XM_CALLCONV Get() const noexcept;
 
 		/// GetNormal
-		Vector4	GetNormal() const;
+		const Vector4	XM_CALLCONV GetNormal() const noexcept;
 
 		/// read/write access to A component
-		float& a();
+		float& XM_CALLCONV a() noexcept;
 		
 		/// read/write access to B component
-		float& b();
+		float& XM_CALLCONV b() noexcept;
 		
 		/// read/write access to C component
-		float& c();
+		float& XM_CALLCONV c() noexcept;
 		
 		/// read/write access to D component
-		float& d();
+		float& XM_CALLCONV d() noexcept;
 		
 		/// read-only access to A component
-		float a() const;
+		const float XM_CALLCONV a() const noexcept;
 		
 		/// read-only access to B component
-		float b() const;
+		const float XM_CALLCONV b() const noexcept;
 		
 		/// read-only access to C component
-		float c() const;
+		const float XM_CALLCONV c() const noexcept;
 		
 		/// read-only access to D component
-		float d() const;
+		const float XM_CALLCONV d() const noexcept;
 
 		/// compute dot product of plane and vector
-		float Dot(const Vector4& v) const;
+		const float XM_CALLCONV Dot(const Vector4& v) const noexcept;
 		
 		/// find intersection with line
-		bool Intersectline(const Vector4& startPoint, const Vector4& endPoint, Vector4& outIntersectPoint);
+		const bool XM_CALLCONV Intersectline(const Vector4& startPoint, const Vector4& endPoint, Vector4& outIntersectPoint) noexcept;
 
 		/// normalize plane components a,b,c
-		static Plane Normalize(const Plane &p);
+		static Plane XM_CALLCONV Normalize(const Plane &p) noexcept;
 
-		void Normalize();
+		void XM_CALLCONV Normalize() noexcept;
 
-		void Transform(const Quat& Rotation,const Vector4& Translation );
+		void XM_CALLCONV Transform(const Quat& Rotation,const Vector4& Translation ) noexcept;
 		
-		void Transform(const Matrix& m);
+		void XM_CALLCONV Transform(const Matrix& m) noexcept;
 
 		/// Inverse
-		void Inverse();
+		void XM_CALLCONV Inverse() noexcept;
 
 		/// Refelct
-		const Vector4 Reflect(const Vector4& vec) const;
+		const Vector4 XM_CALLCONV Reflect(const Vector4& vec) const noexcept;
 
 		/// Project
-		const Vector4 Project(const Vector4& p) const;
+		const Vector4 XM_CALLCONV Project(const Vector4& p) const noexcept;
 
 		/// Get  Distrance to Point
-		const float DistanceToPoint(const Vector4& pt) const;
+		const float XM_CALLCONV DistanceToPoint(const Vector4& pt) const noexcept;
 
 		/// IsUnit ?
-		const bool IsUnit() const ;
+		const bool XM_CALLCONV IsUnit() const noexcept ;
 
 		/// IsUnit ?
-		static bool IsUnit(const XMVECTOR p);
+		static const bool XM_CALLCONV IsUnit(const XMVECTOR p) noexcept;
 
 		//-----------------------------------------------------------------------------
 		// Volume vs plane intersection testing routines.
@@ -166,13 +166,13 @@ namespace TurboMath
 		//                2 = volume is behind the plane (on the negative side of the plane)
 		//-----------------------------------------------------------------------------
 		// Classify point to plane.
-		const eCullClassify Classify(const Vector4& vcPoint);
+		const eCullClassify XM_CALLCONV Classify(const Vector4& vcPoint) noexcept;
 		
 		// Classify point to plane.
-		const eCullClassify Classify(const Polygon& vcPoint);
+		const eCullClassify XM_CALLCONV Classify(const Polygon& vcPoint) noexcept;
 
 		// clips a ray into two segments if it Collision the plane
-		const bool Clip(const Line& inLine, float fL, Line* pFrontLine, Line* pBackLine);
+		const bool XM_CALLCONV Clip(const Line& inLine, float fL, Line* pFrontLine, Line* pBackLine) noexcept;
 
 		friend class Matrix;
 
