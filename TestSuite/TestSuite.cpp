@@ -37,6 +37,9 @@ bool MatrixTest();
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	// CPU-Check
+//	if (!VerifyCPUSupport()) return 1;
+
 	// First Test - Point2
 	Point2Test();
 

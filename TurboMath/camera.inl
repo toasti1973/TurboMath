@@ -30,7 +30,7 @@ namespace TurboMath
 {
 
 	
-	XM_INLINE Camera::Camera(void)
+	XM_INLINE Camera::Camera(void) noexcept
 	{
 		m_Position		= Vector4(0.0f, 0.0f, -1.0f);
 		m_Target			= Vector4(0.0f, 0.0f, 0.0f);
@@ -49,12 +49,12 @@ namespace TurboMath
 		m_Ortho = Matrix::Identity();
 	}
 
-	XM_INLINE Camera::Camera(const Camera& camera)
+	XM_INLINE Camera::Camera(const Camera& camera) noexcept
 	{
 		*this = camera;
 	}
 
-	XM_INLINE Camera& Camera::operator=(const Camera& camera)
+	XM_INLINE Camera& Camera::operator=(const Camera& camera) noexcept
 	{
 		m_Position		= camera.m_Position;
 		m_Target		= camera.m_Target;
@@ -134,8 +134,8 @@ namespace TurboMath
 		Vector4 vRight = Vector4::Cross(m_Up, m_Target);
 		vRight = Vector4::Transform(vRight, R);
 
-        m_Up = Vector4::Transform(m_Up, R);
-        m_Target = Vector4::Transform(m_Target, R);
+       		m_Up = Vector4::Transform(m_Up, R);
+        	m_Target = Vector4::Transform(m_Target, R);
 
 		// Update Matrix
 		this->initViewMatrix();
@@ -152,8 +152,8 @@ namespace TurboMath
 		Vector4 vRight = Vector4::Cross(m_Up, m_Target);
 		vRight = Vector4::Transform(vRight, R);
 
-        m_Up = Vector4::Transform(m_Up, R);
-        m_Target = Vector4::Transform(m_Target, R);
+        	m_Up = Vector4::Transform(m_Up, R);
+        	m_Target = Vector4::Transform(m_Target, R);
 
 		// Update Matrix
 		this->initViewMatrix();
@@ -170,8 +170,8 @@ namespace TurboMath
 		Vector4 vRight = Vector4::Cross(m_Up, m_Target);
 		vRight = Vector4::Transform(vRight, R);
 
-        m_Up = Vector4::Transform(m_Up, R);
-        m_Target = Vector4::Transform(m_Target, R);
+        	m_Up = Vector4::Transform(m_Up, R);
+        	m_Target = Vector4::Transform(m_Target, R);
 
 		// Update Matrix
 		this->initViewMatrix();	
@@ -186,10 +186,10 @@ namespace TurboMath
 		// Rotate up and look vector about the right vector.
 		Vector4 vRight = Vector4::Cross(m_Up, m_Target);
 
-        const Matrix rotation = Matrix::RotationAxis(vRight, angle);
+        	const Matrix rotation = Matrix::RotationAxis(vRight, angle);
  
 		m_Up = Vector4::Transform(m_Up, rotation);
-        m_Target =Vector4::Transform(m_Target, rotation);
+        	m_Target =Vector4::Transform(m_Target, rotation);
  
 		// Update Matrix
 		this->initViewMatrix();
@@ -203,10 +203,10 @@ namespace TurboMath
 	XM_INLINE void XM_CALLCONV Camera::Yaw(const float angle) noexcept
 	{
 		// Rotate the basis vectors about the world y-axis.
-        const Matrix rotation = Matrix::RotationY(angle);
+        	const Matrix rotation = Matrix::RotationY(angle);
  
-        m_Up = Vector4::Transform(m_Up, rotation);
-        m_Target = Vector4::Transform(m_Target, rotation); 
+        	m_Up = Vector4::Transform(m_Up, rotation);
+        	m_Target = Vector4::Transform(m_Target, rotation); 
 
 		// Update Matrix
 		this->initViewMatrix();

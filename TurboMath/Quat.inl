@@ -34,310 +34,294 @@
 namespace TurboMath
 {
 	//------------------------------------------------------------------------------
-	__forceinline	Quat::Quat()
+	XM_INLINE Quat::Quat() noexcept
 	{
 		// empty
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline	Quat::Quat(float x, float y, float z, float w)
+	XM_INLINE Quat::Quat(const float x, const float y, const float z, const float w) noexcept
 	{
 		this->vec = XMVectorSet(x, y, z, w);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline	Quat::Quat(Vector4 const &rhs) :
+	XM_INLINE Quat::Quat(Vector4 const &rhs) noexcept :
 	vec(rhs)
 	{
 		// empty
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline	Quat::Quat(const Quat& rhs) :
+	XM_INLINE Quat::Quat(const Quat& rhs) noexcept :
 	vec(rhs.vec)
 	{
 		// empty
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline 	Quat::Quat(XMVECTOR rhs) :
+	XM_INLINE 	Quat::Quat(XMVECTOR rhs) noexcept :
 	vec(rhs)
 	{
 		// empty
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void	Quat::operator=(const Quat& rhs)
+	XM_INLINE void	XM_CALLCONV Quat::operator=(const Quat& rhs) noexcept
 	{
 		this->vec = rhs.vec;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void	Quat::operator=(XMVECTOR rhs)
+	XM_INLINE void	XM_CALLCONV Quat::operator=(XMVECTOR rhs) noexcept
 	{
 		this->vec = rhs;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline bool	Quat::operator==(const Quat& rhs) const
+	XM_INLINE bool	XM_CALLCONV Quat::operator==(const Quat& rhs) const noexcept
 	{
 		return (0 != XMQuaternionEqual(this->vec, rhs.vec));
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline bool	Quat::operator!=(const Quat& rhs) const
+	XM_INLINE bool	XM_CALLCONV Quat::operator!=(const Quat& rhs) const noexcept
 	{
 		return (0 != XMQuaternionNotEqual(this->vec, rhs.vec));
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void	Quat::Set(const float x,const float y,const float z,const float w)
+	XM_INLINE void	XM_CALLCONV Quat::Set(const float x,const float y,const float z,const float w) noexcept
 	{
 		this->vec = XMVectorSet(x, y, z, w);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Quat::Set_X(const float x)
+	XM_INLINE void XM_CALLCONV Quat::Set_X(const float x) noexcept
 	{
 		this->vec = XMVectorSetXPtr(this->vec, &x);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Quat::Set_Y(const float y)
+	XM_INLINE void XM_CALLCONV Quat::Set_Y(const float y) noexcept
 	{
 		this->vec = XMVectorSetYPtr(this->vec, &y);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Quat::Set_Z(const float z)
+	XM_INLINE void XM_CALLCONV Quat::Set_Z(const float z) noexcept
 	{
 		this->vec = XMVectorSetZPtr(this->vec, &z);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Quat::Set_W(const float w)
+	XM_INLINE void XM_CALLCONV Quat::Set_W(const float w) noexcept
 	{
 		this->vec = XMVectorSetWPtr(this->vec, &w);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void	Quat::Set(Vector4 const &f4)
+	XM_INLINE void	XM_CALLCONV Quat::Set(Vector4 const &f4) noexcept
 	{
 		this->vec = f4;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void	Quat::Set(XMVECTOR const &f4)
+	XM_INLINE void	XM_CALLCONV Quat::Set(XMVECTOR const &f4) noexcept
 	{
 		this->vec = f4;
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float&	Quat::X()
+	XM_INLINE float& XM_CALLCONV Quat::X() noexcept
 	{
-#if __XBOX360__ || defined(_XM_NO_INTRINSICS_)
-		return this->vec.x;
-#elif __WIN32__
 		return this->vec.m128_f32[0];
-#endif
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float	Quat::X() const
+	XM_INLINE float	Quat::X() const noexcept
 	{
 		return Vector4::Unpack_X(this->vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float&	Quat::Y()
+	XM_INLINE float& XM_CALLCONV Quat::Y() noexcept
 	{
-#if __XBOX360__ || defined(_XM_NO_INTRINSICS_)
-		return this->vec.y;
-#elif __WIN32__
 		return this->vec.m128_f32[1];
-#endif
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float	Quat::Y() const
+	XM_INLINE float XM_CALLCONV Quat::Y() const noexcept
 	{
 		return Vector4::Unpack_Y(this->vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float&	Quat::Z()
+	XM_INLINE float& XM_CALLCONV Quat::Z() noexcept
 	{
-#if __XBOX360__ || defined(_XM_NO_INTRINSICS_)
-		return this->vec.z;
-#elif __WIN32__
 		return this->vec.m128_f32[2];
-#endif
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float	Quat::Z() const
+	XM_INLINE float	XM_CALLCONV Quat::Z() const noexcept
 	{
 		return Vector4::Unpack_Z(this->vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float&	Quat::W()
+	XM_INLINE float& XM_CALLCONV Quat::W() noexcept
 	{
-#if __XBOX360__ || defined(_XM_NO_INTRINSICS_)
-		return this->vec.w;
-#elif __WIN32__
 		return this->vec.m128_f32[3];
-#endif
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float	Quat::W() const
+	XM_INLINE float	XM_CALLCONV Quat::W() const noexcept
 	{
 		return Vector4::Unpack_W(this->vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline const XMVECTOR Quat::Get() const
+	XM_INLINE const XMVECTOR XM_CALLCONV Quat::Get() const noexcept
 	{
 		return (this->vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void	Quat::operator*=(const Quat& rhs)
+	XM_INLINE void XM_CALLCONV Quat::operator*=(const Quat& rhs) noexcept
 	{
 		this->vec = XMQuaternionMultiply(this->vec, rhs.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline bool	Quat::IsIdentity() const
+	XM_INLINE bool XM_CALLCONV Quat::IsIdentity() const noexcept
 	{
 		return (0 != XMQuaternionIsIdentity(this->vec));
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::NullQuat()
+	XM_INLINE Quat XM_CALLCONV Quat::NullQuat() noexcept
 	{
 		return Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float	Quat::Length() const
+	XM_INLINE float	XM_CALLCONV Quat::Length() const noexcept
 	{
 		return Vector4::Unpack_X(XMQuaternionLength(this->vec));
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float	Quat::Lengthsq() const
+	XM_INLINE float	XM_CALLCONV Quat::Lengthsq() const noexcept
 	{
 		return Vector4::Unpack_X(XMQuaternionLengthSq(this->vec));
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Barycentric(const Quat& q0, const Quat& q1, const Quat& q2, float f, float g)
+	XM_INLINE Quat XM_CALLCONV Quat::Barycentric(const Quat& q0, const Quat& q1, const Quat& q2, float f, float g) noexcept
 	{
 		return XMQuaternionBaryCentric(q0.vec, q1.vec, q2.vec, f, g);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Conjugate(const Quat& q)
+	XM_INLINE Quat XM_CALLCONV Quat::Conjugate(const Quat& q) noexcept
 	{
 		return XMQuaternionConjugate(q.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline float	Quat::Dot(const Quat& q0, const Quat& q1)
+	XM_INLINE float	XM_CALLCONV Quat::Dot(const Quat& q0, const Quat& q1) noexcept
 	{
 		return Vector4::Unpack_X(XMQuaternionDot(q0.vec, q1.vec));
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Exp(const Quat& q)
+	XM_INLINE Quat XM_CALLCONV Quat::Exp(const Quat& q) noexcept
 	{
 		return XMQuaternionExp(q.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Identity()
+	XM_INLINE Quat XM_CALLCONV Quat::Identity() noexcept
 	{
 		return XMQuaternionIdentity();
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Inverse(const Quat& q)
+	XM_INLINE Quat XM_CALLCONV Quat::Inverse(const Quat& q) noexcept
 	{
 		return XMQuaternionInverse(q.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::ln(const Quat& q)
+	XM_INLINE Quat XM_CALLCONV Quat::ln(const Quat& q) noexcept
 	{
 		return XMQuaternionLn(q.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Multiply(const Quat& q0, const Quat& q1)
+	XM_INLINE Quat XM_CALLCONV Quat::Multiply(const Quat& q0, const Quat& q1) noexcept
 	{
 		return XMQuaternionMultiply(q0.vec, q1.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Normalize(const Quat& q)
+	XM_INLINE Quat XM_CALLCONV Quat::Normalize(const Quat& q) noexcept
 	{
 		return XMQuaternionNormalize(q.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::RotationAxis(const Vector4& axis, float angle)
+	XM_INLINE Quat XM_CALLCONV Quat::RotationAxis(const Vector4& axis, float angle) noexcept
 	{
 		return XMQuaternionRotationAxis(axis, angle);
 	}
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::RotationRollPitchYaw(const float roll,const float pitch, const float yaw)
+	XM_INLINE Quat XM_CALLCONV Quat::RotationRollPitchYaw(const float roll,const float pitch, const float yaw) noexcept
 	{
 		return XMQuaternionRotationRollPitchYaw(roll,pitch,yaw);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::RotationYawPitchRoll(float yaw, float pitch, float roll)
+	XM_INLINE Quat XM_CALLCONV Quat::RotationYawPitchRoll(float yaw, float pitch, float roll) noexcept
 	{
 		return XMQuaternionRotationRollPitchYaw(pitch, yaw, roll);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Slerp(const Quat& q1, const Quat& q2, float t)
+	XM_INLINE Quat XM_CALLCONV Quat::Slerp(const Quat& q1, const Quat& q2, float t) noexcept
 	{
 		return XMQuaternionSlerp(q1.vec, q2.vec, t);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void	Quat::SquadSetup(const Quat& q0, const Quat& q1, const Quat& q2, const Quat& q3, Quat& aOut, Quat& bOut, Quat& cOut)
+	XM_INLINE void XM_CALLCONV Quat::SquadSetup(const Quat& q0, const Quat& q1, const Quat& q2, const Quat& q3, Quat& aOut, Quat& bOut, Quat& cOut) noexcept
 	{
 		XMQuaternionSquadSetup(&aOut.vec, &bOut.vec, &cOut.vec, q0.vec, q1.vec, q2.vec, q3.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat	Quat::Squad(const Quat& q1, const Quat& a, const Quat& b, const Quat& c, float t)
+	XM_INLINE Quat XM_CALLCONV Quat::Squad(const Quat& q1, const Quat& a, const Quat& b, const Quat& c, float t) noexcept
 	{
 		return XMQuaternionSquad(q1.vec, a.vec, b.vec, c.vec, t);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void	Quat::To_AxisAngle(const Quat& q, Vector4& outAxis, float& outAngle)
+	XM_INLINE void XM_CALLCONV Quat::To_AxisAngle(const Quat& q, Vector4& outAxis, float& outAngle) noexcept
 	{
 		XMQuaternionToAxisAngle(outAxis.GetRawPtr(), &outAngle, q.vec);
 		outAxis.SetW(0.0f);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat Quat::RotationMatrix(const Matrix& m)
+	XM_INLINE Quat XM_CALLCONV Quat::RotationMatrix(const Matrix& m) noexcept
 	{
 		return XMQuaternionRotationMatrix(m.mx);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline bool Quat::IsUnit() const 
+	XM_INLINE bool XM_CALLCONV Quat::IsUnit() const  noexcept
 	{
-		static const XMVECTOR UnitQuaternionEpsilon =
+		static constexpr XMVECTOR UnitQuaternionEpsilon =
 		{
 			1.0e-4f, 1.0e-4f, 1.0e-4f, 1.0e-4f
 		};
@@ -347,9 +331,9 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline bool Quat::IsUnit(const XMVECTOR q) 
+	XM_INLINE bool XM_CALLCONV Quat::IsUnit(const XMVECTOR q)  noexcept
 	{
-		static const XMVECTOR UnitQuaternionEpsilon =
+		static constexpr XMVECTOR UnitQuaternionEpsilon =
 		{
 			1.0e-4f, 1.0e-4f, 1.0e-4f, 1.0e-4f
 		};
@@ -359,7 +343,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Matrix Quat::GetMatrix(const Quat& q)
+	XM_INLINE Matrix XM_CALLCONV Quat::GetMatrix(const Quat& q) noexcept
 	{
 		Matrix mat;
 
@@ -400,7 +384,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Quat  Quat::MakeFromEuler(const float fPitch, const float fYaw, const float fRoll)
+	XM_INLINE Quat  XM_CALLCONV Quat::MakeFromEuler(const float fPitch, const float fYaw, const float fRoll) noexcept
 	{
 		Quat q;
 		float cX, cY, cZ, sX, sY,sZ, cYcZ, sYsZ, cYsZ, sYcZ;
@@ -423,7 +407,7 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Quat::GetEulers(const Quat& q, float *fPitch, float *fYaw, float *fRoll)
+	XM_INLINE void XM_CALLCONV Quat::GetEulers(const Quat& q, float *fPitch, float *fYaw, float *fRoll)
 	{
 		assert(fPitch);
 		assert(fYaw);

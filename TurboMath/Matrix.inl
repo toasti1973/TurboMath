@@ -34,7 +34,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline	Matrix::Matrix():
+	XM_INLINE   Matrix::Matrix():
 	mx(XMMatrixIdentity())
 	{
 		// Check 16Byte Alligment
@@ -44,7 +44,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline	Matrix::Matrix(Vector4 const &row0, Vector4 const &row1, Vector4 const &row2, Vector4 const &row3)
+	XM_INLINE   Matrix::Matrix(Vector4 const &row0, Vector4 const &row1, Vector4 const &row2, Vector4 const &row3)
 	{
 		// Check 16Byte Alligment
 		assert(IsAligned(&this->mx,16));
@@ -59,7 +59,7 @@ namespace TurboMath
 	/**
 	*/
 
-	__forceinline Matrix::Matrix( Matrix&& rhs) 
+	XM_INLINE   Matrix::Matrix( Matrix&& rhs) noexcept
 	{
 		this->mx.r[0] = rhs.mx.r[0];
 		this->mx.r[1] = rhs.mx.r[1];
@@ -71,7 +71,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline	Matrix::Matrix(const XMMATRIX& rhs) :
+	XM_INLINE   Matrix::Matrix(const XMMATRIX& rhs) :
 	mx(rhs)
 	{
 		// Check 16Byte Alligment
@@ -81,7 +81,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline	Matrix::Matrix(const Matrix& rhs) :
+	XM_INLINE   Matrix::Matrix(const Matrix& rhs) noexcept:
 	mx(rhs)
 	{
 	}
@@ -89,7 +89,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::operator=(const Matrix& rhs)
+	XM_INLINE   void XM_CALLCONV Matrix::operator=(const Matrix& rhs) noexcept
 	{
 		this->mx = rhs.mx;
 	}
@@ -97,7 +97,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::operator=(const XMMATRIX& rhs)
+	XM_INLINE   void XM_CALLCONV Matrix::operator=(const XMMATRIX& rhs) noexcept
 	{
 		this->mx = rhs;
 	}
@@ -106,7 +106,7 @@ namespace TurboMath
 	/**
 	*/ 
 	/// C++11 Move
-	__forceinline Matrix& Matrix::operator=( Matrix&& other)
+	XM_INLINE   Matrix& XM_CALLCONV Matrix::operator=( Matrix&& other) noexcept
 	{
 		this->mx = other.mx;
 		return *this;
@@ -115,7 +115,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline bool	Matrix::operator==(const Matrix& rhs) const
+	XM_INLINE   bool XM_CALLCONV Matrix::operator==(const Matrix& rhs) const noexcept
 	{
 		return XMVector4Equal(this->mx.r[0], rhs.mx.r[0]) &&
 			XMVector4Equal(this->mx.r[1], rhs.mx.r[1]) &&
@@ -126,7 +126,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline bool	Matrix::operator!=(const Matrix& rhs) const
+	XM_INLINE   bool XM_CALLCONV Matrix::operator!=(const Matrix& rhs) const noexcept
 	{
 		return XMVector4NotEqual(this->mx.r[0], rhs.mx.r[0]) ||
 			XMVector4NotEqual(this->mx.r[1], rhs.mx.r[1]) ||
@@ -137,7 +137,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4 Matrix::operator * (const Vector4& v) const
+	XM_INLINE   const Vector4 XM_CALLCONV Matrix::operator * (const Vector4& v) const noexcept
 	{
 		XMVector3Transform(v, this->mx );
 
@@ -145,7 +145,7 @@ namespace TurboMath
 	}
 
 	//----------------------------------------------------------------------------------------------------
-	__forceinline float Matrix::operator[] ( const int iPos ) const
+	XM_INLINE   float XM_CALLCONV Matrix::operator[] ( const int iPos ) const
 	{
 		assert (iPos < 16);
 
@@ -158,7 +158,7 @@ namespace TurboMath
 		return mx.r[iRow].m128_f32[iCol];
 	}
 	//----------------------------------------------------------------------------------------------------
-	__forceinline float& Matrix::operator[] ( const int iPos )
+	XM_INLINE   float& XM_CALLCONV Matrix::operator[] ( const int iPos )
 	{
 		assert (iPos < 16);
 
@@ -171,7 +171,7 @@ namespace TurboMath
 		return mx.r[iRow].m128_f32[iCol];
 	}
 	//----------------------------------------------------------------------------------------------------
-	__forceinline float Matrix::operator() ( const int iRow, const int iCol ) const
+	XM_INLINE   float XM_CALLCONV Matrix::operator() ( const int iRow, const int iCol ) const
 	{
 		assert (iRow < 4);
 		assert (iCol < 4);
@@ -179,7 +179,7 @@ namespace TurboMath
 		return mx.r[iRow].m128_f32[iCol];
 	}
 	//----------------------------------------------------------------------------------------------------
-	__forceinline float& Matrix::operator() ( const int iRow, const int iCol )
+	XM_INLINE   float& XM_CALLCONV  Matrix::operator() ( const int iRow, const int iCol )
 	{
 		assert (iRow < 4);
 		assert (iCol < 4);
@@ -190,7 +190,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Load(const float* ptr)
+	XM_INLINE   void XM_CALLCONV Matrix::Load(const float* ptr) noexcept
 	{
 		this->mx.r[0] = XMLoadFloat4A((XMFLOAT4A*)ptr);
 		this->mx.r[1] = XMLoadFloat4A((XMFLOAT4A*)(ptr + 4));
@@ -201,7 +201,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::LoadU(const float* ptr)
+	XM_INLINE   void XM_CALLCONV Matrix::LoadU(const float* ptr) noexcept
 	{
 		this->mx.r[0] = XMLoadFloat4((XMFLOAT4*)ptr);
 		this->mx.r[1] = XMLoadFloat4((XMFLOAT4*)(ptr + 4));
@@ -212,7 +212,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Store(float* ptr) const
+	XM_INLINE   void XM_CALLCONV Matrix::Store(float* ptr) const noexcept
 	{
 		XMStoreFloat4A((XMFLOAT4A*)ptr, this->mx.r[0]);
 		XMStoreFloat4A((XMFLOAT4A*)(ptr + 4), this->mx.r[1]);
@@ -223,7 +223,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::StoreU(float* ptr) const
+	XM_INLINE   void XM_CALLCONV Matrix::StoreU(float* ptr) const noexcept
 	{
 		XMStoreFloat4((XMFLOAT4*)ptr, this->mx.r[0]);
 		XMStoreFloat4((XMFLOAT4*)(ptr + 4), this->mx.r[1]);
@@ -234,7 +234,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Stream(float* ptr) const
+	XM_INLINE   void XM_CALLCONV Matrix::Stream(float* ptr) const noexcept
 	{
 		XMStoreFloat4A((XMFLOAT4A*)ptr, this->mx.r[0]);
 		XMStoreFloat4A((XMFLOAT4A*)(ptr + 4), this->mx.r[1]);
@@ -245,7 +245,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Set(Vector4 const &row0, Vector4 const &row1, Vector4 const &row2, Vector4 const &row3)
+	XM_INLINE   void XM_CALLCONV  Matrix::Set(Vector4 const &row0, Vector4 const &row1, Vector4 const &row2, Vector4 const &row3) noexcept
 	{
 		this->mx.r[0] = row0;
 		this->mx.r[1] = row1;
@@ -256,7 +256,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::SetRow0(Vector4 const &r)
+	XM_INLINE   void XM_CALLCONV 	Matrix::SetRow0(Vector4 const &r) noexcept
 	{
 		this->mx.r[0] = r;
 	}
@@ -264,7 +264,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4&	Matrix::GetRow0() const
+	XM_INLINE   const Vector4& XM_CALLCONV 	Matrix::GetRow0() const noexcept
 	{
 		return *(Vector4*)&(this->mx.r[0]);
 	}
@@ -272,7 +272,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::SetRow1(Vector4 const &r)
+	XM_INLINE   void XM_CALLCONV 	Matrix::SetRow1(Vector4 const &r) noexcept
 	{
 		this->mx.r[1] = r;
 	}
@@ -280,7 +280,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4&	Matrix::GetRow1() const
+	XM_INLINE   const Vector4& XM_CALLCONV  Matrix::GetRow1() const noexcept
 	{
 		return *(Vector4*)&(this->mx.r[1]);
 	}
@@ -288,7 +288,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::SetRow2(Vector4 const &r)
+	XM_INLINE   void XM_CALLCONV 	Matrix::SetRow2(Vector4 const &r) noexcept
 	{
 		this->mx.r[2] = r;
 	}
@@ -296,7 +296,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4&	Matrix::GetRow2() const
+	XM_INLINE   const Vector4& XM_CALLCONV 	Matrix::GetRow2() const noexcept
 	{
 		return *(Vector4*)&(this->mx.r[2]);
 	}
@@ -304,7 +304,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::SetRow3(Vector4 const &r)
+	XM_INLINE   void XM_CALLCONV 	Matrix::SetRow3(Vector4 const &r) noexcept
 	{
 		this->mx.r[3] = r;
 	}
@@ -312,7 +312,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4&	Matrix::GetRow3() const
+	XM_INLINE   const Vector4& XM_CALLCONV 	Matrix::GetRow3() const noexcept
 	{
 		return *(Vector4*)&(this->mx.r[3]);
 	}
@@ -320,7 +320,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Set_X_Axis(Vector4 const &x)
+	XM_INLINE   void XM_CALLCONV 	Matrix::Set_X_Axis(Vector4 const &x) noexcept
 	{
 		this->mx.r[0] = x;
 	}
@@ -328,7 +328,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Set_Y_Axis(Vector4 const &y)
+	XM_INLINE   void XM_CALLCONV 	Matrix::Set_Y_Axis(Vector4 const &y) noexcept
 	{
 		this->mx.r[1] = y;
 	}
@@ -336,7 +336,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Set_Z_Axis(Vector4 const &z)
+	XM_INLINE   void XM_CALLCONV 	Matrix::Set_Z_Axis(Vector4 const &z) noexcept
 	{
 		this->mx.r[2] = z;
 	}
@@ -344,7 +344,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Set_Position(Vector4 const &pos)
+	XM_INLINE   void XM_CALLCONV 	Matrix::Set_Position(Vector4 const &pos) noexcept
 	{
 		this->mx.r[3] = pos;
 	}
@@ -352,7 +352,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4&	Matrix::Get_X_Axis() const
+	XM_INLINE   const Vector4& XM_CALLCONV 	Matrix::Get_X_Axis() const noexcept
 	{
 		return *(Vector4*)&(this->mx.r[0]);
 	}
@@ -360,7 +360,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4&	Matrix::Get_Y_Axis() const
+	XM_INLINE   const Vector4& XM_CALLCONV 	Matrix::Get_Y_Axis() const noexcept
 	{
 		return *(Vector4*)&(this->mx.r[1]);
 	}
@@ -368,7 +368,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4&	Matrix::Get_Z_Axis() const
+	XM_INLINE   const Vector4& XM_CALLCONV 	Matrix::Get_Z_Axis() const noexcept
 	{
 		return *(Vector4*)&(this->mx.r[2]);
 	}
@@ -376,7 +376,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline const Vector4&	Matrix::Get_Position() const
+	XM_INLINE   const Vector4& XM_CALLCONV 	Matrix::Get_Position() const noexcept
 	{
 		return *(Vector4*)&(this->mx.r[3]);
 	}
@@ -384,7 +384,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline	void 	Matrix::Translate(Vector4 const &t)
+	XM_INLINE   void  XM_CALLCONV 	Matrix::Translate(Vector4 const &t)
 	{
 		assert(t.GetW() == 0 && "w component not 0, use vector for translation not a point!");
 
@@ -394,7 +394,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline void	Matrix::Scale(Vector4 const &s)
+	XM_INLINE   void XM_CALLCONV 	Matrix::Scale(Vector4 const &s) noexcept
 	{
 		// need to make sure that last column isn't erased
 		Vector4 scl = s;
@@ -409,7 +409,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline bool	Matrix::IsIdentity() const
+	XM_INLINE   bool XM_CALLCONV 	Matrix::IsIdentity() const noexcept
 	{
 		return (0 != XMMatrixIsIdentity(this->mx));
 	}
@@ -417,7 +417,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline float	Matrix::Determinant() const
+	XM_INLINE   float XM_CALLCONV 	Matrix::Determinant() const noexcept
 	{
 		return Vector4::Unpack_X(XMMatrixDeterminant(this->mx));
 	}
@@ -425,7 +425,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Identity()
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::Identity() noexcept
 	{
 		return XMMatrixIdentity();
 	}
@@ -433,7 +433,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::MakeZero()
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::MakeZero() noexcept
 	{
 		Matrix temp;
 
@@ -448,7 +448,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Inverse(const Matrix& m)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::Inverse(const Matrix& m) noexcept
 	{
 		XMVECTOR det;
 		return XMMatrixInverse(&det, m.mx);
@@ -457,7 +457,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::LookAtLH(Vector4 const &eye, Vector4 const &at, Vector4 const &up)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::LookAtLH(Vector4 const &eye, Vector4 const &at, Vector4 const &up) noexcept
 	{
 		return XMMatrixLookAtLH(eye,at,up);
 	}
@@ -465,7 +465,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::LookAtRH(Vector4 const &eye, Vector4 const &at, Vector4 const &up)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::LookAtRH(Vector4 const &eye, Vector4 const &at, Vector4 const &up) noexcept
 	{
 		return XMMatrixLookAtRH(eye,at,up);
 	}
@@ -473,7 +473,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::LookToLH(Vector4 const &eye, Vector4 const &at, Vector4 const &up)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::LookToLH(Vector4 const &eye, Vector4 const &at, Vector4 const &up) noexcept
 	{
 		return XMMatrixLookToLH(eye,at,up);
 	}
@@ -481,7 +481,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::LookToRH(Vector4 const &eye, Vector4 const &at, Vector4 const &up)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::LookToRH(Vector4 const &eye, Vector4 const &at, Vector4 const &up) noexcept
 	{
 		return XMMatrixLookToRH(eye,at,up);
 	}
@@ -489,7 +489,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Multiply(const Matrix& m0, const Matrix& m1)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::Multiply(const Matrix& m0, const Matrix& m1) noexcept
 	{
 		return XMMatrixMultiply(m0.mx, m1.mx);
 	}
@@ -497,7 +497,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::OrthoLH(float w, float h, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::OrthoLH(float w, float h, float zn, float zf) noexcept
 	{
 		return XMMatrixOrthographicLH(w, h, zn, zf);
 	}
@@ -505,7 +505,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::OrthoRH(float w, float h, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::OrthoRH(float w, float h, float zn, float zf) noexcept
 	{
 		return XMMatrixOrthographicRH(w, h, zn, zf);
 	}
@@ -513,7 +513,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::OrthoOffCenterLH(float l, float r, float b, float t, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::OrthoOffCenterLH(float l, float r, float b, float t, float zn, float zf) noexcept
 	{
 		return XMMatrixOrthographicOffCenterLH(l, r, b, t, zn, zf);
 	}
@@ -521,7 +521,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::OrthoOffCenterRH(float l, float r, float b, float t, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::OrthoOffCenterRH(float l, float r, float b, float t, float zn, float zf) noexcept
 	{
 		return XMMatrixOrthographicOffCenterRH(l, r, b, t, zn, zf);
 	}
@@ -529,7 +529,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::PerspectiveProjectionFovLH(float fovy, float aspect, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::PerspectiveProjectionFovLH(float fovy, float aspect, float zn, float zf) noexcept
 	{
 		return XMMatrixPerspectiveFovLH(fovy, aspect, zn, zf);
 	}
@@ -537,7 +537,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::PerspectiveProjectionFovRH(float fovy, float aspect, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::PerspectiveProjectionFovRH(float fovy, float aspect, float zn, float zf) noexcept
 	{
 		return XMMatrixPerspectiveFovRH(fovy, aspect, zn, zf);
 	}
@@ -545,7 +545,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::PerspectiveProjectionLH(float w, float h, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::PerspectiveProjectionLH(float w, float h, float zn, float zf) noexcept
 	{
 		return XMMatrixPerspectiveLH(w, h, zn, zf);
 	}
@@ -553,7 +553,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::PerspectiveProjectionRH(float w, float h, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::PerspectiveProjectionRH(float w, float h, float zn, float zf) noexcept
 	{
 		return XMMatrixPerspectiveRH(w, h, zn, zf);
 	}
@@ -561,7 +561,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::PerspOffCenterLH(float l, float r, float b, float t, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::PerspOffCenterLH(float l, float r, float b, float t, float zn, float zf) noexcept
 	{
 		return XMMatrixPerspectiveOffCenterLH(l, r, b, t, zn, zf);
 	}
@@ -569,7 +569,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::PerspOffCenterRH(float l, float r, float b, float t, float zn, float zf)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::PerspOffCenterRH(float l, float r, float b, float t, float zn, float zf) noexcept
 	{
 		return XMMatrixPerspectiveOffCenterRH(l, r, b, t, zn, zf);
 	}
@@ -577,7 +577,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::RotationAxis(Vector4 const &axis, float angle)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::RotationAxis(Vector4 const &axis, float angle) noexcept
 	{
 		return XMMatrixRotationAxis(axis, angle);
 	}
@@ -585,7 +585,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::RotationX(float angle)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::RotationX(float angle) noexcept
 	{
 		return XMMatrixRotationX(angle);
 	}
@@ -593,7 +593,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::RotationY(float angle)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::RotationY(float angle) noexcept
 	{
 		return XMMatrixRotationY(angle);
 	}
@@ -601,7 +601,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::RotationZ(float angle)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::RotationZ(float angle) noexcept
 	{
 		return XMMatrixRotationZ(angle);
 	}
@@ -609,7 +609,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::RotationYawPitchRoll(float yaw, float pitch, float roll)
+	XM_INLINE   Matrix XM_CALLCONV 	Matrix::RotationYawPitchRoll(float yaw, float pitch, float roll) noexcept
 	{
 		return XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
 	}
@@ -617,7 +617,7 @@ namespace TurboMath
 	/**
 	*/
 
-	__forceinline void	Matrix::Rotation( const Vector3& rot )
+	XM_INLINE   void XM_CALLCONV 	Matrix::Rotation( const Vector3& rot ) noexcept
 	{
 		Matrix mRot1;
 		Matrix mRot2;
@@ -634,7 +634,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Scaling(float sx, float sy, float sz)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::Scaling(float sx, float sy, float sz) noexcept
 	{
 		return XMMatrixScaling(sx, sy, sz);
 	}
@@ -642,7 +642,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Scaling(float s)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::Scaling(float s) noexcept
 	{
 		return XMMatrixScaling(s, s, s);
 	}
@@ -650,7 +650,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Scaling(Vector4 const &s)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::Scaling(Vector4 const &s) noexcept
 	{
 		return XMMatrixScalingFromVector(s);
 	}
@@ -658,7 +658,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Translation(float x, float y, float z)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::Translation(float x, float y, float z) noexcept
 	{
 		return XMMatrixTranslation(x, y, z);
 	}
@@ -666,7 +666,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Translation(Vector4 const &t)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::Translation(Vector4 const &t) noexcept
 	{
 		return XMMatrixTranslationFromVector(t);
 	}
@@ -674,7 +674,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Matrix	Matrix::Transpose(const Matrix& m)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::Transpose(const Matrix& m) noexcept
 	{
 		return XMMatrixTranspose(m.mx);
 	}
@@ -682,7 +682,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline	Vector4	Matrix::Transform(const Vector4 &v, const Matrix &m)
+	XM_INLINE   Vector4 XM_CALLCONV Matrix::Transform(const Vector4 &v, const Matrix &m) noexcept
 	{
 		return XMVector4Transform(v, m.mx);
 	}
@@ -690,7 +690,7 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline Quat	Matrix::RotationMatrix(const Matrix& m)
+	XM_INLINE   Quat XM_CALLCONV Matrix::RotationMatrix(const Matrix& m) noexcept
 	{
 		return XMQuaternionRotationMatrix(m.mx);
 	}
@@ -698,175 +698,238 @@ namespace TurboMath
 	//------------------------------------------------------------------------------
 	/**
 	*/
-	__forceinline	Plane	Matrix::Transform(const Plane &p, const Matrix& m)
+	XM_INLINE   Plane XM_CALLCONV Matrix::Transform(const Plane &p, const Matrix& m) noexcept
 	{
 		return Plane(XMPlaneTransform(p.vec, m.mx));
 	}
 
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M11 element
-	__forceinline	const float		Matrix::GetM11() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM11() const noexcept
 	{
 		return mx.r[0].m128_f32[0];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M12 element
-	__forceinline	const float		Matrix::GetM12() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM12() const noexcept
 	{
 		return mx.r[0].m128_f32[1];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M13 element
-	__forceinline	const float		Matrix::GetM13() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM13() const noexcept
 	{
 		return mx.r[0].m128_f32[2];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M14 element
-	__forceinline	const float		Matrix::GetM14() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM14() const noexcept
 	{
 		return mx.r[0].m128_f32[3];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M21 element
-	__forceinline	const float		Matrix::GetM21() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM21() const noexcept
 	{
 		return mx.r[1].m128_f32[0];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M22 element
-	__forceinline	const float		Matrix::GetM22() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM22() const noexcept
 	{
 		return mx.r[1].m128_f32[1];
 	}
-	/// Get access to M13 element
-	__forceinline	const float		Matrix::GetM23() const
+
+	//----------------------------------------------------------------------------------------------------
+	/// Get access to M23 element
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM23() const noexcept
 	{
 		return mx.r[1].m128_f32[2];
 	}
-	/// Get access to M14 element
-	__forceinline	const float		Matrix::GetM24() const
+
+	//----------------------------------------------------------------------------------------------------
+	/// Get access to M24 element
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM24() const noexcept
 	{
 		return mx.r[1].m128_f32[3];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M31 element
-	__forceinline	const float		Matrix::GetM31() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM31() const noexcept
 	{
 		return mx.r[2].m128_f32[0];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M32 element
-	__forceinline	const float		Matrix::GetM32() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM32() const noexcept
 	{
 		return mx.r[2].m128_f32[1];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M33 element
-	__forceinline	const float		Matrix::GetM33() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM33() const noexcept
 	{
 		return mx.r[2].m128_f32[2];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M34 element
-	__forceinline	const float		Matrix::GetM34() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM34() const noexcept
 	{
 		return mx.r[2].m128_f32[3];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M41 element
-	__forceinline	const float		Matrix::GetM41() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM41() const noexcept
 	{
 		return mx.r[3].m128_f32[0];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M42 element
-	__forceinline	const float		Matrix::GetM42() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM42() const noexcept
 	{
 		return mx.r[3].m128_f32[1];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M43 element
-	__forceinline	const float		Matrix::GetM43() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM43() const noexcept
 	{
 		return mx.r[3].m128_f32[2];
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Get access to M44 element
-	__forceinline	const float		Matrix::GetM44() const
+	XM_INLINE   const float	XM_CALLCONV Matrix::GetM44() const noexcept
 	{
 		return mx.r[3].m128_f32[3];
 	}
 
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M11 element
-	__forceinline	void	Matrix::SetM11(const float m11)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM11(const float m11) noexcept
 	{
 		XMVectorSetXPtr(this->mx.r[0], &m11);
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M12 element
-	__forceinline	void	Matrix::SetM12(const float m12)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM12(const float m12) noexcept
 	{
 		XMVectorSetYPtr(this->mx.r[0], &m12);
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M13 element
-	__forceinline	void	Matrix::SetM13(const float m13)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM13(const float m13) noexcept
 	{
 		XMVectorSetZPtr(this->mx.r[0], &m13);
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M14 element
-	__forceinline	void	Matrix::SetM14(const float m14)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM14(const float m14) noexcept
 	{
 		XMVectorSetWPtr(this->mx.r[0], &m14);
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M21 element
-	__forceinline	void	Matrix::SetM21(const float m21)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM21(const float m21) noexcept
 	{
 		XMVectorSetXPtr(this->mx.r[1], &m21);
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M22 element
-	__forceinline	void	Matrix::SetM22(const float m22)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM22(const float m22) noexcept
 	{
 		XMVectorSetYPtr(this->mx.r[1], &m22);
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M13 element
-	__forceinline	void	Matrix::SetM23(const float m23)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM23(const float m23) noexcept
 	{
 		XMVectorSetZPtr(this->mx.r[1], &m23);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M14 element
-	__forceinline	void	Matrix::SetM24(const float m24)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM24(const float m24) noexcept
 	{
 		XMVectorSetWPtr(this->mx.r[1], &m24);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M31 element
-	__forceinline	void	Matrix::SetM31(const float m31)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM31(const float m31) noexcept
 	{
 		XMVectorSetXPtr(this->mx.r[2], &m31);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M32 element
-	__forceinline	void	Matrix::SetM32(const float m32)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM32(const float m32) noexcept
 	{
 		XMVectorSetYPtr(this->mx.r[2], &m32);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M33 element
-	__forceinline	void	Matrix::SetM33(const float m33)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM33(const float m33) noexcept
 	{
 		XMVectorSetZPtr(this->mx.r[2], &m33);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M34 element
-	__forceinline	void	Matrix::SetM34(const float m34)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM34(const float m34) noexcept
 	{
 		XMVectorSetWPtr(this->mx.r[2], &m34);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M41 element
-	__forceinline	void	Matrix::SetM41(const float m41)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM41(const float m41) noexcept
 	{
 		XMVectorSetXPtr(this->mx.r[3], &m41);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M42 element
-	__forceinline	void	Matrix::SetM42(const float m42)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM42(const float m42) noexcept
 	{
 		XMVectorSetYPtr(this->mx.r[3], &m42);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M43 element
-	__forceinline	void	Matrix::SetM43(const float m43)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM43(const float m43) noexcept
 	{
 		XMVectorSetZPtr(this->mx.r[3], &m43);;
 	}
+
+	//----------------------------------------------------------------------------------------------------
 	/// Set access to M44 element
-	__forceinline	void	Matrix::SetM44(const float m44)
+	XM_INLINE   void XM_CALLCONV Matrix::SetM44(const float m44) noexcept
 	{
 		XMVectorSetWPtr(this->mx.r[3], &m44);;
 	}
 
+	//----------------------------------------------------------------------------------------------------
 	// arithmetic operations
-	__forceinline	Matrix Matrix::operator+ ( const Matrix& Mat ) const
+	XM_INLINE   Matrix XM_CALLCONV Matrix::operator+ ( const Matrix& Mat ) const noexcept
 	{
 		Matrix tmp;
 
@@ -878,7 +941,8 @@ namespace TurboMath
 		return tmp;
 	}
 
-	__forceinline	Matrix Matrix::operator- ( const Matrix& Mat ) const
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix XM_CALLCONV Matrix::operator- ( const Matrix& Mat ) const noexcept
 	{
 		Matrix tmp;
 
@@ -890,7 +954,8 @@ namespace TurboMath
 		return tmp;
 	}
 
-	__forceinline	Matrix Matrix::operator* ( const Matrix& Mat ) const
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix XM_CALLCONV Matrix::operator* ( const Matrix& Mat ) const noexcept
 	{
 #if XM_AVX2_INTRINSICS
 	 	XMMATRIX mResult;
@@ -948,19 +1013,22 @@ namespace TurboMath
 		return XMMatrixMultiply(this->mx, Mat.mx);
 	}
 
-	__forceinline	Matrix Matrix::operator* ( float fScalar ) const
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix XM_CALLCONV Matrix::operator* ( float fScalar ) const noexcept
 	{
 		return Scaling(fScalar,fScalar,fScalar);
 	}
 
-	__forceinline	Matrix Matrix::operator/ ( float fScalar ) const
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix XM_CALLCONV Matrix::operator/ ( float fScalar ) const noexcept
 	{
 		const float t = 1.0f / fScalar;
 
 		return Scaling(t,t,t);
 	}
 
-	__forceinline	Matrix Matrix::operator- () const
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix XM_CALLCONV Matrix::operator- () const noexcept
 	{
 		Matrix tmp;
 
@@ -972,8 +1040,9 @@ namespace TurboMath
 		return tmp;
 	}
 
+	//----------------------------------------------------------------------------------------------------
 	// arithmetic updates
-	__forceinline	Matrix& Matrix::operator+= ( const Matrix& Mat )
+	XM_INLINE   Matrix& XM_CALLCONV Matrix::operator+= ( const Matrix& Mat ) noexcept
 	{
 		this->mx.r[0] = XMVectorAdd( this->mx.r[0], Mat.mx.r[0] );
 		this->mx.r[1] = XMVectorAdd( this->mx.r[1], Mat.mx.r[1] );
@@ -983,7 +1052,8 @@ namespace TurboMath
 		return *this;
 	}
 
-	__forceinline	Matrix& Matrix::operator-= ( const Matrix& Mat )
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix& XM_CALLCONV Matrix::operator-= ( const Matrix& Mat ) noexcept
 	{
 		this->mx.r[0] = XMVectorSubtract( this->mx.r[0], Mat.mx.r[0] );
 		this->mx.r[1] = XMVectorSubtract( this->mx.r[1], Mat.mx.r[1] );
@@ -992,21 +1062,25 @@ namespace TurboMath
 
 		return *this;
 	}
-	__forceinline	Matrix& Matrix::operator*= ( const Matrix& Mat )
+
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix& XM_CALLCONV Matrix::operator*= ( const Matrix& Mat ) noexcept
 	{
 		this->mx = XMMatrixMultiply(this->mx, Mat.mx);
 
 		return *this;
 	}
 
-	__forceinline	Matrix& Matrix::operator*= ( float fScalar )
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix& XM_CALLCONV Matrix::operator*= ( float fScalar ) noexcept
 	{
 		this->mx = XMMatrixScaling(fScalar,fScalar,fScalar);
 
 		return *this;
 	}
 
-	__forceinline	Matrix& Matrix::operator/= ( float fScalar )
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   Matrix& XM_CALLCONV Matrix::operator/= ( float fScalar ) noexcept
 	{
 		const float t = 1.0f / fScalar;
 
@@ -1015,35 +1089,40 @@ namespace TurboMath
 		return *this;
 	}
 
-	__forceinline	const Vector4& Matrix::GetBasisX() const
+	//----------------------------------------------------------------------------------------------------
+	XM_INLINE   const Vector4& XM_CALLCONV Matrix::GetBasisX() const noexcept
 	{
 		return( this->GetRow0() );
 	}
+
 	//----------------------------------------------------------------------------------------------------
-	__forceinline	const Vector4&  Matrix::GetBasisY() const
+	XM_INLINE   const Vector4&  XM_CALLCONV Matrix::GetBasisY() const noexcept
 	{
 		return( this->GetRow1() );
 	}
+
 	//----------------------------------------------------------------------------------------------------
-	__forceinline	const Vector4&  Matrix::GetBasisZ()const
+	XM_INLINE   const Vector4&  XM_CALLCONV Matrix::GetBasisZ()const noexcept
 	{
 		return( this->GetRow2() );
 	}
 
 	//----------------------------------------------------------------------------------------------------
-	__forceinline	const Vector4& Matrix::GetTranslation() const
+	XM_INLINE   const Vector4& XM_CALLCONV Matrix::GetTranslation() const noexcept
 	{
 		return( this->GetRow3() );
 	}
+
 	//----------------------------------------------------------------------------------------------------
-	__forceinline	void Matrix::SetTranslation( const Vector4& Trans )
+	XM_INLINE   void XM_CALLCONV Matrix::SetTranslation( const Vector4& Trans ) noexcept
 	{
 		const float m44 = this->GetM44();
 		this->SetRow3( Trans );
 		this->SetM44(m44);
 	}
+
 	//----------------------------------------------------------------------------------------------------
-	__forceinline	const Matrix Matrix::GetRotation() const
+	XM_INLINE   const Matrix XM_CALLCONV  Matrix::GetRotation() const noexcept
 	{
 		Matrix mRet;
 
@@ -1053,8 +1132,9 @@ namespace TurboMath
 
 		return( mRet );
 	}
+
 	//----------------------------------------------------------------------------------------------------
-	__forceinline	void Matrix::SetRotation( const Matrix& Rot )
+	XM_INLINE   void XM_CALLCONV Matrix::SetRotation( const Matrix& Rot ) noexcept
 	{
 		this->SetRow0(Rot.GetBasisX());
 		this->SetRow1(Rot.GetBasisY());
@@ -1062,7 +1142,7 @@ namespace TurboMath
 	}
 
 	//----------------------------------------------------------------------------------------------------
-	__forceinline Matrix Matrix::MakeWorldMatrix(const Vector3& rotAxis, const float rotAngle, const Vector3& scale, const Vector3& translation)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::MakeWorldMatrix(const Vector3& rotAxis, const float rotAngle, const Vector3& scale, const Vector3& translation) noexcept
 	{
 		XMVECTOR	axisVec = XMVector3Normalize(XMLoadFloat3(&rotAxis.GetRaw()));
 		Matrix		world;
@@ -1079,13 +1159,13 @@ namespace TurboMath
 	}
 	
 	//------------------------------------------------------------------------------
-	__forceinline Matrix	Matrix::Reflect( const Plane& p)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::Reflect( const Plane& p) noexcept
 	{
 		return XMMatrixReflect(p.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline void Matrix::Decompose( Vector4& outScale,  Quat& outRotation,  Vector4& outTranslation) const
+	XM_INLINE   void XM_CALLCONV Matrix::Decompose( Vector4& outScale,  Quat& outRotation,  Vector4& outTranslation) const
 	{
 		const bool result = XMMatrixDecompose(outScale.GetRawPtr(),&outRotation.vec, outTranslation.GetRawPtr(),this->mx);
 		assert(result);
@@ -1094,19 +1174,19 @@ namespace TurboMath
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Matrix Matrix::AffineTransformation( float scaling,  Vector4 const &rotationCenter,  const Quat& rotation,  Vector4 const &translation)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::AffineTransformation( float scaling,  Vector4 const &rotationCenter,  const Quat& rotation,  Vector4 const &translation) noexcept
 	{
 		return XMMatrixAffineTransformation(XMVectorReplicate(scaling), rotationCenter, rotation.vec, translation);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Matrix Matrix::RotationQuaternion(_In_ const Quat& q)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::RotationQuaternion(_In_ const Quat& q) noexcept
 	{
 		return XMMatrixRotationQuaternion(q.vec);
 	}
 
 	//------------------------------------------------------------------------------
-	__forceinline Matrix Matrix::Transformation( Vector4 const &scalingCenter,  const Quat& scalingRotation,  Vector4 const &scaling,  Vector4 const &rotationCenter,  const Quat& rotation,  Vector4 const &translation)
+	XM_INLINE   Matrix XM_CALLCONV Matrix::Transformation( Vector4 const &scalingCenter,  const Quat& scalingRotation,  Vector4 const &scaling,  Vector4 const &rotationCenter,  const Quat& rotation,  Vector4 const &translation) noexcept
 	{
 		return XMMatrixTransformation(scalingCenter,scalingRotation.vec,scaling,rotationCenter,rotation.vec,translation);
 	}

@@ -188,6 +188,9 @@
     <None Include="Vector4.inl" />
     <None Include="WayPoints.inl" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="VerifyCPUSupport.inl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

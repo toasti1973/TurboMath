@@ -29,7 +29,7 @@
 namespace TurboMath
 {
 
-	__forceinline Frustum::Frustum()
+	XM_INLINE Frustum::Frustum() noexcept
 	{
 		Origin.NullVec();
 		Orientation.NullQuat();
@@ -42,7 +42,7 @@ namespace TurboMath
 		Far = 0.0f;
 	}
 
-	__forceinline Frustum::Frustum(const Frustum& cpyFrustum)
+	XM_INLINE Frustum::Frustum(const Frustum& cpyFrustum) noexcept
 	{
 		Origin = cpyFrustum.GetOrigin();
 		Orientation= cpyFrustum.GetOrientation();
@@ -56,82 +56,82 @@ namespace TurboMath
 	}
 
 	
-	__forceinline void Frustum::SetOrigin(const Vector4& orig)
+	XM_INLINE void XM_CALLCONV Frustum::SetOrigin(const Vector4& orig) noexcept
 	{
 		Origin = orig;
 	}
 
-	__forceinline const Vector4 Frustum::GetOrigin() const
+	XM_INLINE const Vector4 XM_CALLCONV Frustum::GetOrigin() const noexcept
 	{
 		return Origin;
 	}
 
-	__forceinline void Frustum::SetOrientation(const Quat& NewQuat)	
+	XM_INLINE void XM_CALLCONV Frustum::SetOrientation(const Quat& NewQuat)	 noexcept
 	{
 		Orientation = NewQuat;
 	}
 
-	__forceinline const Quat Frustum::GetOrientation() const				
+	XM_INLINE const Quat XM_CALLCONV Frustum::GetOrientation() const noexcept				
 	{
 		return Orientation;
 	}
 
-	__forceinline void Frustum::SetRightSlope(const float rf)		
+	XM_INLINE void XM_CALLCONV Frustum::SetRightSlope(const float rf) noexcept		
 	{
 		RightSlope = rf;
 	}
 
-	__forceinline const float Frustum::GetRightSlope() const				
+	XM_INLINE const float XM_CALLCONV Frustum::GetRightSlope() const noexcept				
 	{
 		return RightSlope;
 	}
 
-	__forceinline void Frustum::SetLeftSlope(const float lf)
+	XM_INLINE void XM_CALLCONV Frustum::SetLeftSlope(const float lf) noexcept
 	{
 		LeftSlope = lf;
 	}
 
-	__forceinline const float Frustum::GetLeftSlope() const				
+	XM_INLINE const float XM_CALLCONV Frustum::GetLeftSlope() const	 noexcept			
 	{
 		return LeftSlope;
 	}
 
-	__forceinline void Frustum::SetTopSlope(const float tf)	
+	XM_INLINE void XM_CALLCONV Frustum::SetTopSlope(const float tf)	 noexcept
 	{
 		TopSlope = tf;
 	}
 
-	__forceinline const float Frustum::GetTopSlope() const					
+	XM_INLINE const float XM_CALLCONV Frustum::GetTopSlope() const	 noexcept				
 	{
 		return TopSlope;
 	}
 
-	__forceinline void Frustum::SetBottonSlope(const float bf)
+	XM_INLINE void XM_CALLCONV Frustum::SetBottonSlope(const float bf) noexcept
 	{
 		BottomSlope = bf;
 	}
 
-	__forceinline const float Frustum::GetBottomSlope() const				
+	XM_INLINE const float XM_CALLCONV Frustum::GetBottomSlope() const noexcept			
 	{
 		return BottomSlope;
 	}
 
-	__forceinline void Frustum::SetNearPlane(const float fNear)		
+	XM_INLINE void XM_CALLCONV Frustum::SetNearPlane(const float fNear) noexcept	
 	{
 		Near = fNear;
 	}
 
-	__forceinline const float Frustum::GetNearPlane() const
+	XM_INLINE const float XM_CALLCONV Frustum::GetNearPlane() const noexcept
 	{
 		return Near;
 	}
 
-	__forceinline void Frustum::SetFarPlane(const float fFar)
+	XM_INLINE void XM_CALLCONV Frustum::SetFarPlane(const float fFar) noexcept
 	{
 		Far = fFar;
 	}
 
-	__forceinline const float Frustum::GetFarPlane() const					
+	XM_INLINE const float XM_CALLCONV Frustum::GetFarPlane() const noexcept					
 	{
 		return Far;
 	}
@@ -140,7 +140,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Transform a plane by a rotation and translation.
 	//-----------------------------------------------------------------------------
-	static __forceinline XMVECTOR TransformPlane( FXMVECTOR Plane, FXMVECTOR Rotation, FXMVECTOR Translation )
+	static XM_INLINE XMVECTOR XM_CALLCONV TransformPlane( FXMVECTOR Plane, FXMVECTOR Rotation, FXMVECTOR Translation ) noexcept
 	{
 		const XMVECTOR Normal = XMVector3Rotate( Plane, Rotation );
 		const XMVECTOR D = XMVectorSubtract(XMVectorSplatW( Plane ) , XMVector3Dot( Normal, Translation ) );
@@ -148,10 +148,10 @@ namespace TurboMath
 		return XMVectorInsert( Normal, D, 0, 0, 0, 0, 1 );
 	}
 
-	__forceinline void Frustum::ComputeFrustumFromProjection(const Matrix& Projection )
+	void XM_CALLCONV Frustum::ComputeFrustumFromProjection(const Matrix& Projection ) noexcept
 	{
 			// Corners of the projection frustum in homogenous space.
-		const static XMVECTOR HomogenousPoints[6] =
+		constexpr static XMVECTOR HomogenousPoints[6] =
 		{
 			{  1.0f,  0.0f, 1.0f, 1.0f },   // right (at far plane)
 			{ -1.0f,  0.0f, 1.0f, 1.0f },   // left
@@ -198,7 +198,7 @@ namespace TurboMath
 		return;
 	}
 
-	__forceinline void Frustum::ComputePlanes( Plane& Plane0, Plane& Plane1, Plane& Plane2,Plane& Plane3, Plane& Plane4, Plane& Plane5 ) const
+	XM_INLINE void XM_CALLCONV Frustum::ComputePlanes( Plane& Plane0, Plane& Plane1, Plane& Plane2,Plane& Plane3, Plane& Plane4, Plane& Plane5 ) const noexcept
 	{
 		// Load origin and orientation of the frustum.
 		const XMVECTOR Origin = XMLoadFloat3( (XMFLOAT3*)&this->Origin );
@@ -230,7 +230,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Transform a frustum by an angle preserving transform.
 	//-----------------------------------------------------------------------------
-	__forceinline void Frustum::Transform(const float Scale, Quat& Rotation,const Vector4& Translation )
+	XM_INLINE void XM_CALLCONV Frustum::Transform(const float Scale, Quat& Rotation,const Vector4& Translation ) noexcept
 	{
 		// Composite the frustum rotation and the transform rotation.
 		this->Orientation *= Rotation;
@@ -244,7 +244,7 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	__forceinline void Frustum::Rotate(const Vector4& axis, float degrees)
+	XM_INLINE void XM_CALLCONV Frustum::Rotate(const Vector4& axis, float degrees) noexcept
 	{
 		const Quat qRot = Quat::RotationMatrix( Matrix::RotationAxis(axis, XMConvertToRadians(degrees)) );
 
@@ -252,18 +252,18 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	__forceinline void Frustum::Rotate(const Quat& q)
+	XM_INLINE void XM_CALLCONV Frustum::Rotate(const Quat& q) noexcept
 	{
 		this->Orientation *= q;
 	}
 
 	//-----------------------------------------------------------------------------
-	__forceinline const bool Frustum::IntersectPoint(const Vector4& Point) const
+	const bool XM_CALLCONV Frustum::IntersectPoint(const Vector4& Point) const noexcept
 	{
 		static const XMVECTORU32 SelectW = {XM_SELECT_0, XM_SELECT_0, XM_SELECT_0, XM_SELECT_1};
 		static const XMVECTORU32 SelectZ = {XM_SELECT_0, XM_SELECT_0, XM_SELECT_1, XM_SELECT_0};
 
-		static const XMVECTOR BasePlanes[6] =
+		static constexpr XMVECTOR BasePlanes[6] =
 		{
 			{  0.0f,  0.0f, -1.0f, 0.0f },
 			{  0.0f,  0.0f,  1.0f, 0.0f },
@@ -315,7 +315,7 @@ namespace TurboMath
 	//                1 = intersection,
 	//                2 = triangle is completely inside frustum
 	//-----------------------------------------------------------------------------
-	_inline const eCullClassify Frustum::IntersectTriangle(const Vector4& V0,const Vector4& V1,const Vector4& V2) const
+	const eCullClassify XM_CALLCONV Frustum::IntersectTriangle(const Vector4& V0,const Vector4& V1,const Vector4& V2) const noexcept
 	{
 		// Build the frustum planes (NOTE: D is negated from the usual).
 		XMVECTOR Planes[6];
@@ -466,7 +466,7 @@ namespace TurboMath
 	//                1 = intersection,
 	//                2 = sphere is completely inside frustum
 	//-----------------------------------------------------------------------------
-	_inline const eCullClassify Frustum::IntersectSphere( const Sphere& pVolumeA) const
+	const eCullClassify XM_CALLCONV Frustum::IntersectSphere( const Sphere& pVolumeA) const noexcept
 	{
 		const XMVECTOR Zero = XMVectorZero();
 
@@ -535,7 +535,7 @@ namespace TurboMath
 		// to the sphere.
 
 		// The faces adjacent to each face are:
-		static const int adjacent_faces[6][4] =
+		static constexpr int adjacent_faces[6][4] =
 		{
 			{ 2, 3, 4, 5 },    // 0
 			{ 2, 3, 4, 5 },    // 1
@@ -595,7 +595,7 @@ namespace TurboMath
 		Corners[7] = XMVectorMultiply(LeftBottom , Far);
 
 		// The Edges are:
-		static const int edges[12][2] =
+		static constexpr int edges[12][2] =
 		{
 			{ 0, 1 }, { 2, 3 }, { 0, 2 }, { 1, 3 },    // Near plane
 			{ 4, 5 }, { 6, 7 }, { 4, 6 }, { 5, 7 },    // Far plane
@@ -642,7 +642,7 @@ namespace TurboMath
 	//                1 = intersection,
 	//                2 = box is completely inside frustum
 	//-----------------------------------------------------------------------------
-	__forceinline const eCullClassify Frustum::IntersectAABB( const AABB& pVolumeA) const
+	XM_INLINE const eCullClassify XM_CALLCONV Frustum::IntersectAABB( const AABB& pVolumeA) const noexcept
 	{
 		// Make the axis aligned box oriented and do an OBB vs frustum test.
 		OBB BoxA;
@@ -660,13 +660,13 @@ namespace TurboMath
 	//                1 = intersection,
 	//                2 = box is completely inside frustum
 	//-----------------------------------------------------------------------------
-	__forceinline const eCullClassify Frustum::IntersectOBB( const OBB& pVolumeA) const
+	const eCullClassify XM_CALLCONV Frustum::IntersectOBB( const OBB& pVolumeA) const noexcept
 	{
-		static const XMVECTORI32 SelectY =
+		static constexpr XMVECTORI32 SelectY =
 		{
 			XM_SELECT_0, XM_SELECT_1, XM_SELECT_0, XM_SELECT_0
 		};
-		static const XMVECTORI32 SelectZ =
+		static constexpr XMVECTORI32 SelectZ =
 		{
 			XM_SELECT_0, XM_SELECT_0, XM_SELECT_1, XM_SELECT_0
 		};
@@ -850,7 +850,7 @@ namespace TurboMath
 	//                1 = intersection,
 	//                2 = frustum A is completely inside frustum B
 	//-----------------------------------------------------------------------------
-	_inline const eCullClassify Frustum::IntersectFrustum( const Frustum& pVolumeA) const
+	const eCullClassify XM_CALLCONV Frustum::IntersectFrustum( const Frustum& pVolumeA) const noexcept
 	{
 		// Load origin and orientation of frustum B.
 		XMVECTOR OriginB = XMLoadFloat3( (XMFLOAT3*)&this->Origin );
@@ -1061,7 +1061,7 @@ namespace TurboMath
 		return CLIPPED; // 1
 	}
 
-	_inline const eCullClassify Frustum::Intersect6Planes( const Plane& Plane0,const Plane& Plane1, const Plane& Plane2,const Plane& Plane3,const  Plane& Plane4, const Plane& Plane5 ) const
+	const eCullClassify XM_CALLCONV  Frustum::Intersect6Planes( const Plane& Plane0,const Plane& Plane1, const Plane& Plane2,const Plane& Plane3,const  Plane& Plane4, const Plane& Plane5 ) const
 	{
 		// Load origin and orientation of the frustum.
 		XMVECTOR Origin = XMLoadFloat3( (XMFLOAT3*)&this->Origin );
@@ -1144,7 +1144,7 @@ namespace TurboMath
 		return CLIPPED; // 1
 	}
 
-	_inline const eCullClassify Frustum::IntersectPlane( const Plane& Plane0 ) const
+	const eCullClassify XM_CALLCONV Frustum::IntersectPlane( const Plane& Plane0 ) const
 	{
 		assert( Plane0.IsUnit() );
 

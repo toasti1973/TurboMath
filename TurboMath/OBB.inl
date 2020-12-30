@@ -31,53 +31,52 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Constructor / Destructor
 	//-----------------------------------------------------------------------------
-	__forceinline OBB::OBB(const Vector4& c, const Vector4& e, const Quat& o) :
-    Center(c), Extents(e), Orientation(o)
+	XM_INLINE OBB::OBB(const Vector4& c, const Vector4& e, const Quat& o) noexcept :
+    	Center(c), Extents(e), Orientation(o)
 	{
 	}
 
-	OBB::OBB()
+	OBB::OBB() noexcept
 	{
-        Reset();
+        	Reset();
 	}
 	
 	// Get / Set-Functions
-	__forceinline void OBB::SetCenter(const Vector4& newCenter)
+	XM_INLINE void XM_CALLCONV OBB::SetCenter(const Vector4& newCenter) noexcept
 	{
-		static_assert(sizeof(OBB) == 48, "Class TurboMath::OBB wrong size");
 		Center = newCenter;
 	}
 
-	__forceinline void OBB::SetExtents(const Vector4& newExtents)
+	XM_INLINE void XM_CALLCONV OBB::SetExtents(const Vector4& newExtents) noexcept
 	{
 		Extents = newExtents;
 	}
 
-	__forceinline void OBB::SetOrientation(const Quat& newOrientation)
+	XM_INLINE void XM_CALLCONV OBB::SetOrientation(const Quat& newOrientation) noexcept
 	{
 		Orientation = newOrientation;
 	}
 
-	__forceinline const Vector4 OBB::GetCenter() const
+	XM_INLINE const Vector4 XM_CALLCONV OBB::GetCenter() const noexcept
 	{
 		return Center;
 	}
 
-	__forceinline const Vector4 OBB::GetExtents() const
+	XM_INLINE const Vector4 XM_CALLCONV OBB::GetExtents() const noexcept
 	{
 		return Extents;
 	}
 
-	__forceinline const Quat OBB::GetOrientation() const
+	XM_INLINE const Quat XM_CALLCONV OBB::GetOrientation() const noexcept
 	{
 		return Orientation;
 	}
 
-	__forceinline void OBB::Reset()
+	XM_INLINE void XM_CALLCONV OBB::Reset() noexcept
 	{
-        Center.NullVec();
-        Extents.NullVec();
-        Orientation.Identity();
+       		Center.NullVec();
+        	Extents.NullVec();
+        	Orientation.Identity();
 	}
 	
 
@@ -92,13 +91,13 @@ namespace TurboMath
 	// Exact computation of the minimum oriented bounding box is possible but the
 	// best know algorithm is O(N^3) and is significanly more complex to implement.
 	//-----------------------------------------------------------------------------
-	_inline  void OBB::ComputeBoundingOBBFromPoints( UINT Count, const XMFLOAT3* pPoints, UINT Stride )
+	void XM_CALLCONV OBB::ComputeBoundingOBBFromPoints( UINT Count, const XMFLOAT3* pPoints, UINT Stride )
 	{
-		static const XMVECTORI32 PermuteXXY =
+		static constexpr XMVECTORI32 PermuteXXY =
 		{
 			XM_PERMUTE_0X, XM_PERMUTE_0X, XM_PERMUTE_0Y, XM_PERMUTE_0W
 		};
-		static const XMVECTORI32 PermuteYZZ =
+		static constexpr XMVECTORI32 PermuteYZZ =
 		{
 			XM_PERMUTE_0Y, XM_PERMUTE_0Z, XM_PERMUTE_0Z, XM_PERMUTE_0W
 		};
@@ -111,6 +110,7 @@ namespace TurboMath
 		// Compute the center of mass and inertia tensor of the points.
 		for( UINT i = 0; i < Count; i++ )
 		{
+//			XM_PREFETCH( ( char* )pPoints + (i+1) * Stride )
 			XMVECTOR Point = XMLoadFloat3( ( XMFLOAT3* )( ( char* )pPoints + i * Stride ) );
 
 			CenterOfMass += Point;
@@ -163,7 +163,7 @@ namespace TurboMath
 
 		if( XMVector4Less( Det, XMVectorZero() ) )
 		{
-			const XMVECTORF32 VectorNegativeOne =
+			constexpr XMVECTORF32 VectorNegativeOne =
 			{
 				-1.0f, -1.0f, -1.0f, -1.0f
 			};
@@ -213,7 +213,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Transform an oriented box by an angle preserving transform.
 	//-----------------------------------------------------------------------------
-	__forceinline void OBB::Transform( const float Scale, const Quat& Rotation,const Vector4& Translation )
+	XM_INLINE void XM_CALLCONV OBB::Transform( const float Scale, const Quat& Rotation,const Vector4& Translation )
 	{
 		assert( Rotation.IsUnit() );
 
@@ -245,7 +245,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Point in oriented box test.
 	//-----------------------------------------------------------------------------
-	__forceinline const bool OBB::IntersectPoint( const Vector4& Point )
+	XM_INLINE const bool XM_CALLCONV OBB::IntersectPoint( const Vector4& Point )
 	{
 		const XMVECTOR Center = XMLoadFloat3( (XMFLOAT3*)&this->Center.GetRaw() );
 		const XMVECTOR Extents = XMLoadFloat3( (XMFLOAT3*)&this->Extents.GetRaw() );
@@ -263,7 +263,7 @@ namespace TurboMath
 	// Fast oriented box / oriented box intersection test using the separating axis
 	// theorem.
 	//-----------------------------------------------------------------------------
-	_inline const bool OBB::IntersectOBB( const OBB* pVolumeB )
+	const bool XM_CALLCONV OBB::IntersectOBB( const OBB* pVolumeB )
 	{
 		assert( pVolumeB );
 
@@ -455,28 +455,28 @@ namespace TurboMath
 	// Compute the intersection of a ray (Origin, Direction) with an oriented box
 	// using the slabs method.
 	//-----------------------------------------------------------------------------
-	_inline const bool OBB::IntersectRay( Ray& theRay, float* pDist )
+	const bool XM_CALLCONV OBB::IntersectRay( Ray& theRay, float* pDist )
 	{
 		assert( pDist );
 		assert( theRay.GetDirection().IsUnit() );
 
-		static const XMVECTOR Epsilon =
+		static constexpr XMVECTOR Epsilon =
 		{
 			1e-20f, 1e-20f, 1e-20f, 1e-20f
 		};
-		static const XMVECTOR FltMin =
+		static constexpr XMVECTOR FltMin =
 		{
 			-FLT_MAX, -FLT_MAX, -FLT_MAX, -FLT_MAX
 		};
-		static const XMVECTOR FltMax =
+		static constexpr XMVECTOR FltMax =
 		{
 			FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX
 		};
-		static const XMVECTORI32 SelectY =
+		static constexpr XMVECTORI32 SelectY =
 		{
 			XM_SELECT_0, XM_SELECT_1, XM_SELECT_0, XM_SELECT_0
 		};
-		static const XMVECTORI32 SelectZ =
+		static constexpr XMVECTORI32 SelectZ =
 		{
 			XM_SELECT_0, XM_SELECT_0, XM_SELECT_1, XM_SELECT_0
 		};
@@ -547,7 +547,7 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	__forceinline const bool OBB::IntersectTriangle( const Vector4& V0, const Vector4& V1, const Vector4& V2 )
+	XM_INLINE const bool XM_CALLCONV OBB::IntersectTriangle( const Vector4& V0, const Vector4& V1, const Vector4& V2 )
 	{
 		// Load the box center & orientation.
 		const XMVECTOR Center = XMLoadFloat3( (XMFLOAT3*)&this->Center.GetRaw() );
@@ -569,7 +569,7 @@ namespace TurboMath
 	}
 
 	//-----------------------------------------------------------------------------
-	__forceinline const bool OBB::IntersectSphere( const Sphere* pVolumeA )
+	const bool XM_CALLCONV OBB::IntersectSphere( const Sphere* pVolumeA )
 	{
 		assert( pVolumeA );
 
@@ -618,14 +618,14 @@ namespace TurboMath
 	//                1 = intersection,
 	//                2 = A is completely inside B
 	//-----------------------------------------------------------------------------
-	__forceinline const eCullClassify OBB::IntersectFrustum( Frustum* pVolumeB )
+	XM_INLINE const eCullClassify XM_CALLCONV OBB::IntersectFrustum( Frustum* pVolumeB )
 	{
 		assert(pVolumeB);
 
 		return pVolumeB->IntersectOBB(*this);
 	}
 
-	__forceinline const bool OBB::IntersectAABB( AABB& pVolumeB )
+	XM_INLINE const bool XM_CALLCONV OBB::IntersectAABB( AABB& pVolumeB )
 	{
 		return pVolumeB.IntersectOBB(*this);
 	}
@@ -636,7 +636,7 @@ namespace TurboMath
 	//                1 = may be intersecting,
 	//                2 = box is inside all planes
 	//-----------------------------------------------------------------------------
-	_inline const eCullClassify OBB::Intersect6Planes( const Plane& Plane0, const Plane& Plane1, const Plane& Plane2,const Plane& Plane3, const Plane& Plane4, const Plane& Plane5 )
+	const eCullClassify XM_CALLCONV OBB::Intersect6Planes( const Plane& Plane0, const Plane& Plane1, const Plane& Plane2,const Plane& Plane3, const Plane& Plane4, const Plane& Plane5 )
 	{
 		// Load the box.
 		XMVECTOR Center = XMLoadFloat3( (XMFLOAT3*)&this->Center.GetRaw() );
@@ -697,7 +697,7 @@ namespace TurboMath
 	//                1 = volume intersects the plane,
 	//                2 = volume is inside the plane (on the negative side of the plane)
 	//-----------------------------------------------------------------------------
-	__forceinline const eCullClassify OBB::IntersectPlane( const Plane& Plane )
+	XM_INLINE const eCullClassify XM_CALLCONV OBB::IntersectPlane( const Plane& Plane )
 	{
 		assert( Plane.IsUnit() );
 
@@ -733,11 +733,11 @@ namespace TurboMath
 	// Get the 8 EdgePoints from the OBB
 	// We MUST give a Array from 8 TurboMath::Vector4 Members for the EdgePoints
 	//-------------------------------------------------------------------------------
-	__forceinline void OBB::GetEdgePoints( Vector4* pPointlist)
+	XM_INLINE void XM_CALLCONV OBB::GetEdgePoints( Vector4* pPointlist)
 	{
 		assert(pPointlist);
 
-		static XMVECTOR verts[8] =
+		static constexpr XMVECTOR verts[8] =
 		{
 			{ -1, -1, -1, 0 },
 			{ 1, -1, -1, 0 },

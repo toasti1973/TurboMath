@@ -43,363 +43,363 @@ namespace TurboMath
 		/// construct from XMMATRIX
 					Matrix(const XMMATRIX& rhs);
 		/// C++11 Move Constructor
-					Matrix(_In_ Matrix&& other);
+					Matrix(_In_ Matrix&& other) noexcept;
 		/// constructs from Matrix
-					Matrix::Matrix(const Matrix& rhs);
+					Matrix::Matrix(const Matrix& rhs) noexcept;
 
 		/// assignment operator
-		void operator=(const Matrix& rhs);
+		void XM_CALLCONV operator=(const Matrix& rhs) noexcept;
 	
 		/// assign XMMATRIX
-		void operator=(const XMMATRIX& rhs);
+		void XM_CALLCONV operator=(const XMMATRIX& rhs) noexcept;
 		
 		/// equality operator
-		bool operator==(const Matrix& rhs) const;
+		bool XM_CALLCONV operator==(const Matrix& rhs) const noexcept;
 		
 		/// inequality operator
-		bool operator!=(const Matrix& rhs) const;
+		bool XM_CALLCONV operator!=(const Matrix& rhs) const noexcept;
 		
 		// matrix-Vector product
-		const Vector4 operator * (const Vector4& v) const;
+		const Vector4 XM_CALLCONV operator * (const Vector4& v) const noexcept;
 
 		/// C++11 Move
-		Matrix& operator=( Matrix&& other);
+		Matrix& XM_CALLCONV operator=( Matrix&& other) noexcept;
 		
 		// member access
-		float operator()	( const int iRow, const int iCol ) const;
-		float& operator()	( const int iRow, const int iCol );
-		float operator[]	( const int iPos ) const;
-		float& operator[]	( const int iPos );
+		float	XM_CALLCONV	operator()	( const int iRow, const int iCol ) const;
+		float&	XM_CALLCONV	operator()	( const int iRow, const int iCol );
+		float	XM_CALLCONV	operator[]	( const int iPos ) const;
+		float&	XM_CALLCONV	operator[]	( const int iPos );
 
-		operator float* ()					{return (float*)&mx;}
+		operator float* ()			{return (float*)&mx;}
 		operator const float* () const		{return (float*)&mx;}
 
 		// arithmetic operations
-		Matrix operator+ ( const Matrix& Matrix ) const;
-		Matrix operator- ( const Matrix& Matrix ) const;
-		Matrix operator* ( const Matrix& Matrix ) const;
-		Matrix operator* ( float fScalar ) const;
-		Matrix operator/ ( float fScalar ) const;
-		Matrix operator- () const;
+		Matrix XM_CALLCONV operator+ ( const Matrix& Matrix ) const noexcept;
+		Matrix XM_CALLCONV operator- (const Matrix& Matrix) const noexcept;
+		Matrix XM_CALLCONV operator* ( const Matrix& Matrix ) const noexcept;
+		Matrix XM_CALLCONV operator* ( float fScalar ) const noexcept;
+		Matrix XM_CALLCONV operator/ ( float fScalar ) const noexcept;
+		Matrix XM_CALLCONV operator- () const noexcept;
 
 		// arithmetic updates
-		Matrix& operator+= ( const Matrix& Matrix );
-		Matrix& operator-= ( const Matrix& Matrix );
-		Matrix& operator*= ( const Matrix& Matrix );
-		Matrix& operator*= ( float fScalar );
-		Matrix& operator/= ( float fScalar );
+		Matrix& XM_CALLCONV operator+= ( const Matrix& Matrix ) noexcept;
+		Matrix& XM_CALLCONV operator-= ( const Matrix& Matrix ) noexcept;
+		Matrix& XM_CALLCONV operator*= ( const Matrix& Matrix ) noexcept;
+		Matrix& XM_CALLCONV operator*= ( float fScalar ) noexcept;
+		Matrix& XM_CALLCONV operator/= ( float fScalar ) noexcept;
 
 		/// load content from 16-byte-aligned memory
-		void Load(const float* ptr);
+		void XM_CALLCONV Load(const float* ptr) noexcept;
 		
 		/// load content from unaligned memory
-		void LoadU(const float* ptr);
+		void XM_CALLCONV LoadU(const float* ptr) noexcept;
 		
 		/// write content to 16-byte-aligned memory through the write cache
-		void Store(float* ptr) const;
+		void XM_CALLCONV Store(float* ptr) const noexcept;
 		
 		/// write content to unaligned memory through the write cache
-		void StoreU(float* ptr) const;
+		void XM_CALLCONV StoreU(float* ptr) const noexcept;
 		
 		/// stream content to 16-byte-aligned memory circumventing the write-cache
-		void Stream(float* ptr) const;
+		void XM_CALLCONV Stream(float* ptr) const noexcept;
 		
 		/// set content
-		void Set(Vector4 const &row0, Vector4 const &row1, Vector4 const &row2, Vector4 const &row3);
+		void XM_CALLCONV Set(Vector4 const &row0, Vector4 const &row1, Vector4 const &row2, Vector4 const &row3) noexcept;
 		
 		/// write access to x component
-		void SetRow0(Vector4 const &row0);
+		void XM_CALLCONV SetRow0(Vector4 const &row0) noexcept;
 		
 		/// write access to y component
-		void SetRow1(Vector4 const &row1);
+		void XM_CALLCONV SetRow1(Vector4 const &row1) noexcept;
 		
 		/// write access to z component
-		void SetRow2(Vector4 const &row2);
+		void XM_CALLCONV SetRow2(Vector4 const &row2) noexcept;
 		
 		/// write access to w component
-		void SetRow3(Vector4 const &row3);
+		void XM_CALLCONV SetRow3(Vector4 const &row3) noexcept;
 		
 		/// read-only access to x component
-		const Vector4& GetRow0() const;
+		const Vector4&  XM_CALLCONV GetRow0() const noexcept;
 		
 		/// read-only access to y component
-		const Vector4& GetRow1() const;
+		const Vector4&  XM_CALLCONV GetRow1() const noexcept;
 		
 		/// read-only access to z component
-		const Vector4& GetRow2() const;
+		const Vector4&  XM_CALLCONV GetRow2() const noexcept;
 		
 		/// read-only access to w component
-		const Vector4& GetRow3() const;
+		const Vector4&  XM_CALLCONV GetRow3() const noexcept;
 
 		/// Get access to M11 element
-		const float		GetM11() const;
+		const float	XM_CALLCONV GetM11() const noexcept;
 		
 		/// Get access to M12 element
-		const float		GetM12() const;
+		const float	XM_CALLCONV GetM12() const noexcept;
 		
 		/// Get access to M13 element
-		const float		GetM13() const;
+		const float	XM_CALLCONV GetM13() const noexcept;
 		
 		/// Get access to M14 element
-		const float		GetM14() const;
+		const float	XM_CALLCONV GetM14() const noexcept;
 		
 		/// Get access to M21 element
-		const float		GetM21() const;
+		const float	XM_CALLCONV GetM21() const noexcept;
 		
 		/// Get access to M22 element
-		const float		GetM22() const;
+		const float	XM_CALLCONV GetM22() const noexcept;
 		
 		/// Get access to M13 element
-		const float		GetM23() const;
+		const float	XM_CALLCONV GetM23() const noexcept;
 		
 		/// Get access to M14 element
-		const float		GetM24() const;
+		const float	XM_CALLCONV GetM24() const noexcept;
 		
 		/// Get access to M31 element
-		const float		GetM31() const;
+		const float	XM_CALLCONV GetM31() const noexcept;
 		
 		/// Get access to M32 element
-		const float		GetM32() const;
+		const float	XM_CALLCONV GetM32() const noexcept;
 		
 		/// Get access to M33 element
-		const float		GetM33() const;
+		const float	XM_CALLCONV GetM33() const noexcept;
 		
 		/// Get access to M34 element
-		const float		GetM34() const;
+		const float	XM_CALLCONV GetM34() const noexcept;
 		
 		/// Get access to M41 element
-		const float		GetM41() const;
+		const float	XM_CALLCONV GetM41() const noexcept;
 		
 		/// Get access to M42 element
-		const float		GetM42() const;
+		const float	XM_CALLCONV GetM42() const noexcept;
 		
 		/// Get access to M43 element
-		const float		GetM43() const;
+		const float	XM_CALLCONV GetM43() const noexcept;
 		
 		/// Get access to M44 element
-		const float		GetM44() const;
+		const float	XM_CALLCONV GetM44() const noexcept;
 		
 		/// Get	Basis X
-		const Vector4&	GetBasisX() const;
+		const Vector4&	XM_CALLCONV GetBasisX() const noexcept;
 		
 		/// Get Basis Y
-		const Vector4&	GetBasisY() const;
+		const Vector4&	XM_CALLCONV GetBasisY() const noexcept;
 		
 		/// Get Basis Z
-		const Vector4&	GetBasisZ() const;
+		const Vector4&	XM_CALLCONV GetBasisZ() const noexcept;
 		
 		/// Get Translation
-		const Vector4&	 GetTranslation() const;
+		const Vector4&	XM_CALLCONV GetTranslation() const noexcept;
 		
 		/// Rotation
-		const Matrix	GetRotation() const;
+		const Matrix	XM_CALLCONV GetRotation() const noexcept;
 		
 		/// Set Rotation
-		void			SetRotation( const Matrix& Rot );
+		void		XM_CALLCONV SetRotation( const Matrix& Rot ) noexcept;
 		
 		/// Set Translation
-		void			SetTranslation( const Vector4& Trans );
+		void		XM_CALLCONV SetTranslation( const Vector4& Trans ) noexcept;
 
 		/// Set access to M11 element
-		void			SetM11(const float m11);
+		void		XM_CALLCONV SetM11(const float m11) noexcept;
 		
 		/// Set access to M12 element
-		void			SetM12(const float m12);
+		void		XM_CALLCONV SetM12(const float m12) noexcept;
 		
 		/// Set access to M13 element
-		void			SetM13(const float m13);
+		void		XM_CALLCONV SetM13(const float m13) noexcept;
 		
 		/// Set access to M14 element
-		void			SetM14(const float m14);
+		void		XM_CALLCONV SetM14(const float m14) noexcept;
 		
 		/// Set access to M21 element
-		void			SetM21(const float m21);
+		void		XM_CALLCONV SetM21(const float m21) noexcept;
 		
 		/// Set access to M22 element
-		void			SetM22(const float m22);
+		void		XM_CALLCONV SetM22(const float m22) noexcept;
 		
 		/// Set access to M13 element
-		void			SetM23(const float m23);
+		void		XM_CALLCONV SetM23(const float m23) noexcept;
 		
 		/// Set access to M14 element
-		void			SetM24(const float m24);
+		void		XM_CALLCONV SetM24(const float m24) noexcept;
 		
 		/// Set access to M31 element
-		void			SetM31(const float m31);
+		void		XM_CALLCONV SetM31(const float m31) noexcept;
 		
 		/// Set access to M32 element
-		void			SetM32(const float m32);
+		void		XM_CALLCONV SetM32(const float m32) noexcept;
 		
 		/// Set access to M33 element
-		void			SetM33(const float m33);
+		void		XM_CALLCONV SetM33(const float m33) noexcept;
 		
 		/// Set access to M34 element
-		void			SetM34(const float m34);
+		void		XM_CALLCONV SetM34(const float m34) noexcept;
 		
 		/// Set access to M41 element
-		void			SetM41(const float m41);
+		void		XM_CALLCONV SetM41(const float m41) noexcept;
 		
 		/// Set access to M42 element
-		void			SetM42(const float m42);
+		void		XM_CALLCONV SetM42(const float m42) noexcept;
 		
 		/// Set access to M43 element
-		void			SetM43(const float m43);
+		void		XM_CALLCONV SetM43(const float m43) noexcept;
 		
 		/// Set access to M44 element
-		void			SetM44(const float m44);
+		void		XM_CALLCONV SetM44(const float m44) noexcept;
 		
 		/// write access to x component
-		void			Set_X_Axis(Vector4 const &x);
+		void		XM_CALLCONV Set_X_Axis(Vector4 const &x) noexcept;
 		
 		/// write access to y component
-		void			Set_Y_Axis(Vector4 const &y);
+		void		XM_CALLCONV Set_Y_Axis(Vector4 const &y) noexcept;
 		
 		/// write access to z component
-		void			Set_Z_Axis(Vector4 const &z);
+		void		XM_CALLCONV Set_Z_Axis(Vector4 const &z) noexcept;
 		
 		/// write access to w component / pos component
-		void			Set_Position(Vector4 const &pos);
+		void		XM_CALLCONV Set_Position(Vector4 const &pos) noexcept;
 		
 		/// read access to x component
-		const Vector4&	Get_X_Axis() const;
+		const Vector4&	XM_CALLCONV Get_X_Axis() const noexcept;
 		
 		/// read access to y component
-		const Vector4&	Get_Y_Axis() const;
+		const Vector4&	XM_CALLCONV Get_Y_Axis() const noexcept;
 		
 		/// read access to z component
-		const Vector4&	Get_Z_Axis() const;
+		const Vector4&	XM_CALLCONV Get_Z_Axis() const noexcept;
 		
 		/// read access to w component / pos component
-		const Vector4&	Get_Position() const;
+		const Vector4&	XM_CALLCONV Get_Position() const noexcept;
 		
 		/// add a translation to pos_component
-		void			Translate(Vector4 const &t);
+		void		XM_CALLCONV Translate(Vector4 const &t);
 		
 		/// scale matrix
-		void			Scale(Vector4 const &v);
+		void		XM_CALLCONV Scale(Vector4 const &v) noexcept;
 		
 		/// Computer Matrix from Axis, rotation Angle, a Scale and a Translation
-		Matrix			MakeWorldMatrix(const Vector3& rotAxis, const float rotAngle, const Vector3& scale, const Vector3& translation) ;
+		Matrix		XM_CALLCONV MakeWorldMatrix(const Vector3& rotAxis, const float rotAngle, const Vector3& scale, const Vector3& translation) noexcept ;
 
 		/// return true if matrix is identity
-		bool			IsIdentity() const;
+		bool		XM_CALLCONV IsIdentity() const noexcept;
 		
 		/// return determinant of matrix
-		float			Determinant() const;
+		float		XM_CALLCONV Determinant() const noexcept;
 		
 		/// decompose into scale, rotation and translation
-		void			Decompose(Vector4& outScale, Quat& outRotation, Vector4& outTranslation) const;
+		void		XM_CALLCONV Decompose(Vector4& outScale, Quat& outRotation, Vector4& outTranslation) const;
 
 		/// build identity matrix
-		static Matrix	Identity();
+		static Matrix	XM_CALLCONV Identity() noexcept;
 		
 		/// Make all elements Zero
-		static Matrix	MakeZero();
+		static Matrix	XM_CALLCONV MakeZero() noexcept;
 		
 		/// build matrix from affine transformation
-		static Matrix	AffineTransformation(float scaling, Vector4 const &rotationCenter, const Quat& rotation, Vector4 const &translation);
+		static Matrix	XM_CALLCONV AffineTransformation(float scaling, Vector4 const &rotationCenter, const Quat& rotation, Vector4 const &translation) noexcept;
 		
 		/// compute the inverse of a matrix
-		static Matrix	Inverse(const Matrix& m);
+		static Matrix	XM_CALLCONV Inverse(const Matrix& m) noexcept;
 		
 		/// build left handed lookat matrix
-		static Matrix	LookAtLH(Vector4 const &eye, Vector4 const &at, Vector4 const &up);
+		static Matrix	XM_CALLCONV LookAtLH(Vector4 const &eye, Vector4 const &at, Vector4 const &up) noexcept;
 		
 		/// build right handed lookat matrix
-		static Matrix	LookAtRH(Vector4 const &eye, Vector4 const &at, Vector4 const &up);
+		static Matrix	XM_CALLCONV LookAtRH(Vector4 const &eye, Vector4 const &at, Vector4 const &up) noexcept;
 		
 		/// build left handed lookto matrix
-		static Matrix	LookToLH(Vector4 const &eye, Vector4 const &at, Vector4 const &up);
+		static Matrix	XM_CALLCONV LookToLH(Vector4 const &eye, Vector4 const &at, Vector4 const &up) noexcept;
 		
 		/// build right handed lookto matrix
-		static Matrix	LookToRH(Vector4 const &eye, Vector4 const &at, Vector4 const &up);
+		static Matrix	XM_CALLCONV LookToRH(Vector4 const &eye, Vector4 const &at, Vector4 const &up) noexcept;
 		
 		/// multiply 2 matrices
-		static Matrix	Multiply(const Matrix& m0, const Matrix& m1);
+		static Matrix	XM_CALLCONV Multiply(const Matrix& m0, const Matrix& m1) noexcept;
 		
 		/// build left handed orthogonal projection matrix
-		static Matrix	OrthoLH(float w, float h, float zn, float zf);
+		static Matrix	XM_CALLCONV OrthoLH(float w, float h, float zn, float zf) noexcept;
 		
 		/// build right handed orthogonal projection matrix
-		static Matrix	OrthoRH(float w, float h, float zn, float zf);
+		static Matrix	XM_CALLCONV OrthoRH(float w, float h, float zn, float zf) noexcept;
 		
 		/// build left-handed off-center orthogonal projection matrix
-		static Matrix	OrthoOffCenterLH(float l, float r, float b, float t, float zn, float zf);
+		static Matrix	XM_CALLCONV OrthoOffCenterLH(float l, float r, float b, float t, float zn, float zf) noexcept;
 		
 		/// build right-handed off-center orthogonal projection matrix
-		static Matrix	OrthoOffCenterRH(float l, float r, float b, float t, float zn, float zf);
+		static Matrix	XM_CALLCONV OrthoOffCenterRH(float l, float r, float b, float t, float zn, float zf) noexcept;
 		
 		/// build left-handed perspective projection matrix based on field-of-view
-		static Matrix	PerspectiveProjectionFovLH(float fovy, float aspect, float zn, float zf);
+		static Matrix	XM_CALLCONV PerspectiveProjectionFovLH(float fovy, float aspect, float zn, float zf) noexcept;
 		
 		/// build right-handed perspective projection matrix based on field-of-view
-		static Matrix	PerspectiveProjectionFovRH(float fovy, float aspect, float zn, float zf);
+		static Matrix	XM_CALLCONV PerspectiveProjectionFovRH(float fovy, float aspect, float zn, float zf) noexcept;
 		
 		/// build left-handed perspective projection matrix
-		static Matrix	PerspectiveProjectionLH(float w, float h, float zn, float zf);
+		static Matrix	XM_CALLCONV PerspectiveProjectionLH(float w, float h, float zn, float zf) noexcept;
 		
 		/// build right-handed perspective projection matrix
-		static Matrix	PerspectiveProjectionRH(float w, float h, float zn, float zf);
+		static Matrix	XM_CALLCONV PerspectiveProjectionRH(float w, float h, float zn, float zf) noexcept;
 		
 		/// build left-handed off-center perspective projection matrix
-		static Matrix	PerspOffCenterLH(float l, float r, float b, float t, float zn, float zf);
+		static Matrix	XM_CALLCONV PerspOffCenterLH(float l, float r, float b, float t, float zn, float zf) noexcept;
 		
 		/// build right-handed off-center perspective projection matrix
-		static Matrix	PerspOffCenterRH(float l, float r, float b, float t, float zn, float zf);
+		static Matrix	XM_CALLCONV PerspOffCenterRH(float l, float r, float b, float t, float zn, float zf) noexcept;
 		
 		/// build matrix that reflects coordinates about a plance
-		static Matrix	Reflect(const Plane& p);
+		static Matrix	XM_CALLCONV Reflect(const Plane& p) noexcept;
 		
 		/// build rotation matrix around arbitrary axis
-		static Matrix	RotationAxis(Vector4 const &axis, float angle);
+		static Matrix	XM_CALLCONV RotationAxis(Vector4 const &axis, float angle) noexcept;
 		
 		/// build rotation matrix from quaternion
-		static Matrix	RotationQuaternion(const Quat& q);
+		static Matrix	XM_CALLCONV RotationQuaternion(const Quat& q) noexcept;
 		
 		/// build x-axis-rotation matrix
-		static Matrix	RotationX(float angle);
+		static Matrix	XM_CALLCONV RotationX(float angle) noexcept;
 		
 		/// build y-axis-rotation matrix
-		static Matrix	RotationY(float angle);
+		static Matrix	XM_CALLCONV RotationY(float angle) noexcept;
 		
 		/// build z-axis-rotation matrix
-		static Matrix	RotationZ(float angle);
+		static Matrix	XM_CALLCONV RotationZ(float angle) noexcept;
 		
 		/// build Rotation Matrix
-		void			Rotation(const Vector3& rot);
+		void		XM_CALLCONV Rotation(const Vector3& rot) noexcept;
 		
 		/// build rotation matrix from yaw, pitch and roll
-		static Matrix	RotationYawPitchRoll(float yaw, float pitch, float roll);
+		static Matrix	XM_CALLCONV RotationYawPitchRoll(float yaw, float pitch, float roll) noexcept;
 		
 		/// build a scaling matrix from components
-		static Matrix	Scaling(float sx, float sy, float sz);
+		static Matrix	XM_CALLCONV Scaling(float sx, float sy, float sz) noexcept;
 		
 		/// build a scaling matrix from components
-		static Matrix	Scaling(float s);
+		static Matrix	XM_CALLCONV Scaling(float s) noexcept;
 		
 		/// build a scaling matrix from Vector4
-		static Matrix	Scaling(Vector4 const &s);
+		static Matrix	XM_CALLCONV Scaling(Vector4 const &s) noexcept;
 		
 		/// build a transformation matrix
-		static Matrix	Transformation(Vector4 const &scalingCenter, const Quat& scalingRotation, Vector4 const &scaling, Vector4 const &rotationCenter, const Quat& rotation, Vector4 const &translation);
+		static Matrix	XM_CALLCONV Transformation(Vector4 const &scalingCenter, const Quat& scalingRotation, Vector4 const &scaling, Vector4 const &rotationCenter, const Quat& rotation, Vector4 const &translation) noexcept;
 		
 		/// build a translation matrix
-		static Matrix	Translation(float x, float y, float z);
+		static Matrix	XM_CALLCONV Translation(float x, float y, float z) noexcept;
 		
 		/// build a translation matrix from point
-		static Matrix	Translation(Vector4 const &t);
+		static Matrix	XM_CALLCONV Translation(Vector4 const &t) noexcept;
 		
 		/// return the transpose of a matrix
-		static Matrix	Transpose(const Matrix& m);
+		static Matrix	XM_CALLCONV Transpose(const Matrix& m) noexcept;
 		
 		/// transform 4d vector by Matrix, faster inline version than Vector4::transform
-		static Vector4	Transform(const Vector4 &v, const Matrix &m);
+		static Vector4	XM_CALLCONV Transform(const Vector4 &v, const Matrix &m) noexcept;
 		
 		/// return a quaternion from rotational part of the 4x4 matrix
-		static Quat		RotationMatrix(const Matrix& m);
+		static Quat	XM_CALLCONV 	RotationMatrix(const Matrix& m) noexcept;
 		
 		// transform a plane with a matrix
-		static Plane	Transform(const Plane& p, const Matrix& m);
+		static Plane	XM_CALLCONV Transform(const Plane& p, const Matrix& m) noexcept;
 
 
 		/// Easy acces Matrix Members
@@ -407,25 +407,25 @@ namespace TurboMath
 		/// Matrix matrix;
 		/// float value = matrix[Matrix::M11];
 
-		static const int M11 = 0;
-		static const int M12 = 1;
-		static const int M13 = 2;
-		static const int M14 = 3;
+		static constexpr int M11 = 0;
+		static constexpr int M12 = 1;
+		static constexpr int M13 = 2;
+		static constexpr int M14 = 3;
 
-		static const int M21 = 4;
-		static const int M22 = 5;
-		static const int M23 = 6;
-		static const int M24 = 7;
+		static constexpr int M21 = 4;
+		static constexpr int M22 = 5;
+		static constexpr int M23 = 6;
+		static constexpr int M24 = 7;
 		
-		static const int M31 = 8;
-		static const int M32 = 9;
-		static const int M33 = 10;
-		static const int M34 = 11;
+		static constexpr int M31 = 8;
+		static constexpr int M32 = 9;
+		static constexpr int M33 = 10;
+		static constexpr int M34 = 11;
 
-		static const int M41 = 12;
-		static const int M42 = 13;
-		static const int M43 = 14;
-		static const int M44 = 15;
+		static constexpr int M41 = 12;
+		static constexpr int M42 = 13;
+		static constexpr int M43 = 14;
+		static constexpr int M44 = 15;
 
 		/// friend-classes
 		friend class Vector2;

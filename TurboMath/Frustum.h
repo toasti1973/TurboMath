@@ -35,49 +35,49 @@ namespace TurboMath
 	{
 	public:
 
-		Frustum();
-		Frustum(const Frustum& cpyFrustum);
+		Frustum() noexcept;
+		Frustum(const Frustum& cpyFrustum) noexcept;
 	
 		// Fucntions
 
 	public:
 
-		 void				SetOrigin(const Vector4& orig);	
-		const Vector4		GetOrigin() const;		
+		void		XM_CALLCONV SetOrigin(const Vector4& orig) noexcept;	
+		const Vector4	XM_CALLCONV GetOrigin() const noexcept;		
 
-		void				SetOrientation(const Quat& NewQuat);	
-		const Quat			GetOrientation() const;		
+		void		XM_CALLCONV SetOrientation(const Quat& NewQuat) noexcept;	
+		const Quat	XM_CALLCONV GetOrientation() const noexcept;		
 
-		void				SetRightSlope(const float rf);	
-		const float			GetRightSlope() const;	
+		void		XM_CALLCONV SetRightSlope(const float rf) noexcept;	
+		const float	XM_CALLCONV GetRightSlope() const noexcept;	
 
-		void				SetLeftSlope(const float lf);	
-		const float			GetLeftSlope() const;	
+		void		XM_CALLCONV SetLeftSlope(const float lf) noexcept;	
+		const float	XM_CALLCONV GetLeftSlope() const noexcept;	
 
-		void				SetTopSlope(const float tf);	
-		const float			GetTopSlope() const;	
+		void		XM_CALLCONV SetTopSlope(const float tf) noexcept;	
+		const float	XM_CALLCONV GetTopSlope() const noexcept;	
 
-		void				SetBottonSlope(const float bf);	
-		const float			GetBottomSlope() const;		
+		void		XM_CALLCONV SetBottonSlope(const float bf) noexcept;	
+		const float	XM_CALLCONV GetBottomSlope() const noexcept;		
 
-		void				SetNearPlane(const float fNear);	
-		const float			GetNearPlane() const;	
+		void		XM_CALLCONV SetNearPlane(const float fNear) noexcept;	
+		const float	XM_CALLCONV GetNearPlane() const noexcept;	
 
-		void				SetFarPlane(const float fFar);
-		const float			GetFarPlane() const	;	
+		void		XM_CALLCONV SetFarPlane(const float fFar) noexcept;
+		const float	XM_CALLCONV GetFarPlane() const  noexcept;	
 
 		/// Rotate Frustum around `axis` by `degrees`. Frustum's position is a 
 		/// pivot point of rotation, so it doesn't change
-		void Rotate(const Vector4& axis, float degrees);
+		void XM_CALLCONV Rotate(const Vector4& axis, float degrees) noexcept;
 
-		void Rotate(const Quat& q);
+		void XM_CALLCONV Rotate(const Quat& q) noexcept;
 
-		void ComputeFrustumFromProjection(const Matrix& Projection );
-		void ComputePlanes( Plane& Plane0, Plane& Plane1, Plane& Plane2,Plane& Plane3, Plane& Plane4, Plane& Plane5 ) const;
+		void XM_CALLCONV ComputeFrustumFromProjection(const Matrix& Projection ) noexcept;
+		void XM_CALLCONV ComputePlanes( Plane& Plane0, Plane& Plane1, Plane& Plane2,Plane& Plane3, Plane& Plane4, Plane& Plane5 ) const noexcept;
 
-		void Transform(const float Scale,Quat& Rotation,const Vector4& Translation );
+		void XM_CALLCONV Transform(const float Scale,Quat& Rotation,const Vector4& Translation ) noexcept;
 
-		const bool IntersectPoint(const Vector4& Point) const;
+		const bool XM_CALLCONV IntersectPoint(const Vector4& Point) const noexcept;
 
 		//-----------------------------------------------------------------------------
 		// Frustum intersection testing routines.
@@ -85,23 +85,23 @@ namespace TurboMath
 		//                1 = intersection,
 		//                2 = A is completely inside B
 		//-----------------------------------------------------------------------------
-		const eCullClassify IntersectTriangle(const Vector4& V0,const Vector4& V1,const Vector4& V2) const;
-		const eCullClassify IntersectSphere( const Sphere& pVolumeA) const;
-		const eCullClassify IntersectAABB( const AABB& pVolumeA) const;
-		const eCullClassify IntersectOBB( const OBB& pVolumeA) const;
-		const eCullClassify IntersectFrustum( const Frustum& pVolumeA) const;
-		const eCullClassify Intersect6Planes( const Plane& Plane0,const Plane& Plane1, const Plane& Plane2,const Plane& Plane3,const  Plane& Plane4, const Plane& Plane5 ) const;
-		const eCullClassify IntersectPlane( const Plane& Plane0 ) const;
+		const eCullClassify XM_CALLCONV IntersectTriangle(const Vector4& V0,const Vector4& V1,const Vector4& V2) const noexcept;
+		const eCullClassify XM_CALLCONV IntersectSphere( const Sphere& pVolumeA) const noexcept;
+		const eCullClassify XM_CALLCONV IntersectAABB( const AABB& pVolumeA) const noexcept;
+		const eCullClassify XM_CALLCONV IntersectOBB( const OBB& pVolumeA) const noexcept;
+		const eCullClassify XM_CALLCONV IntersectFrustum( const Frustum& pVolumeA) const noexcept;
+		const eCullClassify XM_CALLCONV Intersect6Planes( const Plane& Plane0,const Plane& Plane1, const Plane& Plane2,const Plane& Plane3,const  Plane& Plane4, const Plane& Plane5 ) const;
+		const eCullClassify XM_CALLCONV IntersectPlane( const Plane& Plane0 ) const;
 
 	protected:
-		Vector4 Origin;				// Origin of the frustum (and projection).
-		Quat Orientation;			// Unit quaternion representing rotation.
+		Vector4 Origin;		// Origin of the frustum (and projection).
+		Quat Orientation;	// Unit quaternion representing rotation.
 
-		float RightSlope;           // Positive X slope (X/Z).
-		float LeftSlope;            // Negative X slope.
-		float TopSlope;             // Positive Y slope (Y/Z).
-		float BottomSlope;          // Negative Y slope.
-		float Near, Far;            // Z of the near plane and far plane.
+		float RightSlope;       // Positive X slope (X/Z).
+		float LeftSlope;        // Negative X slope.
+		float TopSlope;         // Positive Y slope (Y/Z).
+		float BottomSlope;      // Negative Y slope.
+		float Near, Far;        // Z of the near plane and far plane.
 
 	};
 

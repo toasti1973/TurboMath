@@ -39,11 +39,11 @@ namespace TurboMath
 		//-----------------------------------------------------------------------------
 		// Constructor / Destructor
 		//-----------------------------------------------------------------------------
-		explicit	AABB(const Vector4& c,const Vector4& e);
+		explicit	AABB(const Vector4& c,const Vector4& e) noexcept;
 
-					AABB();
+					AABB() noexcept;
 
-		explicit	AABB( OBB& o );
+		explicit	AABB( OBB& o ) noexcept;
 
 		bool XM_CALLCONV operator == (const AABB& box) const noexcept;
 		bool XM_CALLCONV operator != (const AABB& box) const noexcept;
@@ -66,40 +66,40 @@ namespace TurboMath
 		const Vector4	XM_CALLCONV	GetMinExtents() const noexcept;
 		const Vector4	XM_CALLCONV	GetMaxExtents() const noexcept;
 
-		const float		XM_CALLCONV	GetVolume() const noexcept;
+		const float	XM_CALLCONV	GetVolume() const noexcept;
 
 		const Vector4	XM_CALLCONV	GetPoint(const int index) const noexcept;
 		const Vector4	XM_CALLCONV	GetVertexNormal( const int index) const noexcept;
 		const Vector4	XM_CALLCONV	GetFaceNormal( const ePlane which) const noexcept;
 		
-		const Plane		XM_CALLCONV	GetPlane(const ePlane which) const noexcept;
-		const Line		XM_CALLCONV	GetEdge(const int index) const noexcept;
+		const Plane	XM_CALLCONV	GetPlane(const ePlane which) const noexcept;
+		const Line	XM_CALLCONV	GetEdge(const int index) const noexcept;
 
 		// Get the 6 plane of the AABB
-		const void XM_CALLCONV	GetPlanes(  Plane& Plane0, Plane& Plane1, Plane& Plane2, Plane& Plane3, Plane& Plane4, Plane& Plane5 ) const noexcept;
+		const void 	XM_CALLCONV	GetPlanes(  Plane& Plane0, Plane& Plane1, Plane& Plane2, Plane& Plane3, Plane& Plane4, Plane& Plane5 ) const noexcept;
 
 		//-----------------------------------------------------------------------------
 		// Find the minimum axis aligned bounding box containing a set of points.
 		//-----------------------------------------------------------------------------
-		void XM_CALLCONV	ComputeBoundingAABBFromPoints(UINT Count, Vector4* pPoints, UINT Stride ) noexcept;
+		void 		XM_CALLCONV	ComputeBoundingAABBFromPoints(UINT Count, Vector4* pPoints, UINT Stride );
 
 		//-----------------------------------------------------------------------------
 		// Transform an axis aligned box by an angle preserving transform.
 		//-----------------------------------------------------------------------------
-		void XM_CALLCONV	Transform( const AABB* pIn,const float Scale, const Quat& Rotation, const Vector4& Translation ) noexcept;
+		void 		XM_CALLCONV	Transform( const AABB* pIn,const float Scale, const Quat& Rotation, const Vector4& Translation );
 
 		//-----------------------------------------------------------------------------
 		// Intersection testing routines.
 		//-----------------------------------------------------------------------------
-		const bool XM_CALLCONV	IntersectPoint( const Vector4& Point) const noexcept;
-		const bool XM_CALLCONV	IntersectRay(  const Ray& theRay,float* pDist ) const noexcept;
-		const bool XM_CALLCONV	IntersectTriangle(  const Vector4& V0, const Vector4& V1, const Vector4& V2 ) const noexcept;
-		const bool XM_CALLCONV	IntersectSphere( Sphere& pVolumeA ) const noexcept;
-		const bool XM_CALLCONV	IntersectAABB( AABB& pVolumeB ) const noexcept;
-		const bool XM_CALLCONV	IntersectOBB( OBB& pVolumeB ) const noexcept;
+		const bool 	XM_CALLCONV	IntersectPoint( const Vector4& Point) const noexcept;
+		const bool 	XM_CALLCONV	IntersectRay(  const Ray& theRay,float* pDist ) const;
+		const bool 	XM_CALLCONV	IntersectTriangle(  const Vector4& V0, const Vector4& V1, const Vector4& V2 ) const noexcept;
+		const bool 	XM_CALLCONV	IntersectSphere( Sphere& pVolumeA ) const noexcept;
+		const bool 	XM_CALLCONV	IntersectAABB( AABB& pVolumeB ) const noexcept;
+		const bool 	XM_CALLCONV	IntersectOBB( OBB& pVolumeB ) const noexcept;
 
 		// does aabb contain ray
-		const bool XM_CALLCONV	Contains(const Ray& ray, float fL) const noexcept;
+		const bool 	XM_CALLCONV	Contains(const Ray& ray, float fL) const noexcept;
 
 		//-----------------------------------------------------------------------------
 		// Frustum intersection testing routines.
@@ -107,7 +107,7 @@ namespace TurboMath
 		//                1 = intersection,
 		//                2 = A is completely inside B
 		//-----------------------------------------------------------------------------
-		const eCullClassify XM_CALLCONV	IntersectFrustum( Frustum* pVolumeB ) const noexcept;
+		const eCullClassify XM_CALLCONV	IntersectFrustum( Frustum* pVolumeB ) const;
 		const eCullClassify XM_CALLCONV	IntersectPlane( Plane& Plane0 ) const noexcept;
 
 		//-----------------------------------------------------------------------------

@@ -55,7 +55,7 @@ namespace TurboMath
 		assert(NumPoints > 0);																		// Have we any Points in the List ?
 
 		const float fCurrentPoint = m_CurrentTime * (float)NumPoints;
-		const size_t	CurrentPoint = (size_t)floor(fCurrentPoint);
+		const size_t CurrentPoint = (size_t)floor(fCurrentPoint);
 
 		const float segmentLength = (1.0f / (float)NumPoints);
 		const float timeStart = (float)CurrentPoint * segmentLength;

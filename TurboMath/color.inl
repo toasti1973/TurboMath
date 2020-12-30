@@ -37,66 +37,66 @@
 
 namespace TurboMath
 {
-		__forceinline Color::Color()
+		XM_INLINE Color::Color() noexcept
 		{
 		}
 
-		__forceinline Color::Color(const Color& c)
+		XM_INLINE Color::Color(const Color& c) noexcept
 		{
 			color = c.color;
 		}
 
-		__forceinline Color::Color(const float f)
+		XM_INLINE Color::Color(const float f) noexcept
 		{
 			SetRGBA(f,f,f,1.0f);
 		}
 
-		__forceinline Color::Color(const float _r, const float _g, const float _b)
+		XM_INLINE Color::Color(const float _r, const float _g, const float _b) noexcept
 		{
 			SetRGBA(_r,_g,_b,1.0f);
 		}
 
-		__forceinline Color::Color(const float _r, const float _g, const float _b, const float _a)
+		XM_INLINE Color::Color(const float _r, const float _g, const float _b, const float _a) noexcept
 		{
 			SetRGBA(_r,_g,_b,_a);
 		}
 
-		__forceinline Color::Color(const float* pfComponent)
+		XM_INLINE Color::Color(const float* pfComponent) noexcept
 		{
 			SetRGBA( pfComponent[0], pfComponent[1], pfComponent[2], pfComponent[3]);
 		}
 
-		__forceinline Color::Color(const char _r, const char _g, const char _b)
+		XM_INLINE Color::Color(const char _r, const char _g, const char _b) noexcept
 		{
 			SetRGBA( (float)(_r) * I3D_COLOR_CONV, (float)(_g) * I3D_COLOR_CONV, (float)(_b) * I3D_COLOR_CONV, 1.0f );
 		}
 
-		__forceinline Color::Color(const char _r, const char _g, const char _b, const char _a) 
+		XM_INLINE Color::Color(const char _r, const char _g, const char _b, const char _a)  noexcept
 		{
 			SetRGBA( (float)(_r) * I3D_COLOR_CONV, (float)(_g) * I3D_COLOR_CONV, (float)(_b) * I3D_COLOR_CONV, (float)(_a) * I3D_COLOR_CONV);	
 		}
 
-		__forceinline Color::Color(const char* pComponent)
+		XM_INLINE Color::Color(const char* pComponent) noexcept
 		{
 			SetRGBA( (float)(pComponent[0]) * I3D_COLOR_CONV, (float)(pComponent[1]) * I3D_COLOR_CONV, (float)(pComponent[2]) * I3D_COLOR_CONV, (float)(pComponent[3]) * I3D_COLOR_CONV );
 		}
 
-		__forceinline Color::Color(const Vector4& rhs)
+		XM_INLINE Color::Color(const Vector4& rhs) noexcept
 		{
 			color = rhs;
 		}
 
-		__forceinline Color::Color(const XMVECTOR& rhs)
+		XM_INLINE Color::Color(const XMVECTOR& rhs) noexcept
 		{
 			color = rhs;
 		}
 
-		__forceinline Color::Color(uint16_t r, uint16_t g, uint16_t b, uint16_t a, uint16_t bitDepth)
+		XM_INLINE Color::Color(uint16_t r, uint16_t g, uint16_t b, uint16_t a, uint16_t bitDepth) noexcept
 		{
 			color = XMVectorScale(XMVectorSet(r, g, b, a), 1.0f / ((1 << bitDepth) - 1));
 		}
 
-		__forceinline Color::Color(uint32_t u32)
+		XM_INLINE Color::Color(uint32_t u32) noexcept
 		{
 			float r = (float)((u32 >> 0) & 0xFF);
 			float g = (float)((u32 >> 8) & 0xFF);
@@ -109,69 +109,69 @@ namespace TurboMath
 		// -----------------------------------------------------------
 
 		/// assignment operator
-		__forceinline void Color::operator=(  Color& rhs)
+		XM_INLINE void  XM_CALLCONV Color::operator=(  Color& rhs) noexcept
 		{
 			color = rhs.color;
 		}
 
 		/// assign an XMFLOAT4
-		__forceinline void Color::operator=( XMFLOAT4 rhs)
+		XM_INLINE void  XM_CALLCONV Color::operator=( XMFLOAT4 rhs) noexcept
 		{
 			SetRGBA(rhs.x,rhs.y,rhs.z,rhs.w);
 		}
 
 		/// assign a float
-		__forceinline Color Color::operator=( float f)
+		XM_INLINE Color  XM_CALLCONV Color::operator=( float f) noexcept
 		{
 			SetRGBA(f,f,f,1.0f);
 			return *this;
 		}
 
 		/// assign a XMVECTOR
-		__forceinline void Color::operator=( XMVECTOR rhs)
+		XM_INLINE void  XM_CALLCONV Color::operator=( XMVECTOR rhs) noexcept
 		{
 			color = rhs;
 		}
 
 
 		/// Set Red
-		__forceinline void Color::SetR(const float red)
+		XM_INLINE void  XM_CALLCONV Color::SetR(const float red) noexcept
 		{
 			this->color = XMVectorSetXPtr(this->color, &red);
 		}
 
 		/// Set Green
-		__forceinline void Color::SetG(const float green)
+		XM_INLINE void  XM_CALLCONV Color::SetG(const float green) noexcept
 		{
 			this->color = XMVectorSetYPtr(this->color, &green);
 		}
 
 		/// Set Blue
-		__forceinline void Color::SetB(const float blue)
+		XM_INLINE void  XM_CALLCONV Color::SetB(const float blue) noexcept
 		{
 			this->color = XMVectorSetZPtr(this->color, &blue);
 		}
 
 		/// Set Alpha
-		__forceinline void Color::SetA(const float alpha)
+		XM_INLINE void  XM_CALLCONV Color::SetA(const float alpha) noexcept
 		{
 			this->color = XMVectorSetWPtr(this->color, &alpha);
 		}
 
 		/// Set RGB
-		__forceinline void Color::SetRGB(const float red,const float green, const float blue)
+		XM_INLINE void  XM_CALLCONV Color::SetRGB(const float red,const float green, const float blue) noexcept
 		{
 			this->color = XMVectorSet(red, green, blue, 1.0f);
 		}
 
 		/// Set RGBA
-		__forceinline void Color::SetRGBA(const float red,const float green, const float blue, const float alpha)
+		XM_INLINE void  XM_CALLCONV Color::SetRGBA(const float red,const float green, const float blue, const float alpha) noexcept
 		{
 			this->color = XMVectorSet(red, green, blue, alpha);
 		}
 
 		/// Get Red
-		__forceinline const float Color::GetR() const
+		XM_INLINE const float XM_CALLCONV  Color::GetR() const noexcept
 		{
 			float r;
 			XMVectorGetXPtr(&r, color);
@@ -179,7 +179,7 @@ namespace TurboMath
 		}
 
 		/// Get Green
-		__forceinline const float Color::GetG() const
+		XM_INLINE const float XM_CALLCONV  Color::GetG() const noexcept
 		{
 			float g;
 			XMVectorGetYPtr(&g, color);
@@ -187,7 +187,7 @@ namespace TurboMath
 		}
 
 		/// Get Blue
-		__forceinline const float Color::GetB() const
+		XM_INLINE const float XM_CALLCONV  Color::GetB() const noexcept
 		{
 			float b;
 			XMVectorGetZPtr(&b, color);
@@ -195,7 +195,7 @@ namespace TurboMath
 		}
 
 		/// Get Alpha
-		__forceinline const float Color::GetA() const
+		XM_INLINE const float XM_CALLCONV  Color::GetA() const noexcept
 		{
 			float a;
 			XMVectorGetWPtr(&a, color);
@@ -203,13 +203,13 @@ namespace TurboMath
 		}
 
 		/// Get as DWORD
-		__forceinline const DWORD Color::GetAsDWORD() const
+		XM_INLINE const DWORD  XM_CALLCONV Color::GetAsDWORD() const noexcept
 		{
 			return DWORD (PackedVector::XMCOLOR((float*)&color) );
 		}
 
 		/// Get as XMFLOAT4
-		__forceinline const XMFLOAT4 Color::GetAsXMFLOAT4() const
+		XM_INLINE const XMFLOAT4 XM_CALLCONV  Color::GetAsXMFLOAT4() const noexcept
 		{
 			XMFLOAT4 tmp;
 			XMStoreFloat4(&tmp,color);
@@ -217,24 +217,24 @@ namespace TurboMath
 		}
 
 		//------------------------------------------------------------------------------
-		__forceinline XMVECTOR Color::GetRaw() const
+		XM_INLINE XMVECTOR XM_CALLCONV  Color::GetRaw() const noexcept
 		{
 			return this->color;
 		}
 
 		//------------------------------------------------------------------------------
-		__forceinline XMVECTOR* Color::GetRawPtr()
+		XM_INLINE XMVECTOR* XM_CALLCONV  Color::GetRawPtr() noexcept
 		{
 			return &this->color;
 		}
 
 		//------------------------------------------------------------------------------
-		__forceinline float*	Color::GetFloatPtr()
+		XM_INLINE float* XM_CALLCONV 	Color::GetFloatPtr() noexcept
 		{
 			return (float*)&color; 
 		}
 
-		__forceinline void Color::Clamp()
+		XM_INLINE void  XM_CALLCONV Color::Clamp() noexcept
 		{
 			if (GetR() > 1.0f) SetR(1.0f);
 			if (GetG() > 1.0f) SetG(1.0f);
@@ -248,35 +248,35 @@ namespace TurboMath
 		}
 
 
-		__forceinline Color& Color::operator += (const Color& c) 
+		XM_INLINE Color& XM_CALLCONV  Color::operator += (const Color& c)  noexcept
 		{
 			this->color = XMVectorAdd(this->color, c.color);
 
 			return( *this );
 		}
 
-		__forceinline Color& Color::operator -= (const Color& c) 
+		XM_INLINE Color& XM_CALLCONV Color::operator -= (const Color& c)  noexcept
 		{
 			this->color = XMVectorSubtract(this->color, c.color);
 
 			return( *this );
 		}
 
-		__forceinline Color& Color::operator *= (const Color& c) 
+		XM_INLINE Color&  XM_CALLCONV Color::operator *= (const Color& c)  noexcept
 		{
 			this->color = XMVectorMultiply(this->color, c.color);
 
 			return( *this );
 		}
 
-		__forceinline Color& Color::operator *= (const float f) 
+		XM_INLINE Color& XM_CALLCONV  Color::operator *= (const float f)  noexcept
 		{
 			this->color = XMVectorScale(this->color, f);
 
 			return( *this );
 		}
 
-		__forceinline Color& Color::operator /= (const Color& c) 
+		XM_INLINE Color&  XM_CALLCONV Color::operator /= (const Color& c)  noexcept
 		{
 			const float r = c.GetR() != 0.0f ? this->GetR() / c.GetR() : 0.0f;
 			const float g = c.GetG() != 0.0f ? this->GetG() / c.GetG() : 0.0f;
@@ -288,7 +288,7 @@ namespace TurboMath
 			return( *this );
 		}
 
-		__forceinline Color& Color::operator /= (const float f) 
+		XM_INLINE Color&  XM_CALLCONV Color::operator /= (const float f)  noexcept
 		{
 			// Add simple Data ti the float, so we don´t have a Division by Zero!
 			const float div = f + 0.000001f;
@@ -302,27 +302,27 @@ namespace TurboMath
 		}
 
 
-		__forceinline Color Color::operator + (const Color& a) const
+		XM_INLINE Color  XM_CALLCONV Color::operator + (const Color& a) const noexcept
 		{
 			return Color(XMVectorAdd(this->color, a.color));
 		}
 
-		__forceinline Color Color::operator - (const Color& a) const
+		XM_INLINE Color XM_CALLCONV  Color::operator - (const Color& a) const noexcept
 		{
 			return Color(XMVectorSubtract(this->color, a.color));
 		}
 
-		__forceinline Color Color::operator * (const Color& a) const
+		XM_INLINE Color XM_CALLCONV  Color::operator * (const Color& a) const noexcept
 		{
 			return Color( XMVectorMultiply(this->color, a.color) );
 		}
 
-		__forceinline Color Color::operator * (const float f) const
+		XM_INLINE Color XM_CALLCONV  Color::operator * (const float f) const noexcept
 		{
 			return Color(XMVectorScale(this->color, f));
 		}
 
-		__forceinline Color Color::operator / (const Color& a) const
+		XM_INLINE Color XM_CALLCONV  Color::operator / (const Color& a) const noexcept
 		{
 			// Add simple Data ti the float, so we don´t have a Division by Zero!
 			const float divr = a.GetR() + 0.000001f;
@@ -338,7 +338,7 @@ namespace TurboMath
 			return Color(r,g,b,alpha);
 		}
 
-		__forceinline Color Color::operator / ( const float f) const
+		XM_INLINE Color XM_CALLCONV  Color::operator / ( const float f) const noexcept
 		{
 			// Add simple Data ti the float, so we don´t have a Division by Zero!
 			const float div = f + 0.000001f;
@@ -352,18 +352,18 @@ namespace TurboMath
 		}
 
 
-		__forceinline bool Color::operator == (const Color& a) const
+		XM_INLINE bool XM_CALLCONV  Color::operator == (const Color& a) const noexcept
 		{
 			return (0 != XMVector4Equal(this->color, a.color));
 		}
 
-		__forceinline bool Color::operator != (const Color& a) const
+		XM_INLINE bool XM_CALLCONV  Color::operator != (const Color& a) const noexcept
 		{
 			return (0 != XMVector4NotEqual(this->color, a.color));
 		}
 
 
-		__forceinline Color& Color::operator=(const Vector4 &rhs) 
+		XM_INLINE Color& XM_CALLCONV  Color::operator=(const Vector4 &rhs)  noexcept
 		{
 			this->color = rhs.GetRaw();
 
@@ -372,7 +372,7 @@ namespace TurboMath
 
 		/// Functions
 
-		__forceinline unsigned char Color::Pack_RGB332() const
+		XM_INLINE unsigned char XM_CALLCONV  Color::Pack_RGB332() const
 		{
 			static_assert(sizeof(Color) == 16, "Class TurboMath::Color wrong size");
 
@@ -383,7 +383,7 @@ namespace TurboMath
 			return ((cr >> 5) << 5) | ((cg >> 5) << 2) | (cb >> 5);
 		}
 
-		__forceinline unsigned short Color::Pack_ARGB4444() const
+		XM_INLINE unsigned short XM_CALLCONV  Color::Pack_ARGB4444() const noexcept
 		{
 			const unsigned char cr = (unsigned char)(GetR() * 255.0f);
 			const unsigned char cg = (unsigned char)(GetG() * 255.0f);
@@ -393,7 +393,7 @@ namespace TurboMath
 			return ((ca >> 4) << 12) | ((cr >> 4) << 8) | ((cg >> 4) << 4) | (cb >> 4);
 		}
 
-		__forceinline unsigned short Color::Pack_RGB555() const
+		XM_INLINE unsigned short XM_CALLCONV  Color::Pack_RGB555() const noexcept
 		{
 			const unsigned char cr = (unsigned char)(GetR() * 255.0f);
 			const unsigned char cg = (unsigned char)(GetG() * 255.0f);
@@ -402,7 +402,7 @@ namespace TurboMath
 			return ((cr >> 3) << 10) | ((cg >> 3) << 5) | (cb >> 3);
 		}
 
-		__forceinline unsigned short Color::Pack_RGB565() const
+		XM_INLINE unsigned short  XM_CALLCONV Color::Pack_RGB565() const noexcept
 		{
 			const unsigned char cr = (unsigned short)(GetR() * 255.0f);
 			const unsigned char cg = (unsigned short)(GetG() * 255.0f);
@@ -411,7 +411,7 @@ namespace TurboMath
 			return ((cr >> 3) << 11) |	((cg >> 2) << 5) | (cb >> 3);
 		}
 
-		__forceinline unsigned int Color::Pack_RGB888() const
+		XM_INLINE unsigned int XM_CALLCONV  Color::Pack_RGB888() const noexcept
 		{
 			const unsigned char cr = (unsigned char)(GetR() * 255.0f);
 			const unsigned char cg = (unsigned char)(GetG() * 255.0f);
@@ -420,7 +420,7 @@ namespace TurboMath
 			return (cr << 16) | (cg << 8) | cb;
 		}
 
-		__forceinline unsigned int Color::Pack_ABGR8888() const
+		XM_INLINE unsigned int XM_CALLCONV  Color::Pack_ABGR8888() const noexcept
 		{
 			const unsigned char cr = (unsigned char)(GetR() * 255.0f);
 			const unsigned char cg = (unsigned char)(GetG() * 255.0f);
@@ -430,7 +430,7 @@ namespace TurboMath
 			return (ca << 24) | (cb << 16) | (cg << 8) | cr;
 		}
 
-		__forceinline unsigned int Color::Pack_ARGB8888() const
+		XM_INLINE unsigned int XM_CALLCONV  Color::Pack_ARGB8888() const noexcept
 		{
 		
 			const unsigned char cr = (unsigned char)(GetR() * 255.0f);
@@ -441,7 +441,7 @@ namespace TurboMath
 			return (ca << 24) | (cr << 16) | (cg << 8) | cb;
 		}
 
-		__forceinline void Color::Clamp(const float bottom, const float top)
+		XM_INLINE void XM_CALLCONV  Color::Clamp(const float bottom, const float top) noexcept
 		{
 			if(GetR() < bottom)		SetR(bottom);
 			else if(GetR() > top)	SetR(top);
@@ -456,7 +456,7 @@ namespace TurboMath
 			else if(GetA() > top)	SetA(top);
 		}
 
-		__forceinline void Color::AdjustContrast(const float c)
+		XM_INLINE void XM_CALLCONV  Color::AdjustContrast(const float c) noexcept
 		{
 			SetR( 0.5f + c * (GetR() - 0.5f) );
 			SetG( 0.5f + c * (GetG() - 0.5f) );
@@ -464,7 +464,7 @@ namespace TurboMath
 			SetA( 0.5f + c * (GetA() - 0.5f) );
 		}
 
-		__forceinline void Color::AdjustSaturation(const float s)
+		XM_INLINE void  XM_CALLCONV Color::AdjustSaturation(const float s) noexcept
 		{
 			// Approximate values for each component's contribution to luminance.
 			// Based upon the NTSC standard described in ITU-R Recommendation BT.709.
@@ -476,7 +476,7 @@ namespace TurboMath
 			SetA(grey + s * (GetA() - grey));
 		}
 
-		__forceinline void Color::LerpFloat(const Color& ca, const Color& cb, float s)
+		XM_INLINE void XM_CALLCONV  Color::LerpFloat(const Color& ca, const Color& cb, float s) noexcept
 		{
 			SetR( ca.GetR() + s * (cb.GetR() - ca.GetR() ) );
 			SetG( ca.GetG() + s * (cb.GetG() - ca.GetG() ) );
@@ -484,7 +484,7 @@ namespace TurboMath
 			SetA( ca.GetA() + s * (cb.GetA() - ca.GetA() ) );
 		}
 
-		__forceinline void Color::Negative()
+		XM_INLINE void XM_CALLCONV  Color::Negative() noexcept
 		{
 			SetR( 1.0f - GetR() );
 			SetG( 1.0f - GetG() );
@@ -492,14 +492,14 @@ namespace TurboMath
 			SetA( 1.0f - GetA() );
 		}
 
-		__forceinline void Color::Grey()
+		XM_INLINE void XM_CALLCONV  Color::Grey() noexcept
 		{
 			const float m = (GetR() + GetG() + GetB()) / 3.0f;
 
 			SetRGBA(m,m,m,GetA());
 		}
 
-		__forceinline unsigned int Color::toARGB( )
+		XM_INLINE unsigned int XM_CALLCONV  Color::toARGB( ) noexcept
 		{
 			unsigned int result = 0;
 
@@ -513,7 +513,7 @@ namespace TurboMath
 			return( result );
 		}
 
-		__forceinline unsigned int Color::toRGBA( )
+		XM_INLINE unsigned int XM_CALLCONV  Color::toRGBA( ) noexcept
 		{
 			unsigned int result = 0;
 
@@ -527,7 +527,7 @@ namespace TurboMath
 			return( result );
 		}
 
-		__forceinline void Color::fromARGB( unsigned int color )
+		XM_INLINE void XM_CALLCONV  Color::fromARGB( unsigned int color ) noexcept
 		{
 			SetR( (float)((color & 0x00ff0000) >> 16)/(255.0f) );	// red channel
 			SetG( (float)((color & 0x0000ff00) >> 8)/(255.0f) );	// green channel
@@ -536,32 +536,32 @@ namespace TurboMath
 		}
 
 
-		__forceinline float	Brightness(const Color& c)	
+		XM_INLINE float XM_CALLCONV 	Brightness(const Color& c)	 noexcept
 		{
 			return c.GetR() * 0.299f + c.GetG() * 0.587f + c.GetB() * 0.114f;
 		}
 
-		__forceinline Color Interpolate( Color& c1,  Color& c2, const float p)
+		XM_INLINE Color XM_CALLCONV  Interpolate( Color& c1,  Color& c2, const float p) noexcept
 		{
 			return c1 + (c2 - c1) * p;
 		}
 
-		__forceinline Color	Min(const Color& c1, const Color& c2)		
+		XM_INLINE Color XM_CALLCONV 	Min(const Color& c1, const Color& c2)	 noexcept	
 		{
 			return Color(TB_min(c1.GetR(), c2.GetR()), TB_min(c1.GetG(), c2.GetG()), TB_min(c1.GetB(), c2.GetB()), TB_min(c1.GetA(), c2.GetA()));
 		}
 
-		__forceinline Color Max(const Color& c1, const Color& c2)				
+		XM_INLINE Color XM_CALLCONV  Max(const Color& c1, const Color& c2)	 noexcept			
 		{
 			return Color(TB_max(c1.GetR(), c2.GetR()), TB_max(c1.GetG(), c2.GetG()), TB_max(c1.GetB(), c2.GetB()), TB_max(c1.GetA(), c2.GetA()));
 		}
 
-		__forceinline Color	Random(const float fAlpha)		
+		XM_INLINE Color XM_CALLCONV 	Random(const float fAlpha) noexcept		
 		{
 			return Color(Rand(0.0f, 1.0f), Rand(0.0f, 1.0f), Rand(0.0f, 1.0f), fAlpha < 0.0f ? Rand(0.0f, 1.0f) : fAlpha);
 		}
 
-		__forceinline Color Color::ToSRGB(void) const
+		XM_INLINE Color XM_CALLCONV  Color::ToSRGB(void) const noexcept
 		{
 			XMVECTOR T = XMVectorSaturate(color);
 			XMVECTOR result = XMVectorSubtract(XMVectorScale(XMVectorPow(T, XMVectorReplicate(1.0f / 2.4f)), 1.055f), XMVectorReplicate(0.055f));
@@ -569,7 +569,7 @@ namespace TurboMath
 			return Color(XMVectorSelect(T, result, g_XMSelect1110));
 		}
 
-		__forceinline Color Color::FromSRGB(void) const
+		XM_INLINE Color XM_CALLCONV  Color::FromSRGB(void) const noexcept
 		{
 			XMVECTOR T = XMVectorSaturate(color);
 			XMVECTOR result = XMVectorPow(XMVectorScale(XMVectorAdd(T, XMVectorReplicate(0.055f)), 1.0f / 1.055f), XMVectorReplicate(2.4f));
@@ -577,7 +577,7 @@ namespace TurboMath
 			return Color(XMVectorSelect(T, result, g_XMSelect1110));
 		}
 
-		__forceinline Color Color::ToREC709(void) const
+		XM_INLINE Color  XM_CALLCONV Color::ToREC709(void) const noexcept
 		{
 			XMVECTOR T = XMVectorSaturate(color);
 			XMVECTOR result = XMVectorSubtract(XMVectorScale(XMVectorPow(T, XMVectorReplicate(0.45f)), 1.099f), XMVectorReplicate(0.099f));
@@ -585,7 +585,7 @@ namespace TurboMath
 			return Color(XMVectorSelect(T, result, g_XMSelect1110));
 		}
 
-		__forceinline Color Color::FromREC709(void) const
+		XM_INLINE Color XM_CALLCONV  Color::FromREC709(void) const noexcept
 		{
 			XMVECTOR T = XMVectorSaturate(color);
 			XMVECTOR result = XMVectorPow(XMVectorScale(XMVectorAdd(T, XMVectorReplicate(0.099f)), 1.0f / 1.099f), XMVectorReplicate(1.0f / 0.45f));
@@ -593,7 +593,7 @@ namespace TurboMath
 			return Color(XMVectorSelect(T, result, g_XMSelect1110));
 		}
 
-		__forceinline uint32_t Color::R10G10B10A2(void) const
+		XM_INLINE uint32_t XM_CALLCONV  Color::R10G10B10A2(void) const noexcept
 		{
 			XMVECTOR result = XMVectorRound(XMVectorMultiply(XMVectorSaturate(color), XMVectorSet(1023.0f, 1023.0f, 1023.0f, 3.0f)));
 			result = _mm_castsi128_ps(_mm_cvttps_epi32(result));
@@ -604,7 +604,7 @@ namespace TurboMath
 			return a << 30 | b << 20 | g << 10 | r;
 		}
 
-		__forceinline uint32_t Color::R8G8B8A8(void) const
+		XM_INLINE uint32_t XM_CALLCONV  Color::R8G8B8A8(void) const noexcept
 		{
 			XMVECTOR result = XMVectorRound(XMVectorMultiply(XMVectorSaturate(color), XMVectorReplicate(255.0f)));
 			result = _mm_castsi128_ps(_mm_cvttps_epi32(result));
@@ -615,7 +615,7 @@ namespace TurboMath
 			return a << 24 | b << 16 | g << 8 | r;
 		}
 
-/*		__forceinline Color& Color::operator /= (const Color& c)
+/*		XM_INLINE Color& XM_CALLCONV  Color::operator /= (const Color& c) noexcept
 		{
 			const float r = c.R() != 0.0f ? this->R() / c.R() : 0.0f;
 			const float g = c.G() != 0.0f ? this->G() / c.G() : 0.0f;
@@ -627,7 +627,7 @@ namespace TurboMath
 			return(*this);
 		}
 */
-/*		__forceinline Color& Color::operator /= (const float f)
+/*		XM_INLINE Color&  XM_CALLCONV Color::operator /= (const float f) noexcept
 		{
 			// Add simple Data ti the float, so we don´t have a Division by Zero!
 			const float div = f + 0.000001f;

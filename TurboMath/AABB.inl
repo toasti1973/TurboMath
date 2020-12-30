@@ -28,17 +28,17 @@
 namespace TurboMath
 {
 
-	XM_INLINE AABB::AABB(const Vector4& c,const Vector4& e)
+	XM_INLINE AABB::AABB(const Vector4& c,const Vector4& e) noexcept
 		: Center(c),Extents(e)
 	{
 	}
 
-	XM_INLINE AABB::AABB()
+	XM_INLINE AABB::AABB() noexcept
 	{
 		Reset();
 	}
 
-	XM_INLINE AABB::AABB( OBB& o )
+	XM_INLINE AABB::AABB( OBB& o ) noexcept
 	{
 		Vector4 tmp[8];
 
@@ -221,7 +221,7 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Find the minimum axis aligned bounding box containing a set of points.
 	//-----------------------------------------------------------------------------
-	void XM_CALLCONV	AABB::ComputeBoundingAABBFromPoints(UINT Count, Vector4* pPoints, UINT Stride  ) noexcept
+	void XM_CALLCONV	AABB::ComputeBoundingAABBFromPoints(UINT Count, Vector4* pPoints, UINT Stride  )
 	{
 		assert( Count > 0 );
 		assert( pPoints );
@@ -249,12 +249,12 @@ namespace TurboMath
 	//-----------------------------------------------------------------------------
 	// Transform an axis aligned box by an angle preserving transform.
 	//-----------------------------------------------------------------------------
-	void XM_CALLCONV	AABB::Transform(  const AABB* pIn,const float Scale, const Quat& Rotation, const Vector4& Translation ) noexcept
+	void XM_CALLCONV	AABB::Transform(  const AABB* pIn,const float Scale, const Quat& Rotation, const Vector4& Translation )
 	{
 		assert( pIn );
 		assert(  Rotation.IsUnit()  );
 
-		const static XMVECTOR Offset[8] =
+		constexpr static XMVECTOR Offset[8] =
 		{
 			{ -1.0f, -1.0f, -1.0f, 0.0f },
 			{ -1.0f, -1.0f,  1.0f, 0.0f },
@@ -310,20 +310,20 @@ namespace TurboMath
 	// Compute the intersection of a ray (Origin, Direction) with an axis aligned
 	// box using the slabs method.
 	//-----------------------------------------------------------------------------
-	const bool XM_CALLCONV	AABB::IntersectRay( const Ray& theRay,float* pDist ) const noexcept
+	const bool XM_CALLCONV	AABB::IntersectRay( const Ray& theRay,float* pDist ) const
 	{
 		assert( pDist );
 		assert( theRay.GetDirection().IsUnit()  );
 
-		static const XMVECTOR Epsilon =
+		static constexpr XMVECTOR Epsilon =
 		{
 			1e-20f, 1e-20f, 1e-20f, 1e-20f
 		};
-		static const XMVECTOR FltMin =
+		static constexpr XMVECTOR FltMin =
 		{
 			-FLT_MAX, -FLT_MAX, -FLT_MAX, -FLT_MAX
 		};
-		static const XMVECTOR FltMax =
+		static constexpr XMVECTOR FltMax =
 		{
 			FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX
 		};
@@ -443,7 +443,6 @@ namespace TurboMath
 		XMVECTOR Radius;
 
 		// Axis == (1,0,0) x e0 = (0, -e0.z, e0.y)
-	//		Axis = XMVectorPermute( e0, -e0, Permute0W1Z0Y0X );
 		Axis = XMVectorPermute<XM_PERMUTE_0W, XM_PERMUTE_1Z, XM_PERMUTE_0Y, XM_PERMUTE_0X>( e0, XMVectorNegate(e0) );
 		p0 = XMVector3Dot( TV0, Axis );
 		// p1 = XMVector3Dot( V1, Axis ); // p1 = p0;
@@ -455,7 +454,6 @@ namespace TurboMath
 		NoIntersection = XMVectorOrInt( NoIntersection, XMVectorLess( Max, XMVectorNegate(Radius) ) );
 
 		// Axis == (1,0,0) x e1 = (0, -e1.z, e1.y)
-	//		Axis = XMVectorPermute( e1, -e1, Permute0W1Z0Y0X );
 		Axis = XMVectorPermute<XM_PERMUTE_0W, XM_PERMUTE_1Z, XM_PERMUTE_0Y, XM_PERMUTE_0X>( e1, XMVectorNegate(e1) );
 		p0 = XMVector3Dot( TV0, Axis );
 		p1 = XMVector3Dot( TV1, Axis );
@@ -467,7 +465,6 @@ namespace TurboMath
 		NoIntersection = XMVectorOrInt( NoIntersection, XMVectorLess( Max, XMVectorNegate(Radius) ) );
 
 		// Axis == (1,0,0) x e2 = (0, -e2.z, e2.y)
-	//		Axis = XMVectorPermute( e2, -e2, Permute0W1Z0Y0X );
 		Axis = XMVectorPermute<XM_PERMUTE_0W, XM_PERMUTE_1Z, XM_PERMUTE_0Y, XM_PERMUTE_0X>( e2, XMVectorNegate(e2) );
 		p0 = XMVector3Dot( TV0, Axis );
 		p1 = XMVector3Dot( TV1, Axis );
@@ -479,7 +476,6 @@ namespace TurboMath
 		NoIntersection = XMVectorOrInt( NoIntersection, XMVectorLess( Max, XMVectorNegate(Radius) ) );
 
 		// Axis == (0,1,0) x e0 = (e0.z, 0, -e0.x)
-	//		Axis = XMVectorPermute( e0, -e0, Permute0Z0W1X0Y );
 		Axis = XMVectorPermute<XM_PERMUTE_0Z, XM_PERMUTE_0W, XM_PERMUTE_1X, XM_PERMUTE_0Y>( e0, XMVectorNegate(e0) );
 		p0 = XMVector3Dot( TV0, Axis );
 		// p1 = XMVector3Dot( V1, Axis ); // p1 = p0;
@@ -491,7 +487,6 @@ namespace TurboMath
 		NoIntersection = XMVectorOrInt( NoIntersection, XMVectorLess( Max, XMVectorNegate(Radius) ) );
 
 		// Axis == (0,1,0) x e1 = (e1.z, 0, -e1.x)
-	//		Axis = XMVectorPermute( e1, -e1, Permute0Z0W1X0Y );
 		Axis = XMVectorPermute<XM_PERMUTE_0Z, XM_PERMUTE_0W, XM_PERMUTE_1X, XM_PERMUTE_0Y>( e1, XMVectorNegate(e1) );
 		p0 = XMVector3Dot( TV0, Axis );
 		p1 = XMVector3Dot( TV1, Axis );
@@ -503,7 +498,6 @@ namespace TurboMath
 		NoIntersection = XMVectorOrInt( NoIntersection, XMVectorLess( Max, XMVectorNegate(Radius) ) );
 
 		// Axis == (0,0,1) x e2 = (e2.z, 0, -e2.x)
-	//		Axis = XMVectorPermute( e2, -e2, Permute0Z0W1X0Y );
 		Axis = XMVectorPermute<XM_PERMUTE_0Z, XM_PERMUTE_0W, XM_PERMUTE_1X, XM_PERMUTE_0Y>( e2, XMVectorNegate(e2) );
 		p0 = XMVector3Dot( TV0, Axis );
 		p1 = XMVector3Dot( TV1, Axis );
@@ -515,7 +509,6 @@ namespace TurboMath
 		NoIntersection = XMVectorOrInt( NoIntersection, XMVectorLess( Max, XMVectorNegate(Radius) ) );
 
 		// Axis == (0,0,1) x e0 = (-e0.y, e0.x, 0)
-	//		Axis = XMVectorPermute( e0, -e0, Permute1Y0X0W0Z );
 		Axis = XMVectorPermute<XM_PERMUTE_1Y, XM_PERMUTE_0X, XM_PERMUTE_0W, XM_PERMUTE_0Z>( e0, XMVectorNegate(e0) );
 		p0 = XMVector3Dot( TV0, Axis );
 		// p1 = XMVector3Dot( V1, Axis ); // p1 = p0;
@@ -527,7 +520,6 @@ namespace TurboMath
 		NoIntersection = XMVectorOrInt( NoIntersection, XMVectorLess( Max, XMVectorNegate(Radius) ) );
 
 		// Axis == (0,0,1) x e1 = (-e1.y, e1.x, 0)
-	//		Axis = XMVectorPermute( e1, -e1, Permute1Y0X0W0Z );
 		Axis = XMVectorPermute<XM_PERMUTE_1Y, XM_PERMUTE_0X, XM_PERMUTE_0W, XM_PERMUTE_0Z>( e1, XMVectorNegate(e1) );
 		p0 = XMVector3Dot( TV0, Axis );
 		p1 = XMVector3Dot( TV1, Axis );
@@ -539,7 +531,6 @@ namespace TurboMath
 		NoIntersection = XMVectorOrInt( NoIntersection, XMVectorLess( Max, XMVectorNegate(Radius) ) );
 
 		// Axis == (0,0,1) x e2 = (-e2.y, e2.x, 0)
-	//		Axis = XMVectorPermute( e2, -e2, Permute1Y0X0W0Z );
 		Axis = XMVectorPermute<XM_PERMUTE_1Y, XM_PERMUTE_0X, XM_PERMUTE_0W, XM_PERMUTE_0Z>( e2, XMVectorNegate(e2) );
 		p0 = XMVector3Dot( TV0, Axis );
 		p1 = XMVector3Dot( TV1, Axis );
@@ -592,7 +583,7 @@ namespace TurboMath
 		return BoxA.IntersectOBB( &pVolumeB );
 	}
 
-	const eCullClassify XM_CALLCONV	AABB::IntersectFrustum( Frustum* pVolumeB ) const noexcept
+	const eCullClassify XM_CALLCONV	AABB::IntersectFrustum( Frustum* pVolumeB ) const
 	{
 		assert(pVolumeB);
 
@@ -650,8 +641,6 @@ namespace TurboMath
 
 	const eCullClassify XM_CALLCONV	AABB::IntersectPlane( Plane& Plane0 ) const noexcept
 	{
-		assert( Plane0.IsUnit()  );
-
 		// Load the box.
 		XMVECTOR Center = XMLoadFloat3( (XMFLOAT3*)&this->Center );
 		const XMVECTOR Extents = XMLoadFloat3( (XMFLOAT3*)&this->Extents );

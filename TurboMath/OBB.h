@@ -37,20 +37,20 @@ namespace TurboMath
         //-----------------------------------------------------------------------------
         // Constructor / Destructor
         //-----------------------------------------------------------------------------
-        explicit OBB(const Vector4& c, const Vector4& e, const Quat&o);
+        explicit OBB(const Vector4& c, const Vector4& e, const Quat&o) noexcept;
 
-        OBB();
+        	OBB() noexcept;
 
 		// Get / Set-Functions
-		void	SetCenter(const Vector4& newCenter);
-		void	SetExtents(const Vector4& newExtents);
-		void	SetOrientation(const Quat& newOrientation);
+		void XM_CALLCONV 	SetCenter(const Vector4& newCenter) noexcept;
+		void XM_CALLCONV 	SetExtents(const Vector4& newExtents) noexcept;
+		void XM_CALLCONV 	SetOrientation(const Quat& newOrientation) noexcept;
 
-		const	Vector4	GetCenter() const;
-		const	Vector4	GetExtents() const;
-		const	Quat	GetOrientation() const;
+		const Vector4 XM_CALLCONV	GetCenter() const noexcept;
+		const Vector4 XM_CALLCONV 	GetExtents() const noexcept;
+		const Quat	  XM_CALLCONV 	GetOrientation() const noexcept;
 
-		void Reset();
+		void XM_CALLCONV 	Reset() noexcept;
 
 		//-----------------------------------------------------------------------------
 		// Find the approximate minimum oriented bounding box containing a set of
@@ -63,22 +63,22 @@ namespace TurboMath
 		// Exact computation of the minimum oriented bounding box is possible but the
 		// best know algorithm is O(N^3) and is significanly more complex to implement.
 		//-----------------------------------------------------------------------------
-		void ComputeBoundingOBBFromPoints( UINT Count, const XMFLOAT3* pPoints, UINT Stride );
+		void XM_CALLCONV ComputeBoundingOBBFromPoints( UINT Count, const XMFLOAT3* pPoints, UINT Stride );
 
 		//-----------------------------------------------------------------------------
 		// Bounding volume transforms.
 		//-----------------------------------------------------------------------------
-		void Transform(const float Scale, const Quat& Rotation,const Vector4& Translation );
+		void XM_CALLCONV Transform(const float Scale, const Quat& Rotation,const Vector4& Translation );
 
 		//-----------------------------------------------------------------------------
 		// Intersection testing routines.
 		//-----------------------------------------------------------------------------
-		const bool IntersectPoint(const Vector4& Point);
-		const bool IntersectOBB( const OBB* pVolumeB );
-		const bool IntersectAABB( AABB& pVolumeB );
-		const bool IntersectRay( Ray& theRay, float* pDist );
-		const bool IntersectTriangle(  const Vector4& V0, const Vector4& V1, const Vector4& V2  );
-		const bool IntersectSphere( const Sphere* pVolumeA  );
+		const bool XM_CALLCONV IntersectPoint(const Vector4& Point);
+		const bool XM_CALLCONV IntersectOBB( const OBB* pVolumeB );
+		const bool XM_CALLCONV IntersectAABB( AABB& pVolumeB );
+		const bool XM_CALLCONV IntersectRay( Ray& theRay, float* pDist );
+		const bool XM_CALLCONV IntersectTriangle(  const Vector4& V0, const Vector4& V1, const Vector4& V2  );
+		const bool XM_CALLCONV IntersectSphere( const Sphere* pVolumeA  );
 
 		//-----------------------------------------------------------------------------
 		// Frustum intersection testing routines.
@@ -86,7 +86,7 @@ namespace TurboMath
 		//                1 = intersection,
 		//                2 = A is completely inside B
 		//-----------------------------------------------------------------------------
-		const eCullClassify IntersectFrustum( Frustum* pVolumeB );
+		const eCullClassify XM_CALLCONV IntersectFrustum( Frustum* pVolumeB );
 
 		//-----------------------------------------------------------------------------
 		// Test vs six planes (usually forming a frustum) intersection routines.
@@ -100,7 +100,7 @@ namespace TurboMath
 		//                1 = not completely inside or completely outside (intersecting),
 		//                2 = volume is inside all the planes (completely inside)
 		//-----------------------------------------------------------------------------
-		const eCullClassify Intersect6Planes( const Plane& Plane0, const Plane& Plane1, const Plane& Plane2,const Plane& Plane3, const Plane& Plane4, const Plane& Plane5 );
+		const eCullClassify XM_CALLCONV Intersect6Planes( const Plane& Plane0, const Plane& Plane1, const Plane& Plane2,const Plane& Plane3, const Plane& Plane4, const Plane& Plane5 );
 
 		//-----------------------------------------------------------------------------
 		// Volume vs plane intersection testing routines.
@@ -108,13 +108,13 @@ namespace TurboMath
 		//                1 = volume intersects the plane,
 		//                2 = volume is inside the plane (on the negative side of the plane)
 		//-----------------------------------------------------------------------------
-		const eCullClassify IntersectPlane( const Plane& Plane );
+		const eCullClassify XM_CALLCONV IntersectPlane( const Plane& Plane );
 
 		//-------------------------------------------------------------------------------
 		// Get the 8 EdgePoints from the OBB
 		// We MUST give a Array from 8 TurboMath::Vector4 Members for the EdgePoints
 		//-------------------------------------------------------------------------------
-		void GetEdgePoints( Vector4* pPointlist);
+		void XM_CALLCONV GetEdgePoints( Vector4* pPointlist);
 
 		protected:
 		Vector4 Center;				// Center of the box.

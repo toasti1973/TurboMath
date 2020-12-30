@@ -37,7 +37,7 @@
 #error TurboMath requires C++
 #endif
 
-#define TURBOMATH_VERSION 089c
+#define TURBOMATH_VERSION 089d
 
 
 //-------------------------------------------------------
@@ -252,6 +252,7 @@ extern "C"
 	#include "WayPoints.inl"
 	#include "MoveController.inl"
 	#include "Triangle.inl"
+	#include "VerifyCPUSupport.inl"
 
 
 #endif

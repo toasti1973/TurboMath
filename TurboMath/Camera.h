@@ -37,13 +37,13 @@ namespace TurboMath
 	public:
 		// Constructs default camera looking at 0,0,0
 		// placed at 0,0,-1 with up vector 0,1,0 (note that mUp is NOT a vector - it's vector's end)
-		Camera(void);
+		Camera(void) noexcept;
 	
 		// Create camera, based on another one
-		Camera(const Camera& camera);
+		Camera(const Camera& camera) noexcept;
 	
 		// Copy all camera's parameters
-		Camera& operator=(const Camera& camera);
+		Camera& operator=(const Camera& camera)noexcept;
     
 		// Initialize camera's perspective Projection matrix
 		void XM_CALLCONV InitProjMatrix(const float angle, const float client_width, const float client_height, const float nearest, const float farthest) noexcept;
@@ -164,16 +164,16 @@ namespace TurboMath
 		Matrix	m_Ortho;		// Ortho matrix for drawing without tranformation
 		Matrix  m_ViewProj;		// View matrix
 
-		Matrix m_ReprojectMatrix; // Projects a clip-space coordinate to the previous frame (useful for temporal effects).
-		Matrix m_PreviousViewProjMatrix;  // The view-projection matrix from the previous frame
+		Matrix m_ReprojectMatrix; 	// Projects a clip-space coordinate to the previous frame (useful for temporal effects).
+		Matrix m_PreviousViewProjMatrix;// The view-projection matrix from the previous frame
 
 		// ViewFrustum
-		Frustum m_ViewFrustum;	// Camera-View-Frustum
+		Frustum m_ViewFrustum;		// Camera-View-Frustum
 
 		/*** Projection parameters ***/
 		float m_Angle;			// Angle of view frustum
-		float m_ClientWidth;	// Window's width
-		float m_ClientHeight;	// Window's height
+		float m_ClientWidth;		// Window's width
+		float m_ClientHeight;		// Window's height
 		float m_Nearest;		// Nearest view frustum plane
 		float m_Farthest;		// Farthest view frustum plane
 
