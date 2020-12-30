@@ -40,7 +40,7 @@ using namespace TurboMath
 
 * fast inline SSE2-Code with VectorCall (Calling-Convention)
 * Vector2, Vector3, Vector4, Point2, Point3, Point4, AAB, OBB, Ray, Line, Plane, Camera, MoveController
-* Color-Class with much predefined Color´s
+* Color-Class with many predefined Color´s
 * Matrix (4x4)
 * Quaternion
 * Conversion construction and assignment
@@ -54,6 +54,5 @@ Missing/planned:
 
 * swizzling 
 * boolN types
-* more Inline and VectorCall optimazion
 * SSE3 / SSE4.x / AVX support
 * Octree / BSP / BVH - classes
